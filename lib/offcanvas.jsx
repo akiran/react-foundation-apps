@@ -1,8 +1,10 @@
 var React = require('react');
 var cx = require('react/lib/cx');
+var LayerMixin = require('./mixins/layer');
 var PubSub = require('pubsub-js');
 
-var Panel = React.createClass({
+var Offcanvas = React.createClass({
+  mixins: [LayerMixin],
   getInitialState: function () {
     return {open: false};
   },
@@ -22,18 +24,21 @@ var Panel = React.createClass({
       }
     }.bind(this));
   },
-  render: function() {
+  renderLayer: function() {
     var classes = {
-      panel: true,
+      'off-canvas': true,
       'is-active': this.state.open,
     };
-    classes['panel-' + this.props.position] = true;
+    classes[this.props.position] = true;
     return (
       <div className={cx(classes)}>
           {this.props.children}
       </div>
     );
   },
+  render: function () {
+    return null;
+  }
 });
 
-module.exports = Panel;
+module.exports = Offcanvas;

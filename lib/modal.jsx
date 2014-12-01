@@ -1,13 +1,15 @@
 var React = require('react');
 var PubSub = require('pubsub-js');
+var cx = require('react/lib/cx');
 var LayerMixin = require('./mixins/layer');
 
 var Modal = React.createClass({
   mixins: [LayerMixin],
   getInitialState: function () {
-    return {
-      open: false
-    };
+    return { open: false };
+  },
+  getDefaultProps: function () {
+    return { overlay: false };
   },
   componentDidMount: function () {
     PubSub.subscribe(this.props.id, function (msg, data) {
@@ -21,17 +23,23 @@ var Modal = React.createClass({
     }.bind(this));
   },
   renderLayer: function() {
-    if (this.state.open) {
-      return (
-        <div className='modal-overlay is-active'>
-          <div className='modal vertical grid-block is-active'>
-            {this.props.children}
-          </div>
+    var overlayClasses = {
+      'modal-overlay': this.props.overlay,
+      'is-active': this.state.open
+    };
+    var modalClasses = {
+      'grid-block': true,
+      'vertical': true,
+      'modal': true,
+      'is-active': this.state.open
+    };
+    return (
+      <div className={cx(overlayClasses)}>
+        <div className={cx(modalClasses)}>
+          {this.props.children}
         </div>
-      );
-    } else {
-      return <div />;
-    }
+      </div>
+    );
   },
   render: function () {
     return null;

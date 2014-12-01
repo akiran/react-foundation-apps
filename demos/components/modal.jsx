@@ -8,10 +8,10 @@ var Modals = React.createClass({
   render: function () {
     return (
       <div>
-        <Open data-id="first-modal2"><button>Modal</button></Open>
-        <Modal id="first-modal2">
+        <Open data-id="modal"><button>Modal</button></Open>
+        <Modal id="modal" overlay={true}>
             <div className='grid-block align-right'>
-              <Close data-id="first-modal2"><a href="">&times;</a></Close>
+              <Close data-id="modal"><a href="">&times;</a></Close>
             </div>
             <div className='grid-block align-center'>Modal content</div>
         </Modal>
