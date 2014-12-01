@@ -1,18 +1,18 @@
 var React = require('react');
 var cx = require('react/lib/cx');
 
-var Accordian = React.createClass({
+var Accordion = React.createClass({
   render: function () {
     var itemClasses = {
-      'accordian-item': true,
+      'accordion-item': true,
       'is-active': this.props.active
     };
     return (
       <div className={cx(itemClasses)}>
-        <div className='accordian-title' conClick={this.props.activate}>
+        <div className='accordion-title' onClick={this.props.activate}>
           {this.props.title}
         </div>
-        <div className='accordian-content'>
+        <div className='accordion-content'>
           {this.props.children}
         </div>
       </div>
@@ -20,4 +20,4 @@ var Accordian = React.createClass({
   }
 });
 
-module.exports = Accordian;
+module.exports = Accordion;

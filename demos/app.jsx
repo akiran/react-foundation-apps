@@ -5,6 +5,7 @@ require('./scss/app.scss');
 var Modal = require('./components/modal');
 var Panel = require('./components/panel');
 var Offcanvas = require('./components/offcanvas');
+var Accordion = require('./components/accordion');
 
 var Demos = React.createClass({
   getInitialState: function () {
@@ -21,6 +22,8 @@ var Demos = React.createClass({
       componentDemo = <Panel />;
     } if (this.state.component === 'offcanvas') {
       componentDemo = <Offcanvas />;
+    } if (this.state.component === 'accordion') {
+      componentDemo = <Accordion />;
     }
     return (
       <div className='grid-frame vertical'>
@@ -33,6 +36,7 @@ var Demos = React.createClass({
                   <li><a onClick={this.selectComponent.bind(this, 'modal')}>Modal</a></li>
                   <li><a onClick={this.selectComponent.bind(this, 'panel')}>Panel</a></li>
                   <li><a onClick={this.selectComponent.bind(this, 'offcanvas')}>Offcanvas</a></li>
+                  <li><a onClick={this.selectComponent.bind(this, 'accordion')}>Accordion</a></li>
                 </ul>
               </section>
             </div>
