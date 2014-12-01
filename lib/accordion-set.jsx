@@ -15,16 +15,20 @@ var AccordionSet = React.createClass({
     });
     this.setState({sections: sections});
   },
-  select: function (index) {
+  select: function (selectSection) {
     var sections = this.state.sections;
-    // Clear previously select item if multiOpen = false
-    if (!this.props.multiOpen) {
-      sections = sections.map(function(section) {
+    sections.forEach(function (section, index) {
+      if(this.props.multiOpen) {
+        if(index === selectSection) {
+          section.active = !section.active;
+        }
+      } else {
         section.active = false;
-        return section;
-      });
-    }
-    sections[index] = {active: true};
+        if(index === selectSection) {
+          section.active = true;
+        }
+      }
+    }.bind(this));
     this.setState({sections: sections});
   },
   // closeAll: function () {
