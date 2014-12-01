@@ -1,0 +1,42 @@
+{
+  "name": "react-foundation-apps",
+  "version": "0.0.1",
+  "description": "'React port of foundation-apps'",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/akiran/react-foundation-apps"
+  },
+  "keywords": [
+    "react",
+    "foundation-apps"
+  ],
+  "author": {
+    "name": "Kiran Abburi"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/akiran/react-foundation-apps/issues"
+  },
+  "homepage": "https://github.com/akiran/react-foundation-apps",
+  "devDependencies": {
+    "autoprefixer-core": "^4.0.1",
+    "css-loader": "^0.9.0",
+    "gulp": "^3.8.10",
+    "jsx-loader": "^0.12.2",
+    "postcss-loader": "^0.2.0",
+    "react-hot-loader": "^0.5.0",
+    "sass-loader": "^0.3.1",
+    "style-loader": "^0.8.2",
+    "webpack": "^1.4.13",
+    "webpack-dev-server": "^1.6.6"
+  },
+  "dependencies": {
+    "gulp-ruby-sass": "^0.7.1",
+    "pubsub-js": "^1.5.0",
+    "react": "^0.12.1"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "name": "react-foundation-apps",
+  "version": "0.0.1",
+  "homepage": "https://github.com/akiran/react-foundation-apps",
+  "authors": [
+    "Kiran Abburi"
+  ],
+  "description": "\"React port for foundation-apps\"",
+  "keywords": [
+    "React",
+    "foundation-apps"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "foundation-apps": "~1.0.0-rc.1"
+  }
+}
