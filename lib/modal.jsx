@@ -1,7 +1,7 @@
 var React = require('react');
 var PubSub = require('pubsub-js');
 var cx = require('react/lib/cx');
-var LayerMixin = require('./mixins/layer');
+var LayerMixin = require('react-layer-mixin');
 
 var Modal = React.createClass({
   mixins: [LayerMixin],

@@ -37,6 +37,7 @@
   "dependencies": {
     "gulp-ruby-sass": "^0.7.1",
     "pubsub-js": "^1.5.0",
-    "react": "^0.12.1"
+    "react": "^0.12.1",
+    "react-layer-mixin": "^0.1.0"
   }
 }

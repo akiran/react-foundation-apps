@@ -1,6 +1,6 @@
 var React = require('react');
 var cx = require('react/lib/cx');
-var LayerMixin = require('./mixins/layer');
+var LayerMixin = require('react-layer-mixin');
 var PubSub = require('pubsub-js');
 
 var Offcanvas = React.createClass({
