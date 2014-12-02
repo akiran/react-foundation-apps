@@ -28,6 +28,7 @@ var Demos = React.createClass({
                   <li><Link to='panel'>Panel</Link></li>
                   <li><Link to='offcanvas'>Offcanvas</Link></li>
                   <li><Link to='accordion'>Accordion</Link></li>
+                  <li><Link to='tabs'>Tabs</Link></li>
                 </ul>
               </section>
             </div>
@@ -47,6 +48,7 @@ var routes = (
     <Route name='panel' handler={Panel} />
     <Route name='offcanvas' handler={Offcanvas} />
     <Route name='accordion' handler={Accordion} />
+    <Route name='tabs' handler={Tabs} />
     <DefaultRoute handler={Modal} />
   </Route>
 );
