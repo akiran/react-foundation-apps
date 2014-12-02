@@ -1,30 +1,21 @@
 var devServer = require('webpack/hot/only-dev-server');
 var React = require('react');
+var Router = require('react-router');
+var Route = Router.Route;
+var DefaultRoute = Router.DefaultRoute;
+var Link = Router.Link;
+var RouteHandler = Router.RouteHandler;
 var Header = require('./header');
 require('./scss/app.scss');
+
 var Modal = require('./components/modal');
 var Panel = require('./components/panel');
 var Offcanvas = require('./components/offcanvas');
 var Accordion = require('./components/accordion');
+var Tabs = require('./components/tabs');
 
 var Demos = React.createClass({
-  getInitialState: function () {
-    return {component: 'modal'};
-  },
-  selectComponent: function (component) {
-    this.setState({component: component});
-  },
   render: function () {
-    var componentDemo;
-    if (this.state.component === 'modal') {
-      componentDemo = <Modal />;
-    } if (this.state.component === 'panel') {
-      componentDemo = <Panel />;
-    } if (this.state.component === 'offcanvas') {
-      componentDemo = <Offcanvas />;
-    } if (this.state.component === 'accordion') {
-      componentDemo = <Accordion />;
-    }
     return (
       <div className='grid-frame vertical'>
         <Header />
@@ -33,16 +24,16 @@ var Demos = React.createClass({
             <div className='vertical grid-block'>
               <section>
                 <ul className='menu-bar vertical'>
-                  <li><a onClick={this.selectComponent.bind(this, 'modal')}>Modal</a></li>
-                  <li><a onClick={this.selectComponent.bind(this, 'panel')}>Panel</a></li>
-                  <li><a onClick={this.selectComponent.bind(this, 'offcanvas')}>Offcanvas</a></li>
-                  <li><a onClick={this.selectComponent.bind(this, 'accordion')}>Accordion</a></li>
+                  <li><Link to='modal'>Modal</Link></li>
+                  <li><Link to='panel'>Panel</Link></li>
+                  <li><Link to='offcanvas'>Offcanvas</Link></li>
+                  <li><Link to='accordion'>Accordion</Link></li>
                 </ul>
               </section>
             </div>
           </div>
           <div className='grid-content'>
-            {componentDemo}
+            <RouteHandler />
           </div>
         </div>
       </div>
@@ -50,4 +41,16 @@ var Demos = React.createClass({
   }
 });
 
-React.render(<Demos />, document.body);;
+var routes = (
+  <Route handler={Demos}>
+    <Route name='modal' handler={Modal} />
+    <Route name='panel' handler={Panel} />
+    <Route name='offcanvas' handler={Offcanvas} />
+    <Route name='accordion' handler={Accordion} />
+    <DefaultRoute handler={Modal} />
+  </Route>
+);
+
+Router.run(routes, function (Handler) {
+  React.render(<Handler />, document.body);
+});
