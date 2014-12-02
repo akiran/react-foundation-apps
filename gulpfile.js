@@ -11,7 +11,7 @@ gulp.task('sass', function () {
               .pipe(gulp.dest('./demos/css'));
 });
 
-gulp.task('server', function (callback) {
+gulp.task('server', ['sass'], function (callback) {
   var myConfig = require('./webpack.config.js');
   
   var webpackCompiler = webpack(myConfig, function(err, stats) {
