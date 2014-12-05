@@ -10,7 +10,7 @@ gulp.task('copy', function () {
 });
 
 gulp.task('sass', function () {
-  return  gulp.src(['./docs/**/*{scss,sass}'])
+  return  gulp.src(['./docs/**/*.scss'])
               .pipe(sass({ loadPath : ['bower_components', 'node_modules'],}))
                .on('error', function (err) { console.log(err.message); })
               .pipe(gulp.dest('./build'));
@@ -34,4 +34,4 @@ gulp.task('server', ['copy', 'sass'], function (callback) {
 gulp.task('watch', function () {
   gulp.watch(['./docs/**/*{scss,sass}'], ['sass']);
   gulp.watch(['./docs/index.html'], ['copy']);
-})
+});
