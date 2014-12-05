@@ -13,6 +13,8 @@ var Panel = require('./components/panel');
 var Offcanvas = require('./components/offcanvas');
 var Accordion = require('./components/accordion');
 var Tabs = require('./components/tabs');
+var Popup = require('./components/popup');
+var Notification = require('./components/notification');
 
 var Demos = React.createClass({
   render: function () {
@@ -29,6 +31,8 @@ var Demos = React.createClass({
                   <li><Link to='offcanvas'>Offcanvas</Link></li>
                   <li><Link to='accordion'>Accordion</Link></li>
                   <li><Link to='tabs'>Tabs</Link></li>
+                  <li><Link to='popup'>Popup</Link></li>
+                  <li><Link to='notification'>Notification</Link></li>
                 </ul>
               </section>
             </div>
@@ -49,6 +53,8 @@ var routes = (
     <Route name='offcanvas' handler={Offcanvas} />
     <Route name='accordion' handler={Accordion} />
     <Route name='tabs' handler={Tabs} />
+    <Route name='popup' handler={Popup} />
+    <Route name='notification' handler={Notification} />
     <DefaultRoute handler={Modal} />
   </Route>
 );

@@ -6,13 +6,19 @@ var Accordion = React.createClass({
     return { sections: [] };
   },
   getDefaultProps: function () {
-    return { multiOpen: false };
+    return { 
+      multiOpen: false,
+      autoOpen: true,
+    };
   },
   componentDidMount: function () {
     var sections = [];
     React.Children.forEach(this.props.children, function (child, index) {
       sections.push({active: false});
     });
+    if (this.props.autoOpen) {
+      sections[0].active = true;
+    }
     this.setState({sections: sections});
   },
   select: function (selectSection) {

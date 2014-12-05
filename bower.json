@@ -20,5 +20,8 @@
   ],
   "devDependencies": {
     "foundation-apps": "~1.0.0-rc.1"
+  },
+  "dependencies": {
+    "foundation-apps": "~1.0.0"
   }
 }

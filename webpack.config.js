@@ -5,10 +5,11 @@ var autoprefixer = require('autoprefixer-core');
 module.exports = {
   devtool: '#inline-source-map',
   entry: {
-    'app.js': './demos/app.jsx',
+    'demos.js': './demos/app.jsx',
+    'docs.js': './docs/index.jsx'
   },
   output: {
-    path: path.join(__dirname, 'demos', 'build'),
+    path: path.join(__dirname, 'build'),
     filename: '[name]',
   },
   module: {
@@ -19,6 +20,8 @@ module.exports = {
         loader: "style!css!postcss!sass?outputStyle=expanded&includePaths[]=" + 
             (path.resolve(__dirname, './node_modules')) + "&includePaths[]=" + (path.resolve(__dirname, './bower_components'))
       },
+      { test: /\.md$/, loader: "html!markdown" },
+      { test: /\.html$/, loader: "html" },
     ],
   },
   postcss: [ autoprefixer({ browsers: ['last 2 version'] }) ],
