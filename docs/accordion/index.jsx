@@ -4,6 +4,7 @@ var MultiSelect = require('./multi-select');
 var Highlight = require('../react-highlight');
 var singleHTML = require('./single-select.html');
 var multiHTML = require('./multi-select.html');
+var singleMD = require('./single-select.md');
 
 var Accordion = React.createClass({
   render: function () {

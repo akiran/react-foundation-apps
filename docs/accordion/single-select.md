@@ -1,3 +1,4 @@
+```html
 <Accordion>
   <AccordionItem title='First item title zzzz'>
     First item content
@@ -9,4 +10,4 @@
     Third item content
   </AccordionItem>
 </Accordion>
-
+```
