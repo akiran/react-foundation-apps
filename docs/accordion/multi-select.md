@@ -1,3 +1,4 @@
+```html
 <Accordion multiOpen={true} autoOpen={false} >
   <AccordionItem title='First item title'>
     First item content
@@ -9,3 +10,4 @@
     Third item content
   </AccordionItem>
 </Accordion>
+```
