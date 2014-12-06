@@ -5,7 +5,6 @@ var autoprefixer = require('autoprefixer-core');
 module.exports = {
   devtool: '#inline-source-map',
   entry: {
-    'demos.js': './demos/app.jsx',
     'docs.js': './docs/index.jsx'
   },
   output: {

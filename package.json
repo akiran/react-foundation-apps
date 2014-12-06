@@ -4,7 +4,7 @@
   "description": "'React port of foundation-apps'",
   "main": "index.js",
   "scripts": {
-    "test": "mocha test",
+    "postinstall": "bower install",
     "start": "./node_modules/.bin/gulp server"
   },
   "repository": {
