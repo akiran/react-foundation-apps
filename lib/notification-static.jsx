@@ -6,7 +6,7 @@ var ReactCSSTransitionGroup = require('react/lib/ReactCSSTransitionGroup');
 
 var NotificationStatic = React.createClass({
   getInitialState: function () {
-    return { open: true };
+    return { open: false };
   },
   getDefaultProps: function () {
     return {
@@ -30,7 +30,6 @@ var NotificationStatic = React.createClass({
     e.stopPropagation();
   },
   render: function () {
-    console.log(this.state.open);
     var classes = { 
       notification: true,
       'is-active': this.state.open
@@ -60,9 +59,7 @@ var NotificationStatic = React.createClass({
     }
     return (
       <div className={cx(classes)}>
-        <ReactCSSTransitionGroup transitionName='fadeIn'>
-          {notification}
-        </ReactCSSTransitionGroup>
+        {notification}
       </div>
     );
   }
