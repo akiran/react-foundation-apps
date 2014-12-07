@@ -18,7 +18,7 @@ var routes = (
     <Route name='modal' handler={Modal} />
     <Route name='offcanvas' handler={Offcanvas} />
     <Route name='notification' handler={Notification} />
-    <DefaultRoute handler={Accordion} />
+    <DefaultRoute handler={Install} />
   </Route>
 );
 
