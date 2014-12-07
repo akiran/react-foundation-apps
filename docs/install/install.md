@@ -1,12 +1,10 @@
-> React Foundation Apps is a react port of Foundation Apps
-
 Foundation Apps is a new framework for building web apps. It has awesome new features like 
 flexbox based grid, motion-ui, and several core components for building web apps.
 But, javascript components of foundation-apps are built with angular.
 
-Try *React Foundation Apps*
+Try React Foundation Apps, if you want to use react.
 
-Get the benefits of both *React* and *Foundation Apps* . 
+React Foundation Apps lets you avail the benefits of both React and Foundation Apps. 
 
 ### Installation
 

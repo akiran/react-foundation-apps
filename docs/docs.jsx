@@ -19,6 +19,7 @@ var Docs = React.createClass({
                     <li><Link to='accordion'>Accordion</Link></li>
                     <li><Link to='modal'>Modal</Link></li>
                     <li><Link to='offcanvas'>Off-canvas Menu</Link></li>
+                    <li><Link to='notification'>Notification</Link></li>
                   </ul>
                 </section>
               </div>
