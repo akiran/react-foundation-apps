@@ -1,6 +1,6 @@
 ```html
 <Accordion>
-  <AccordionItem title='First item title zzzz'>
+  <AccordionItem title='First item title'>
     First item content
   </AccordionItem>
   <AccordionItem title='Second item title'>

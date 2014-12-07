@@ -11,7 +11,9 @@ var Docs = React.createClass({
             <div className='vertical grid-block'>
               <section>
                 <ul className='menu-bar vertical'>
+                  <li><Link to='install'>Installation &amp; Usage</Link></li>
                   <li><Link to='accordion'>Accordion</Link></li>
+                  <li><Link to='modal'>Modal</Link></li>
                 </ul>
               </section>
             </div>

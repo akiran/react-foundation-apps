@@ -11,8 +11,10 @@ var Accordion = React.createClass({
     return (
       <div className='grid-content'>
         <Highlight code={usageMD}/>
-        <h3>Demos</h3>
-        <h5>Basic</h5>
+        <hr />
+        <SingleSelect />
+        <hr />
+        <h3>Basic</h3>
         <div className='grid-block'>
           <div className='grid-content'>
             <Highlight code={singleMD}/>
@@ -21,9 +23,9 @@ var Accordion = React.createClass({
             <SingleSelect />
           </div>
         </div>
-
+        <hr />
         
-        <h5>Advanced</h5>
+        <h3>Advanced</h3>
         <div className='grid-block'>
           <div className='grid-content' >
             <Highlight code={multiMD}/>
