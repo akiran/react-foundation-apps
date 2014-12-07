@@ -8,7 +8,7 @@ var Docs = React.createClass({
     return (
       <div className='vertical grid-frame'>
         <div className='title-bar'>
-          <span className='title primary'>React Foundation Apps</span>
+          <span className='title'>React Foundation Apps</span>
         </div>
         <div className='grid-block'>
           <div className='small-2 grid-block sidebar'>
@@ -18,12 +18,15 @@ var Docs = React.createClass({
                     <li><Link to='install'>Installation &amp; Usage</Link></li>
                     <li><Link to='accordion'>Accordion</Link></li>
                     <li><Link to='modal'>Modal</Link></li>
+                    <li><Link to='offcanvas'>Off-canvas Menu</Link></li>
                   </ul>
                 </section>
               </div>
           </div>
-          <div className='small-10 grid-block'>
-            <RouteHandler />
+          <div className='small-10 grid-content'>
+            <div className='grid-container main-docs-section'>
+              <RouteHandler />
+            </div>
           </div>
         </div>
       </div>

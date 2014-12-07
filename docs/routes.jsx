@@ -5,6 +5,7 @@ var DefaultRoute = Router.DefaultRoute;
 var Install = require('./install');
 var Accordion = require('./accordion');
 var Interchange = require('./interchange');
+var Offcanvas = require('./offcanvas');
 var Modal = require('./modal');
 var Docs = require('./docs');
 
@@ -14,6 +15,7 @@ var routes = (
     <Route name='accordion' handler={Accordion} />
     <Route name='interchange' handler={Interchange} />
     <Route name='modal' handler={Modal} />
+    <Route name='offcanvas' handler={Offcanvas} />
     <DefaultRoute handler={Accordion} />
   </Route>
 );
