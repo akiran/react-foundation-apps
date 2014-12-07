@@ -9,7 +9,7 @@ var Modal = React.createClass({
     return { open: false };
   },
   getDefaultProps: function () {
-    return { overlay: false };
+    return { overlay: false, overlayClose: false };
   },
   componentDidMount: function () {
     PubSub.subscribe(this.props.id, function (msg, data) {
@@ -22,19 +22,27 @@ var Modal = React.createClass({
       }
     }.bind(this));
   },
+  hideOverlay: function () {
+    if (this.props.overlayClose) {
+      this.setState({open: false});   
+    }
+  },
   renderLayer: function() {
+    var overlay = this.props.overlay === true || this.props.overlayClose === true ? true : false;
     var overlayClasses = {
-      'modal-overlay': this.props.overlay,
+      'modal-overlay': true,
       'is-active': this.state.open
     };
     var modalClasses = {
-      'grid-block': true,
-      'vertical': true,
       'modal': true,
       'is-active': this.state.open
     };
+    var overlayStyle = {};
+    if (!overlay) {
+      overlayStyle.background = 'transparent';
+    }
     return (
-      <div className={cx(overlayClasses)}>
+      <div className={cx(overlayClasses)} style={overlayStyle} onClick={this.hideOverlay}>
         <div className={cx(modalClasses)}>
           {this.props.children}
         </div>
