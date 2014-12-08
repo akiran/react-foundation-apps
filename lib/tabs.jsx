@@ -4,14 +4,12 @@ var cloneWithProps = require('react/lib/cloneWithProps');
 var Tabs = React.createClass({
   getInitialState: function () {
     return {
-      selectedTab: null,
+      selectedTab: 0,
       content: null
     };
   },
   selectTab: function (options) {
-    return function () {
-      this.setState(options);
-    }.bind(this);
+    this.setState(options);
   },
   render: function () {
     var children = React.Children.map(this.props.children, function (child, index) {
