@@ -1,7 +1,7 @@
 var React = require('react');
 var cx = require('react/lib/cx');
 
-var ActionsheetContent = React.createClass({
+var ActionSheetContent = React.createClass({
   getDefaultProps: function () {
     return {position: 'bottom'};
   },
@@ -16,4 +16,4 @@ var ActionsheetContent = React.createClass({
   }
 });
 
-module.exports = ActionsheetContent;
+module.exports = ActionSheetContent;

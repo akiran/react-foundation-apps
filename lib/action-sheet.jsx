@@ -1,7 +1,7 @@
 var React = require('react');
 var cloneWithProps = require('react/lib/cloneWithProps');
 
-var Actionsheet = React.createClass({
+var ActionSheet = React.createClass({
   getInitialState: function () {
     return {active: false};
   },
@@ -24,4 +24,4 @@ var Actionsheet = React.createClass({
   }
 });
 
-module.exports = Actionsheet;
+module.exports = ActionSheet;
