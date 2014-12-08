@@ -1,6 +1,6 @@
 > React Foundation Apps is a react port of Foundation Apps
 
-# Work in progress. Not yet production ready
+### Work in progress. Not yet production ready
 
 Foundation Apps is a new framework for building web apps. It has awesome new features like 
 flexbox based grid, motion-ui, and several core components for building web apps.
