@@ -8,6 +8,7 @@ var Interchange = require('./interchange');
 var Offcanvas = require('./offcanvas');
 var Notification = require('./notification');
 var Modal = require('./modal');
+var ActionSheet = require('./action-sheet');
 var Docs = require('./docs');
 
 var routes = (
@@ -18,6 +19,7 @@ var routes = (
     <Route name='modal' handler={Modal} />
     <Route name='offcanvas' handler={Offcanvas} />
     <Route name='notification' handler={Notification} />
+    <Route name='action-sheet' handler={ActionSheet} />
     <DefaultRoute handler={Install} />
   </Route>
 );
