@@ -2,6 +2,8 @@ var React = require('react');
 var PubSub = require('pubsub-js');
 var cx = require('react/lib/cx');
 var LayerMixin = require('react-layer-mixin');
+// var ReactCSSTransitionGroup = require('react/lib/ReactCSSTransitionGroup');
+var Animation = require('react-animation');
 
 var Modal = React.createClass({
   mixins: [LayerMixin],
@@ -37,15 +39,34 @@ var Modal = React.createClass({
       'modal': true,
       'is-active': this.state.open
     };
+    var animationClass = this.state.open ? "fadeIn": "fadeOut";
+    modalClasses[animationClass] = true;
     var overlayStyle = {};
     if (!overlay) {
       overlayStyle.background = 'transparent';
     }
-    return (
-      <div className={cx(overlayClasses)} style={overlayStyle} onClick={this.hideOverlay}>
+    
+    // var modal = null;
+    // if (this.state.open) {
+      modal = (
         <div className={cx(modalClasses)}>
           {this.props.children}
         </div>
+      );
+    // } 
+
+    modalAnimationClasses = {
+      enter: 'fadeIn ng-enter',
+      enterActive: 'ng-enter-active',
+      leave: 'fadeOut ng-leave',
+      leaveActive: 'ng-leave-active'
+    };
+
+    return (
+      <div className={cx(overlayClasses)} style={overlayStyle} onClick={this.hideOverlay}>
+        <Animation transitionName={modalAnimationClasses}>
+          { modal }
+        </Animation>
       </div>
     );
   },
