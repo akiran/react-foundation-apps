@@ -28,7 +28,8 @@ Currently, built tools like browserify or webpack are required for using react-f
 
 All the components are in react-foundation-apps/lib.
 You can import the required components like so
-```
+
+```javascript
 var Accordion = require('react-foundation-apps/lib/accordion');
 ```
 

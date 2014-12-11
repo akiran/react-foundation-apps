@@ -37,35 +37,42 @@ var Modal = React.createClass({
     };
     var modalClasses = {
       'modal': true,
-      'is-active': this.state.open
+      'is-active': true //this.state.open
     };
-    var animationClass = this.state.open ? "fadeIn": "fadeOut";
-    modalClasses[animationClass] = true;
+    // var animationClass = this.state.open ? "fadeIn": "fadeOut";
+    // modalClasses[animationClass] = true;
     var overlayStyle = {};
     if (!overlay) {
       overlayStyle.background = 'transparent';
     }
-    
-    // var modal = null;
-    // if (this.state.open) {
-      modal = (
-        <div className={cx(modalClasses)}>
-          {this.props.children}
-        </div>
-      );
-    // } 
-
-    modalAnimationClasses = {
-      enter: 'fadeIn ng-enter',
-      enterActive: 'ng-enter-active',
-      leave: 'fadeOut ng-leave',
-      leaveActive: 'ng-leave-active'
-    };
+      
+    var animProps;
+    if (this.state.open) {
+      animProps = {
+        forceEnter: true,
+        forceLeave: false,
+        transitionName: {
+          enter: 'fadeIn ng-enter',
+          enterActive: 'ng-enter-active',
+        }
+      };
+    } else {
+      animProps = {
+        forceEnter: false,
+        forceLeave: true,
+        transitionName: {
+          leave: 'fadeOut ng-leave is-active',
+          leaveActive: 'ng-leave-active',
+        }
+      };
+    }
 
     return (
       <div className={cx(overlayClasses)} style={overlayStyle} onClick={this.hideOverlay}>
-        <Animation transitionName={modalAnimationClasses}>
-          { modal }
+        <Animation {...animProps} >
+          <div className={cx(modalClasses)}>
+            {this.props.children}
+          </div>
         </Animation>
       </div>
     );
