@@ -10,7 +10,6 @@ var Notification = require('./notification');
 var Modal = require('./modal');
 var ActionSheet = require('./action-sheet');
 var Tabs = require('./tabs');
-var Playground = require('./playground');
 var Docs = require('./docs');
 
 var routes = (
@@ -23,7 +22,6 @@ var routes = (
     <Route name='notification' handler={Notification} />
     <Route name='action-sheet' handler={ActionSheet} />
     <Route name='tabs' handler={Tabs} />
-    <Route name='playground' handler={Playground} />
     <DefaultRoute handler={Install} />
   </Route>
 );
