@@ -2,8 +2,7 @@ var React = require('react');
 var PubSub = require('pubsub-js');
 var cx = require('react/lib/cx');
 var LayerMixin = require('react-layer-mixin');
-// var ReactCSSTransitionGroup = require('react/lib/ReactCSSTransitionGroup');
-var Animation = require('react-animation');
+var Animation = require('./animation');
 
 var Modal = React.createClass({
   mixins: [LayerMixin],
@@ -30,51 +29,28 @@ var Modal = React.createClass({
     }
   },
   renderLayer: function() {
-    var overlay = this.props.overlay === true || this.props.overlayClose === true ? true : false;
+    var overlay = (this.props.overlay === true || this.props.overlayClose === true) ? true : false;
     var overlayClasses = {
       'modal-overlay': true,
-      'is-active': this.state.open
     };
     var modalClasses = {
       'modal': true,
-      'is-active': true //this.state.open
     };
-    // var animationClass = this.state.open ? "fadeIn": "fadeOut";
-    // modalClasses[animationClass] = true;
     var overlayStyle = {};
     if (!overlay) {
       overlayStyle.background = 'transparent';
     }
-      
-    var animProps;
-    if (this.state.open) {
-      animProps = {
-        forceEnter: true,
-        forceLeave: false,
-        transitionName: {
-          enter: 'fadeIn ng-enter',
-          enterActive: 'ng-enter-active',
-        }
-      };
-    } else {
-      animProps = {
-        forceEnter: false,
-        forceLeave: true,
-        transitionName: {
-          leave: 'fadeOut ng-leave is-active',
-          leaveActive: 'ng-leave-active',
-        }
-      };
-    }
 
     return (
-      <div className={cx(overlayClasses)} style={overlayStyle} onClick={this.hideOverlay}>
-        <Animation {...animProps} >
-          <div className={cx(modalClasses)}>
-            {this.props.children}
-          </div>
-        </Animation>
-      </div>
+      <Animation active={this.state.open} animationIn="fadeIn" animationOut="fadeOut">
+        <div className={cx(overlayClasses)} style={overlayStyle} onClick={this.hideOverlay}>
+          <Animation active={this.state.open} animationIn="fadeIn" animationOut="fadeOut">
+            <div className={cx(modalClasses)}>
+              {this.props.children}
+            </div>
+          </Animation>
+        </div>
+      </Animation>
     );
   },
   render: function () {
