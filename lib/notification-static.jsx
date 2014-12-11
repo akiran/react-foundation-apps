@@ -2,7 +2,7 @@ var React = require('react');
 var cx = require('react/lib/cx');
 var foundationApi = require('./utils/foundation-api');
 var PubSub = require('pubsub-js');
-var ReactCSSTransitionGroup = require('react/lib/ReactCSSTransitionGroup');
+var Animation = require('./utils/animation');
 
 var NotificationStatic = React.createClass({
   getInitialState: function () {
@@ -32,7 +32,7 @@ var NotificationStatic = React.createClass({
   render: function () {
     var classes = { 
       notification: true,
-      'is-active': this.state.open
+      // 'is-active': this.state.open
     };
     classes[this.props.position] = true;
     classes[this.props.color] = true;
@@ -45,9 +45,9 @@ var NotificationStatic = React.createClass({
         </div>
       );
     }
-    if (this.state.open) {
-      notification = (
-        <div>
+    return (
+      <Animation active={this.state.open} animationIn="fadeIn" animationOut="fadeOut">
+        <div className={cx(classes)}>
           <a href="#" className="close-button" onClick={this.closeHandler}>&times;</a>
           {imageNode}
           <div className="notification-content">
@@ -55,12 +55,7 @@ var NotificationStatic = React.createClass({
             <p>{this.props.children}</p>
           </div>
         </div>
-      );
-    }
-    return (
-      <div className={cx(classes)}>
-        {notification}
-      </div>
+      </Animation>
     );
   }
 });

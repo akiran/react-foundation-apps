@@ -2,7 +2,7 @@ var React = require('react');
 var PubSub = require('pubsub-js');
 var cx = require('react/lib/cx');
 var LayerMixin = require('react-layer-mixin');
-var Animation = require('./animation');
+var Animation = require('./utils/animation');
 
 var Modal = React.createClass({
   mixins: [LayerMixin],

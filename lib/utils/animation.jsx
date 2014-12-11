@@ -1,7 +1,7 @@
+// some parts of code from react/lib/ReactCSSTransitionGroupChild.js
 var React = require('react');
 var ReactTransitionEvents = require('react/lib/ReactTransitionEvents');
 var CSSCore = require('react/lib/CSSCore');
-// var ReactTransitionChildMapping = require('react/lib/ReactTransitionChildMapping');
 var cloneWithProps = require('react/lib/cloneWithProps');
 var cx = require('react/lib/cx');
 var TICK = 17;
@@ -9,8 +9,6 @@ var TICK = 17;
 var Animation = React.createClass({
   getInitialState: function () {
     return {
-     animating : false, 
-     animatingEnd : false, 
     };
   },
   getDefaultProps: function () {
@@ -75,14 +73,10 @@ var Animation = React.createClass({
     }
   },
   componentWillReceiveProps: function (nextProps) {
-    this.setState({
-      animating: true
-    });
   }, 
   componentDidUpdate: function () {
     var animationClass = this.props.active ? this.props.animationIn: this.props.animationOut;
     var animationType = this.props.active ? 'enter': 'leave';
-    console.log(this.props.active, animationType, animationClass);
     this.transition(animationClass, animationType);
   },
   render: function () {
