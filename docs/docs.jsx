@@ -16,12 +16,13 @@ var Docs = React.createClass({
                 <section>
                   <ul className='menu-bar vertical'>
                     <li><Link to='install'>Installation &amp; Usage</Link></li>
-                    <li><Link to='accordion'>Accordion</Link></li>
                     <li><Link to='modal'>Modal</Link></li>
+                    <li><Link to='panel'>Panel</Link></li>
                     <li><Link to='offcanvas'>Off-canvas Menu</Link></li>
                     <li><Link to='notification'>Notification</Link></li>
                     <li><Link to='action-sheet'>Action Sheet</Link></li>
                     <li><Link to='tabs'>Tabs</Link></li>
+                    <li><Link to='accordion'>Accordion</Link></li>
                   </ul>
                 </section>
               </div>

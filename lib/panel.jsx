@@ -1,6 +1,7 @@
 var React = require('react');
 var cx = require('react/lib/cx');
 var PubSub = require('pubsub-js');
+var Animation = require('./utils/animation');
 
 var Panel = React.createClass({
   getInitialState: function () {
@@ -23,15 +24,29 @@ var Panel = React.createClass({
     }.bind(this));
   },
   render: function() {
-    var classes = {
-      panel: true,
-      'is-active': this.state.open,
-    };
-    classes['panel-' + this.props.position] = true;
+    var classes = 'panel panel-' + this.props.position;
+    if (this.props.className) {
+      classes += ' ' + this.props.className;
+    } 
+    if(this.props.position === 'left') {
+      animationIn  = this.props.animationIn || 'slideInRight';
+      animationOut = this.props.animationOut || 'slideOutLeft';
+    } else if (this.props.position === 'right') {
+      animationIn  = this.props.animationIn || 'slideInLeft';
+      animationOut = this.props.animationOut || 'slideOutRight';
+    } else if (this.props.position === 'top') {
+      animationIn  = this.props.animationIn || 'slideInDown';
+      animationOut = this.props.animationOut || 'slideOutUp';
+    } else if (this.props.position === 'bottom') {
+      animationIn  = this.props.animationIn || 'slideInUp';
+      animationOut = this.props.animationOut || 'slideOutBottom';
+    }
     return (
-      <div className={cx(classes)}>
-          {this.props.children}
-      </div>
+      <Animation active={this.state.open} animationIn={animationIn} animationOut={animationOut}>
+        <div className={classes}>
+            {this.props.children}
+        </div>
+      </Animation>
     );
   },
 });
