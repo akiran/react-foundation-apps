@@ -43,7 +43,7 @@ var Panel = React.createClass({
     }
     return (
       <Animation active={this.state.open} animationIn={animationIn} animationOut={animationOut}>
-        <div className={classes}>
+        <div data-closable={true} id={this.props.id} className={classes}>
             {this.props.children}
         </div>
       </Animation>
