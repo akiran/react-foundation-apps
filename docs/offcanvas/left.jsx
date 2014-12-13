@@ -7,11 +7,11 @@ var Left = React.createClass({
   render: function () {
     return (
       <div>
-        <Open openId='left-offcanvas'>
+        <Open trigger='left-offcanvas'>
           <a className='button'>Open Left Off-canvas</a>
         </Open>
         <Offcanvas id='left-offcanvas'>
-          <Close closeId='left-offcanvas'>
+          <Close trigger='left-offcanvas'>
             <a className='close-button'>&times;</a>
           </Close>
           <br />

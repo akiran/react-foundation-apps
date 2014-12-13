@@ -1,5 +1,5 @@
 ```html
-<Open openId='my-notify'>
+<Open trigger='my-notify'>
   <a className='button'>Static notifications</a>
 </Open>
 <NotificationStatic id='my-notify' title="My static notification" image="">

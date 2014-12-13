@@ -1,9 +1,9 @@
 ```html
-<Open openId="basicModal">
+<Open trigger="basicModal">
   <a className='button'>Open Modal</a>
 </Open>
 <Modal id="basicModal" overlay={true}>
-  <Close closeId="basicModal">
+  <Close trigger="basicModal">
     <a href="#" className='close-button'>&times;</a>
   </Close>
   <section className='grid-content'>

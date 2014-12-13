@@ -5,7 +5,7 @@ var foundationApi = require('./utils/foundation-api');
 var Close = React.createClass({
   close: function (e) {
     e.preventDefault();
-    foundationApi.publish(this.props.closeId, 'close');
+    foundationApi.publish(this.props.trigger, 'close');
   },
   render: function () {
     return cloneWithProps(this.props.children, {

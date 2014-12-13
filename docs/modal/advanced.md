@@ -1,5 +1,5 @@
 ```html
-<Open openId='advancedModal'>
+<Open trigger='advancedModal'>
   <a className="button">Open Modal</a>
 </Open>  
 <Modal id='advancedModal' overlay={true} overlayClose={true}>
@@ -8,10 +8,10 @@
       <img src="http://fc07.deviantart.net/fs70/i/2012/014/b/e/snowy_peak_by_cassiopeiaart-d4mb6aq.jpg" />
     </div>
     <div className="grid-content button-group">
-      <Close closeId='advancedModal'>
+      <Close trigger='advancedModal'>
         <a className="button">Ok</a>
       </Close>
-      <Close closeId='advancedModal'>
+      <Close trigger='advancedModal'>
         <a className="button">Cancel</a>
       </Close>
     </div>

@@ -7,11 +7,11 @@ var Bottom = React.createClass({
   render: function () {
     return (
       <div>
-        <Open openId='bottom-offcanvas'>
+        <Open trigger='bottom-offcanvas'>
           <a className='button'>Open Bottom Off-canvas</a>
         </Open>
         <Offcanvas id='bottom-offcanvas' position ='bottom'>
-          <Close closeId='bottom-offcanvas'>
+          <Close trigger='bottom-offcanvas'>
             <a className='close-button'>&times;</a>
           </Close>
           <br />

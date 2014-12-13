@@ -1,9 +1,9 @@
 ```html
-<Open openId='top-offcanvas'>
+<Open trigger='top-offcanvas'>
   <a className='button'>Open Top Off-canvas</a>
 </Open>
 <Offcanvas id='top-offcanvas' position ='top'>
-  <Close closeId='top-offcanvas'>
+  <Close trigger='top-offcanvas'>
     <a className='close-button'>&times;</a>
   </Close>
   <br />
