@@ -1,7 +1,6 @@
 var React = require('react');
 var cx = require('react/lib/cx');
 var foundationApi = require('./utils/foundation-api');
-var PubSub = require('pubsub-js');
 var Animation = require('./utils/animation');
 
 var NotificationStatic = React.createClass({
@@ -18,8 +17,8 @@ var NotificationStatic = React.createClass({
     };
   },
   componentDidMount: function () {
-    PubSub.subscribe(this.props.id, function (msg, data) {
-      if (data === 'open') {
+    foundationApi.subscribe(this.props.id, function (msg) {
+      if (msg === 'open') {
         this.setState({open: true});
       }
     }.bind(this)); 

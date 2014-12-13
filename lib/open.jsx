@@ -1,11 +1,11 @@
 var React = require('react');
-var PubSub = require('pubsub-js');
 var cloneWithProps = require('react/lib/cloneWithProps');
+var foundationApi = require('./utils/foundation-api');
 
 var Open = React.createClass({
   open: function (e) {
     e.preventDefault();
-    PubSub.publish(this.props.openId, 'open');
+    foundationApi.publish(this.props.openId, 'open');
   },
   render: function () {
     return cloneWithProps(this.props.children, {

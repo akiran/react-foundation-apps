@@ -1,7 +1,7 @@
 var React = require('react');
 var cx = require('react/lib/cx');
-var PubSub = require('pubsub-js');
 var Animation = require('./utils/animation');
+var foundationApi = require('./utils/foundation-api');
 
 var Panel = React.createClass({
   getInitialState: function () {
@@ -13,12 +13,12 @@ var Panel = React.createClass({
     };
   },
   componentDidMount: function () {
-    PubSub.subscribe(this.props.id, function (msg, data) {
-      if (data === 'open') {
+    foundationApi.subscribe(this.props.id, function (msg) {
+      if (msg === 'open') {
         this.setState({open: true});
-      } else if (data === 'close') {
+      } else if (msg === 'close') {
         this.setState({open: false});
-      } else if (data === 'toggle') {
+      } else if (msg === 'toggle') {
         this.setState({open: !this.state.open});
       }
     }.bind(this));

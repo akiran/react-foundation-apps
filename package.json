@@ -40,13 +40,11 @@
     "webpack": "^1.4.13",
     "webpack-dev-server": "^1.6.6",
     "escape-loader": "*",
-    "pubsub-js": "*",
     "react": "*",
     "react-layer-mixin": "*",
     "react-responsive-mixin": "*"
   },
   "peerDependencies": {
-    "pubsub-js": "*",
     "react": "*",
     "react-layer-mixin": "*",
     "react-responsive-mixin": "*"

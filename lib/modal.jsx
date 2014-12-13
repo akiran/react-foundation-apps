@@ -1,8 +1,8 @@
 var React = require('react');
-var PubSub = require('pubsub-js');
 var cx = require('react/lib/cx');
 var LayerMixin = require('react-layer-mixin');
 var Animation = require('./utils/animation');
+var foundationApi = require('./utils/foundation-api');
 
 var Modal = React.createClass({
   mixins: [LayerMixin],
@@ -13,12 +13,12 @@ var Modal = React.createClass({
     return { overlay: false, overlayClose: false };
   },
   componentDidMount: function () {
-    PubSub.subscribe(this.props.id, function (msg, data) {
-      if (data === 'open') {
+    foundationApi.subscribe(this.props.id, function (msg) {
+      if (msg === 'open') {
         this.setState({open: true});
-      } else if (data === 'close') {
+      } else if (msg === 'close') {
         this.setState({open: false});
-      } else if (data === 'toggle') {
+      } else if (msg === 'toggle') {
         this.setState({open: !this.state.open});
       }
     }.bind(this));
