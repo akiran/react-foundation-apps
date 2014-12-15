@@ -1,11 +1,9 @@
 var React = require('react');
 var cx = require('react/lib/cx');
-var LayerMixin = require('react-layer-mixin');
 var Animation = require('./utils/animation');
 var foundationApi = require('./utils/foundation-api');
 
 var Modal = React.createClass({
-  mixins: [LayerMixin],
   getInitialState: function () {
     return { open: false };
   },
@@ -13,7 +11,7 @@ var Modal = React.createClass({
     return { overlay: false, overlayClose: false };
   },
   componentDidMount: function () {
-    foundationApi.subscribe(this.props.id, function (msg) {
+    foundationApi.subscribe(this.props.id, function (name, msg) {
       if (msg === 'open') {
         this.setState({open: true});
       } else if (msg === 'close') {
@@ -23,12 +21,15 @@ var Modal = React.createClass({
       }
     }.bind(this));
   },
+  componentWillUnmount: function () {
+    foundationApi.unsubscribe(this.props.id);
+  },
   hideOverlay: function () {
     if (this.props.overlayClose) {
       this.setState({open: false});   
     }
   },
-  renderLayer: function() {
+  render: function() {
     var overlay = (this.props.overlay === true || this.props.overlayClose === true) ? true : false;
     var overlayClasses = {
       'modal-overlay': true,
@@ -40,10 +41,9 @@ var Modal = React.createClass({
     if (!overlay) {
       overlayStyle.background = 'transparent';
     }
-
     return (
       <Animation active={this.state.open} animationIn="fadeIn" animationOut="fadeOut">
-        <div className={cx(overlayClasses)} style={overlayStyle} onClick={this.hideOverlay}>
+        <div id={this.props.id} className={cx(overlayClasses)} style={overlayStyle} onClick={this.hideOverlay} data-closable={true}>
           <Animation active={this.state.open} animationIn="fadeIn" animationOut="fadeOut">
             <div className={cx(modalClasses)}>
               {this.props.children}
@@ -53,9 +53,6 @@ var Modal = React.createClass({
       </Animation>
     );
   },
-  render: function () {
-    return null;
-  }
 });
 
 module.exports = Modal;

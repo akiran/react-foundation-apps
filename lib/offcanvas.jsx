@@ -14,7 +14,7 @@ var Offcanvas = React.createClass({
     };
   },
   componentDidMount: function () {
-    foundationApi.subscribe(this.props.id, function (msg) {
+    foundationApi.subscribe(this.props.id, function (name, msg) {
       if (msg === 'open') {
         this.setState({open: true});
       } else if (msg === 'close') {
@@ -23,6 +23,9 @@ var Offcanvas = React.createClass({
         this.setState({open: !this.state.open});
       }
     }.bind(this));
+  },
+  componentWillUnmount: function () {
+    foundationApi.unsubscribe(this.props.id);
   },
   renderLayer: function() {
     var classes = {

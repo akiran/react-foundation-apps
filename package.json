@@ -47,7 +47,8 @@
   "peerDependencies": {
     "react": "*",
     "react-layer-mixin": "*",
-    "react-responsive-mixin": "*"
+    "react-responsive-mixin": "*",
+    "pubsub-js": "^1.5.x"
   },
   "dependencies": {
   }

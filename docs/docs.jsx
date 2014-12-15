@@ -1,6 +1,8 @@
 var React = require('react');
 var Router = require('react-router');
 var Link = Router.Link;
+var Route = Router.Route;
+var DefaultRoute = Router.DefaultRoute;
 var RouteHandler = Router.RouteHandler;
 
 var Docs = React.createClass({
@@ -16,8 +18,8 @@ var Docs = React.createClass({
                 <section>
                   <ul className='menu-bar vertical'>
                     <li><Link to='install'>Installation &amp; Usage</Link></li>
-                    <li><Link to='triggers'>Triggers</Link></li>
                     <li><Link to='modal'>Modal</Link></li>
+                    <li><Link to='triggers'>Triggers</Link></li>
                     <li><Link to='panel'>Panel</Link></li>
                     <li><Link to='offcanvas'>Off-canvas Menu</Link></li>
                     <li><Link to='notification'>Notification</Link></li>
@@ -40,5 +42,9 @@ var Docs = React.createClass({
     );
   }
 });
+
+
+
+
 
 module.exports = Docs;

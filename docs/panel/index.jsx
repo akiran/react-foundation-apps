@@ -5,8 +5,6 @@ var Panel = require('../../lib/panel');
 var Open = require('../../lib/open');
 var Close = require('../../lib/close');
 var HardToggle = require('../../lib/hard-toggle');
-var fixedMD = require('./fixed-panel.md');
-var basicMD = require('./basic.md');
 
 var PanelDocs = React.createClass({
   render: function () {
@@ -63,7 +61,7 @@ var PanelDocs = React.createClass({
         <p>Each panel should have unique id you can use to target it</p>
         <div className='grid-block'>
           <div className='grid-content'>
-            <Highlight code={basicMD} />
+            <Highlight code={require('./basic.md')} />
           </div>
           <div className='grid-content'>
             <HardToggle trigger='example-left-panel'>
@@ -89,7 +87,7 @@ var PanelDocs = React.createClass({
         <h4>Fixed Panel</h4>
         <div className='grid-block'>
           <div className='grid-content'>
-            <Highlight code={fixedMD} />
+            <Highlight code={require('./fixed-panel.md')} />
           </div>
           <div className='grid-content'>
             <FixedPanel />

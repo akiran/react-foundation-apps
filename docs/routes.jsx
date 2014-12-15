@@ -16,7 +16,7 @@ var Popup = require('./popup');
 var Docs = require('./docs');
 
 var routes = (
-  <Route handler={Docs}>
+  <Route name='app' path='/' handler={Docs}>
     <Route name='install' handler={Install} />
     <Route name='triggers' handler={Triggers} />
     <Route name='modal' handler={Modal} />
@@ -31,5 +31,7 @@ var routes = (
     <DefaultRoute handler={Install} />
   </Route>
 );
+
+    
 
 module.exports = routes;

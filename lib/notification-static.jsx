@@ -17,11 +17,14 @@ var NotificationStatic = React.createClass({
     };
   },
   componentDidMount: function () {
-    foundationApi.subscribe(this.props.id, function (msg) {
+    foundationApi.subscribe(this.props.id, function (name, msg) {
       if (msg === 'open') {
         this.setState({open: true});
       }
     }.bind(this)); 
+  },
+  componentWillUnmount: function () {
+    foundationApi.unsubscribe(this.props.id);
   },
   closeHandler: function (e) {
     this.setState({open: false});
