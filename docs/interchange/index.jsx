@@ -4,7 +4,9 @@ var Content = require('./content');
 var InterchangeDocs = React.createClass({
   render: function () {
     return (
-      <div><Content /></div>
+      <div>
+        <h2>Work in progress</h2>
+      </div>
     );
   }
 });
