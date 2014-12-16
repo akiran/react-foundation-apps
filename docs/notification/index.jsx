@@ -1,7 +1,6 @@
 var React = require('react');
 var Highlight = require('../react-highlight');
 var StaticNotification = require('./static');
-var staticMD = require('./static.md');
 
 var NotificationDocs = React.createClass({
   render: function () {
@@ -16,7 +15,7 @@ var NotificationDocs = React.createClass({
         <h3>Basic</h3>
         <div className='grid-block'>
           <div className='small-8 grid-content'>
-            <Highlight code={staticMD} />
+            <Highlight code={require('./static.md')} />
           </div>
           <div className='grid-content'>
             <StaticNotification />

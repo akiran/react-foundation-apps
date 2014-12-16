@@ -2,8 +2,6 @@ var React = require('react');
 var SingleSelect = require('./single-select');
 var MultiSelect = require('./multi-select');
 var Highlight = require('../react-highlight');
-var singleMD = require('./single-select.md');
-var multiMD = require('./multi-select.md');
 
 var Accordion = React.createClass({
   render: function () {
@@ -19,7 +17,7 @@ var Accordion = React.createClass({
         <h3>Basic</h3>
         <div className='grid-block'>
           <div className='grid-content'>
-            <Highlight code={singleMD}/>
+            <Highlight code={require('./single-select.md')}/>
           </div>
           <div className='grid-content'>
             <SingleSelect />
@@ -30,7 +28,7 @@ var Accordion = React.createClass({
         <h3>Advanced</h3>
         <div className='grid-block'>
           <div className='grid-content' >
-            <Highlight code={multiMD}/>
+            <Highlight code={require('./multi-select.md')}/>
           </div>
           <div className='grid-content'>
             <MultiSelect />

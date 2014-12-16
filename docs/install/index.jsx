@@ -1,6 +1,5 @@
 var React = require('react');
 var Highlight = require('../react-highlight');
-var installMD = require('./install.md');
 
 var InstallationDocs = React.createClass({
   render: function () {
@@ -9,7 +8,7 @@ var InstallationDocs = React.createClass({
         <h4 className='subheader'>
           React Foundation Apps is a react port of Foundation Apps
         </h4>
-        <Highlight code={installMD} />
+        <Highlight code={require('./install.md')} />
       </div>
     );
   }

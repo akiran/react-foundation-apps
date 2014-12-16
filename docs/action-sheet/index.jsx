@@ -1,7 +1,6 @@
 var React = require('react');
 var Highlight = require('../react-highlight');
 var BasicActionSheet = require('./basic');
-var basicMD = require('./basic.md');
 
 var ActionSheetDocs = React.createClass({
   render: function () {
@@ -19,7 +18,7 @@ var ActionSheetDocs = React.createClass({
         <h3>Basic</h3>
         <div className='grid-block'>
           <div className='grid-content'>
-            <Highlight code={basicMD} />
+            <Highlight code={require('./basic.md')} />
           </div>
           <div className='grid-content' >
             <BasicActionSheet />
