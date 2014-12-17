@@ -43,9 +43,9 @@ var Modal = React.createClass({
     }
     return (
       <Animation active={this.state.open} animationIn="fadeIn" animationOut="fadeOut">
-        <div id={this.props.id} className={cx(overlayClasses)} style={overlayStyle} onClick={this.hideOverlay} data-closable={true}>
+        <div className={cx(overlayClasses)} style={overlayStyle} onClick={this.hideOverlay} >
           <Animation active={this.state.open} animationIn="fadeIn" animationOut="fadeOut">
-            <div className={cx(modalClasses)}>
+            <div id={this.props.id} data-closable={true} className={cx(modalClasses)}>
               {this.props.children}
             </div>
           </Animation>

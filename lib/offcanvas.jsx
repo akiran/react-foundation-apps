@@ -1,10 +1,10 @@
 var React = require('react');
 var cx = require('react/lib/cx');
-var LayerMixin = require('react-layer-mixin');
+// var LayerMixin = require('react-layer-mixin');
 var foundationApi = require('./utils/foundation-api');
 
 var Offcanvas = React.createClass({
-  mixins: [LayerMixin],
+  // mixins: [LayerMixin],
   getInitialState: function () {
     return {open: false};
   },
@@ -27,21 +27,18 @@ var Offcanvas = React.createClass({
   componentWillUnmount: function () {
     foundationApi.unsubscribe(this.props.id);
   },
-  renderLayer: function() {
+  render: function() {
     var classes = {
       'off-canvas': true,
       'is-active': this.state.open,
     };
     classes[this.props.position] = true;
     return (
-      <div className={cx(classes)}>
+      <div id={this.props.id} data-closable={true} className={cx(classes)}>
           {this.props.children}
       </div>
     );
   },
-  render: function () {
-    return null;
-  }
 });
 
 module.exports = Offcanvas;
