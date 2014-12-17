@@ -10,7 +10,7 @@ var Close = require('../lib/close');
 var Docs = React.createClass({
   render: function () {
     return (
-      <div>
+      <div className='wrapper'>
         <Offcanvas id='top-offcanvas' position ='top'>
           <Close trigger='top-offcanvas'>
             <a className='close-button'>&times;</a>
@@ -39,7 +39,6 @@ var Docs = React.createClass({
           <br />
           <p>This is Left offcanvas menu</p>
         </Offcanvas>
-
         <div className='vertical grid-frame'>
           <div className='title-bar'>
             <span className='title'>React Foundation Apps</span>
@@ -64,9 +63,11 @@ var Docs = React.createClass({
                   </section>
                 </div>
             </div>
-            <div className='small-10 grid-content'>
-              <div className='grid-container main-docs-section'>
-                <RouteHandler />
+            <div className='small-10 grid-block'>
+              <div className='grid-content'>
+                <div className='grid-container main-docs-section'>
+                  <RouteHandler />
+                </div>
               </div>
             </div>
           </div>

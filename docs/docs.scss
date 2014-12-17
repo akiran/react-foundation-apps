@@ -32,3 +32,9 @@ $primary-color: #00558b !default;
   padding-top: 1rem;
   max-width: 1000px;
 }
+
+.wrapper {
+  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}

@@ -41,10 +41,13 @@ var OffcanvasDocs = React.createClass({
             </Highlight>
           </div>
           <div className='grid-content'>
+            <HardToggle trigger='top-offcanvas'>
+              <a className='button'>Top Off-canvas</a>
+            </HardToggle>
           </div>
         </div>
         <hr />
-
+        
       </div>
     );
   }

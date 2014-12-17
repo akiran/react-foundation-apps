@@ -33,6 +33,9 @@ var Offcanvas = React.createClass({
       'is-active': this.state.open,
     };
     classes[this.props.position] = true;
+    if (this.props.className) {
+      classes[this.props.className] = true;
+    }
     return (
       <div id={this.props.id} data-closable={true} className={cx(classes)}>
           {this.props.children}
