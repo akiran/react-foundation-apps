@@ -1,5 +1,5 @@
 var React = require('react');
-var Highlight = require('../react-highlight');
+var Highlight = require('react-highlight');
 var BasicTabs = require('./basic');
 
 var TabsDocs = React.createClass({
@@ -15,7 +15,9 @@ var TabsDocs = React.createClass({
       <h3>Basic</h3>
       <div className='grid-block'>
           <div className='grid-content'>
-            <Highlight code={require('./basic.md')} />
+            <Highlight innerHTML={true}>
+             {require('./basic.md')}
+            </Highlight>
           </div>
           <div className='grid-content'>
             <BasicTabs />

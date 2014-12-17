@@ -1,5 +1,5 @@
 var React = require('react');
-var Highlight = require('../react-highlight');
+var Highlight = require('react-highlight');
 var LeftOffcanavas = require('./left');
 var RightOffcanavas = require('./right');
 var TopOffcanavas = require('./top');
@@ -26,7 +26,9 @@ var OffcanvasDocs = React.createClass({
         <h4>Basic</h4>
         <div className='grid-block'>
           <div className='grid-content'>
-            <Highlight code={require('./top.md')} />
+            <Highlight innerHTML={true}>
+              {require('./top.md')}
+            </Highlight>
           </div>
           <div className='grid-content'>
             <TopOffcanavas />

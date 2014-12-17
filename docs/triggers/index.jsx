@@ -1,5 +1,5 @@
  var React = require('react');
-var Highlight = require('../react-highlight');
+var Highlight = require('react-highlight');
 
 var TriggersDocs = React.createClass({
   render: function () {
@@ -10,19 +10,27 @@ var TriggersDocs = React.createClass({
         <hr />
         <h3>Open</h3>
         <p>Open the target component</p>
-        <Highlight code={require('./open.md')} />
+        <Highlight innerHTML={true}>
+          {require('./open.md')}
+        </Highlight>
         <hr />
         <h3>Close</h3>
         <p>Close the target component</p> 
-        <Highlight code={require('./close.md')} />
+        <Highlight innerHTML={true}>
+          {require('./close.md')}
+        </Highlight>
         <hr />
         <h3>Toggle</h3>
         <p>Toggle the target component</p>
-        <Highlight code={require('./toggle.md')} />
+        <Highlight innerHTML={true}>
+          {require('./toggle.md')}
+        </Highlight>
         <hr />
         <h3>Hard Toggle</h3>
         <p>Close all the opened components except target component and then toggle the target component</p>
-        <Highlight code={require('./hard-toggle.md')} />
+        <Highlight innerHTML={true}>
+          {require('./hard-toggle.md')}
+        </Highlight>
       </div>
     );
   }

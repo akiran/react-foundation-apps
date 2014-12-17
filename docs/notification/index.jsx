@@ -1,5 +1,5 @@
 var React = require('react');
-var Highlight = require('../react-highlight');
+var Highlight = require('react-highlight');
 var StaticNotification = require('./static');
 
 var NotificationDocs = React.createClass({
@@ -15,7 +15,9 @@ var NotificationDocs = React.createClass({
         <h3>Basic</h3>
         <div className='grid-block'>
           <div className='small-8 grid-content'>
-            <Highlight code={require('./static.md')} />
+            <Highlight innerHTML={true}>
+             {require('./static.md')}
+            </Highlight>
           </div>
           <div className='grid-content'>
             <StaticNotification />

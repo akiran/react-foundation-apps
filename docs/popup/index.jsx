@@ -3,7 +3,7 @@ var React = require('react');
 var Popup = React.createClass({
   render: function () {
     return (
-      <div></div>
+      <div>Work in progress</div>
     );
   }
 });
