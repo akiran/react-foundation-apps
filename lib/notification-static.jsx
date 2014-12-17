@@ -20,6 +20,8 @@ var NotificationStatic = React.createClass({
     foundationApi.subscribe(this.props.id, function (name, msg) {
       if (msg === 'open') {
         this.setState({open: true});
+      } else if (msg === 'close') {
+        this.setState({open: false});
       }
     }.bind(this)); 
   },
@@ -39,17 +41,16 @@ var NotificationStatic = React.createClass({
     classes[this.props.position] = true;
     classes[this.props.color] = true;
     var imageNode = null;
-    var notification = null;
     if (this.props.image) {
       imageNode = (
-        <div className="notification-icon" ng-if="image">
+        <div className="notification-icon">
           <img src="{{ image }}" />
         </div>
       );
     }
     return (
       <Animation active={this.state.open} animationIn="fadeIn" animationOut="fadeOut">
-        <div className={cx(classes)}>
+        <div id={this.props.id} data-closable={true} className={cx(classes)}>
           <a href="#" className="close-button" onClick={this.closeHandler}>&times;</a>
           {imageNode}
           <div className="notification-content">
