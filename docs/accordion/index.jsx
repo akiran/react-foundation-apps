@@ -1,7 +1,36 @@
 var React = require('react');
 var SingleSelect = require('./single-select');
 var MultiSelect = require('./multi-select');
-var Highlight = require('../react-highlight');
+var Highlight = require('react-highlight');
+var multiline = require('multiline');
+
+var singleSnippet = multiline.stripIndent(function (){/*
+<Accordion>
+  <AccordionItem title='First item title'>
+    First item content
+  </AccordionItem>
+  <AccordionItem title='Second item title'>
+    Second item content
+  </AccordionItem>
+  <AccordionItem title='Third item title'>
+    Third item content
+  </AccordionItem>
+</Accordion>
+*/});
+
+var multiSnippet = multiline.stripIndent(function (){/*
+<Accordion multiOpen={true} autoOpen={false} >
+  <AccordionItem title='First item title'>
+    First item content
+  </AccordionItem>
+  <AccordionItem title='Second item title'>
+    Second item content
+  </AccordionItem>
+  <AccordionItem title='Third item title'>
+    Third item content
+  </AccordionItem>
+</Accordion>
+*/});
 
 var Accordion = React.createClass({
   render: function () {
@@ -17,7 +46,9 @@ var Accordion = React.createClass({
         <h3>Basic</h3>
         <div className='grid-block'>
           <div className='grid-content'>
-            <Highlight code={require('./single-select.md')}/>
+            <Highlight className='html'>
+              {singleSnippet}
+            </Highlight>
           </div>
           <div className='grid-content'>
             <SingleSelect />
@@ -28,7 +59,9 @@ var Accordion = React.createClass({
         <h3>Advanced</h3>
         <div className='grid-block'>
           <div className='grid-content' >
-            <Highlight code={require('./multi-select.md')}/>
+            <Highlight className='html'>
+              {multiSnippet}
+            </Highlight>
           </div>
           <div className='grid-content'>
             <MultiSelect />

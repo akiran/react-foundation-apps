@@ -1,6 +1,21 @@
 var React = require('react');
-var Highlight = require('../react-highlight');
+var Highlight = require('react-highlight');
+var multiline = require('multiline');
 var BasicActionSheet = require('./basic');
+
+var basicSnippet = multiline.stripIndent(function() {/*
+<ActionSheet>
+  <ActionSheetButton title="Action Sheet" />
+  <ActionSheetContent>
+    <p>Tap to share</p>
+    <ul>
+      <li><a href="#">Twitter</a></li>
+      <li><a href="#">Facebook</a></li>
+      <li><a href="#">Mail</a></li>
+    </ul>
+  </ActionSheetContent>
+</ActionSheet>
+*/});
 
 var ActionSheetDocs = React.createClass({
   render: function () {
