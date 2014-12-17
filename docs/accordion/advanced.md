@@ -1,5 +1,5 @@
 ```html
-<Accordion multiOpen={true} autoOpen={false} >
+<Accordion autoOpen={false} multiOpen={true}>
   <AccordionItem title='First item title'>
     First item content
   </AccordionItem>

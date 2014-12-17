@@ -7,8 +7,9 @@ var Accordion = React.createClass({
   },
   getDefaultProps: function () {
     return { 
-      multiOpen: false,
       autoOpen: true,
+      multiOpen: false,
+      collapsible: false
     };
   },
   componentDidMount: function () {
@@ -29,9 +30,10 @@ var Accordion = React.createClass({
           section.active = !section.active;
         }
       } else {
-        section.active = false;
         if(index === selectSection) {
-          section.active = true;
+          section.active = (this.props.collapsible === true)? !section.active: true;
+        } else {
+          section.active = false;
         }
       }
     }.bind(this));

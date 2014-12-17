@@ -1,6 +1,6 @@
 var React = require('react');
-var SingleSelect = require('./single-select');
-var MultiSelect = require('./multi-select');
+var BasicAccordion = require('./basic');
+var AdvancedAccordion = require('./advanced');
 var Highlight = require('react-highlight');
 
 var Accordion = React.createClass({
@@ -12,17 +12,17 @@ var Accordion = React.createClass({
           Accordion allows you to create a collapsible content blocks
         </h4>
         <hr />
-        <SingleSelect />
+        <BasicAccordion />
         <hr />
         <h3>Basic</h3>
         <div className='grid-block'>
           <div className='grid-content'>
             <Highlight innerHTML={true}>
-              {require('./single-select.md')}
+              {require('./basic.md')}
             </Highlight>
           </div>
           <div className='grid-content'>
-            <SingleSelect />
+            <BasicAccordion />
           </div>
         </div>
         <hr />
@@ -31,11 +31,11 @@ var Accordion = React.createClass({
         <div className='grid-block'>
           <div className='grid-content' >
             <Highlight innerHTML={true}>
-              {require('./multi-select.md')}
+              {require('./advanced.md')}
             </Highlight>
           </div>
           <div className='grid-content'>
-            <MultiSelect />
+            <AdvancedAccordion />
           </div>
         </div>
       </div>
