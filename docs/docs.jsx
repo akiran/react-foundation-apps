@@ -41,7 +41,7 @@ var Docs = React.createClass({
           <p>This is Left offcanvas menu</p>
         </Offcanvas>
         <div className='vertical grid-frame'>
-          <div className='title-bar'>
+          <div className='title-bar primary'>
             <span className='title'>React Foundation Apps</span>
           </div>
           <div className='grid-block'>
