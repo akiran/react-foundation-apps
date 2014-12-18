@@ -6,6 +6,7 @@ var DefaultRoute = Router.DefaultRoute;
 var RouteHandler = Router.RouteHandler;
 var Offcanvas = require('../lib/offcanvas');
 var Close = require('../lib/triggers/close');
+var Panel = require('../lib/panel');
 
 var Docs = React.createClass({
   render: function () {
@@ -70,6 +71,30 @@ var Docs = React.createClass({
                 </div>
               </div>
             </div>
+            <Panel id='example-top-panel' position='top'>
+              <Close trigger='example-top-panel'>
+                <a className='close-button'>&times;</a>
+              </Close>
+              Top Panel content
+            </Panel> 
+            <Panel id='example-right-panel' position='right'>
+              <Close trigger='example-right-panel'>
+                <a className='close-button'>&times;</a>
+              </Close>
+              Right Panel content
+            </Panel> 
+            <Panel id='example-bottom-panel' position='bottom'>
+              <Close trigger='example-bottom-panel'>
+                <a className='close-button'>&times;</a>
+              </Close>
+              Bottom Panel content
+            </Panel> 
+            <Panel id='example-left-panel'>
+              <Close trigger='example-left-panel'>
+                <a className='close-button'>&times;</a>
+              </Close>
+              Basic Left Panel content
+            </Panel> 
           </div>
         </div>
       </div>
