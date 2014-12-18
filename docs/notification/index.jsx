@@ -1,6 +1,7 @@
 var React = require('react');
 var Highlight = require('react-highlight');
 var StaticNotification = require('./static');
+var AdvancedNotification = require('./advanced');
 
 var NotificationDocs = React.createClass({
   render: function () {
@@ -24,6 +25,10 @@ var NotificationDocs = React.createClass({
           </div>
         </div>
 
+        <hr/>
+        <div className='grid-block'>
+          <AdvancedNotification />
+        </div>
       </div>
     );
   }
