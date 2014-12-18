@@ -1,7 +1,7 @@
 var React = require('react');
 var cx = require('react/lib/cx');
 // var LayerMixin = require('react-layer-mixin');
-var foundationApi = require('./utils/foundation-api');
+var foundationApi = require('../utils/foundation-api');
 
 var Offcanvas = React.createClass({
   // mixins: [LayerMixin],

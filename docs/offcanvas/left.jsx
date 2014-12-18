@@ -1,7 +1,7 @@
 var React = require('react');
 var Offcanvas = require('../../lib/offcanvas');
-var Open = require('../../lib/open');
-var Close = require('../../lib/close');
+var Open = require('../../lib/triggers/open');
+var Close = require('../../lib/triggers/close');
 
 var Left = React.createClass({
   render: function () {

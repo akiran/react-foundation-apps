@@ -1,7 +1,7 @@
 var React = require('react');
 var Panel = require('../../lib/panel');
-var Open = require('../../lib/open');
-var Close = require('../../lib/close');
+var Open = require('../../lib/triggers/open');
+var Close = require('../../lib/triggers/close');
 
 var FixedPa = React.createClass({
   render: function () {

@@ -2,9 +2,9 @@ var React = require('react');
 var Highlight = require('react-highlight');
 var FixedPanel = require('./fixed-panel');
 var Panel = require('../../lib/panel');
-var Open = require('../../lib/open');
-var Close = require('../../lib/close');
-var HardToggle = require('../../lib/hard-toggle');
+var Open = require('../../lib/triggers/open');
+var Close = require('../../lib/triggers/close');
+var HardToggle = require('../../lib/triggers/hard-toggle');
 
 var PanelDocs = React.createClass({
   render: function () {

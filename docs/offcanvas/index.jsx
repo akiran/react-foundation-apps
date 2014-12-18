@@ -1,7 +1,7 @@
 var React = require('react');
 var Highlight = require('react-highlight');
-var Open = require('../../lib/open');
-var HardToggle = require('../../lib/hard-toggle');
+var Open = require('../../lib/triggers/open');
+var HardToggle = require('../../lib/triggers/hard-toggle');
 // var LeftOffcanavas = require('./left');
 // var RightOffcanavas = require('./right');
 // var TopOffcanavas = require('./top');

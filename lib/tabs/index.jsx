@@ -29,3 +29,4 @@ var Tabs = React.createClass({
 });
 
 module.exports = Tabs;
+Tabs.Tab = require('./tab');

@@ -5,7 +5,7 @@ var Route = Router.Route;
 var DefaultRoute = Router.DefaultRoute;
 var RouteHandler = Router.RouteHandler;
 var Offcanvas = require('../lib/offcanvas');
-var Close = require('../lib/close');
+var Close = require('../lib/triggers/close');
 
 var Docs = React.createClass({
   render: function () {

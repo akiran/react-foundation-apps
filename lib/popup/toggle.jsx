@@ -2,7 +2,7 @@ var React = require('react');
 var cloneWithProps = require('react/lib/cloneWithProps');
 var LayerMixin = require('react-layer-mixin');
 // var Tether = require('tether/tether');
-var foundationApi = require('./utils/foundation-api');
+var foundationApi = require('../utils/foundation-api');
 
 var PopupToggle = React.createClass({
   mixins: [LayerMixin],

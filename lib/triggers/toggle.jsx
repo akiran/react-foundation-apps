@@ -1,5 +1,5 @@
 var React = require('react');
-var foundationApi = require('./utils/foundation-api');
+var foundationApi = require('../utils/foundation-api');
 
 var Toggle = React.createClass({
   toggle: function (e) {
