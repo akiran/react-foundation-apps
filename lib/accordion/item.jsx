@@ -1,7 +1,7 @@
 var React = require('react');
 var cx = require('react/lib/cx');
 
-var AccordionItem = React.createClass({
+var Accordion.Item = React.createClass({
   render: function () {
     var itemClasses = {
       'accordion-item': true,
@@ -20,4 +20,4 @@ var AccordionItem = React.createClass({
   }
 });
 
-module.exports = AccordionItem;
+module.exports = Accordion.Item;

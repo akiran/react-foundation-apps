@@ -39,12 +39,6 @@ var Accordion = React.createClass({
     }.bind(this));
     this.setState({sections: sections});
   },
-  // closeAll: function () {
-  //   var sections = this.state.sections.map(function(section) {
-  //     return {active: false};
-  //   });
-  //   this.setState({sections: sections});
-  // },
   render: function () {
     var children = React.Children.map(this.props.children, function (child, index) {
       return cloneWithProps(child, {
@@ -59,3 +53,4 @@ var Accordion = React.createClass({
 });
 
 module.exports = Accordion;
+Accordion.Item = require('./item');

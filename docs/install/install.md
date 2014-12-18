@@ -32,21 +32,21 @@ var Accordion = require('react-foundation-apps/lib/accordion');
 ```javascript
 var React = require('react');
 var Accordion = require('react-foundation-apps/lib/accordion');
-var AccordionItem = require('react-foundation-apps/lib/accordion-item');
+var Accordion.Item = require('react-foundation-apps/lib/accordion-item');
 
 var SampleAccordion = React.createClass({
   render: function () {
     return (
       <Accordion>
-        <AccordionItem title='First item title'>
+        <Accordion.Item title='First item title'>
            First item content
-        </AccordionItem>
-        <AccordionItem title='Second item title'>
+        </Accordion.Item>
+        <Accordion.Item title='Second item title'>
           Second item content
-        </AccordionItem>
-        <AccordionItem title='Third item title'>
+        </Accordion.Item>
+        <Accordion.Item title='Third item title'>
           Third item content
-        </AccordionItem>
+        </Accordion.Item>
       </Accordion>
     );
   }
