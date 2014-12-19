@@ -1,12 +1,22 @@
 var gulp = require('gulp');
-// var rimraf = require('gulp-rimraf');
 var sass = require('gulp-ruby-sass');
+var del = require('del');
 var webpack = require('webpack');
 var WebpackDevServer = require('webpack-dev-server');
+
+gulp.task('clean', function () {
+  del(['./build/*']);
+});
 
 gulp.task('copy', function () {
   gulp.src('./docs/index.html')
     .pipe(gulp.dest('build'));
+
+  gulp.src('./docs/img/*')
+    .pipe(gulp.dest('build/img'));
+
+  gulp.src('./bower_components/foundation-apps/iconic/*')
+    .pipe(gulp.dest('build/img/iconic'));
 });
 
 gulp.task('sass', function () {

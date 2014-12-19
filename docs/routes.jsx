@@ -13,6 +13,7 @@ var ActionSheet = require('./action-sheet');
 var Tabs = require('./tabs');
 var Trigger = require('./trigger');
 var Popup = require('./popup');
+var Iconic = require('./iconic');
 var Docs = require('./docs');
 
 var routes = (
@@ -25,6 +26,7 @@ var routes = (
     <Route name='notification' handler={Notification} />
     <Route name='action-sheet' handler={ActionSheet} />
     <Route name='tabs' handler={Tabs} />
+    <Route name='iconic' handler={Iconic} />
     <Route name='accordion' handler={Accordion} />
     <Route name='interchange' handler={Interchange} />
     <Route name='popup' handler={Popup} />

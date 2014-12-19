@@ -58,6 +58,7 @@ var Docs = React.createClass({
                       <li><Link to='notification'>Notification</Link></li>
                       <li><Link to='action-sheet'>Action Sheet</Link></li>
                       <li><Link to='tabs'>Tabs</Link></li>
+                      <li><Link to='iconic'>Iconic</Link></li>
                       <li><Link to='accordion'>Accordion</Link></li>
                       <li><Link to='interchange'>Interchange</Link></li>
                       <li><Link to='popup'>Popup</Link></li>
