@@ -40,12 +40,10 @@ var Interchange = React.createClass({
   render: function () {
     var matchedNode = null;
     React.Children.forEach(this.props.children, function (child) {
-      console.log(child.props.media === this.state.matchedMedia);
       if(child.props.media === this.state.matchedMedia) {
         matchedNode = child;
       }
     }.bind(this));
-    console.log(this.state.matchedMedia);
     return matchedNode;
   }
 });
