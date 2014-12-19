@@ -52,7 +52,9 @@
     "react": "*",
     "react-layer-mixin": "*",
     "react-responsive-mixin": "*",
-    "pubsub-js": "^1.5.x"
+    "pubsub-js": "^1.5.x",
+    "object-assign": "^2.0.*"
   },
-  "dependencies": {}
+  "dependencies": {
+  }
 }
