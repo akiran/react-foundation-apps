@@ -1,11 +1,25 @@
 var React = require('react');
 var BasicIconic = require('./basic');
+var Highlight = require('react-highlight');
 
 var IconicDocs = React.createClass({
   render: function () {
     return (
       <div>
-        <BasicIconic />
+        <h2>Iconic</h2>
+        <hr />
+
+        <h3>Basic</h3> 
+        <div className='grid-block'>
+          <div className='small-8 grid-content'>
+            <Highlight innerHTML={true}>
+              {require('./basic.md')}
+            </Highlight>
+          </div>
+          <div className='grid-content'>
+            <BasicIconic />
+          </div>
+        </div>
       </div>
     );
   }
