@@ -1,11 +1,11 @@
 ```html
-<Open trigger="basicModal">
+<Trigger open="basicModal">
   <a className='button'>Open Modal</a>
-</Open>
+</Trigger>
 <Modal id="basicModal" overlay={true}>
-  <Close trigger="basicModal">
+  <Trigger close="basicModal">
     <a href="#" className='close-button'>&times;</a>
-  </Close>
+  </Trigger>
   <section className='grid-content'>
     <p> This is modal content </p>
   </section>

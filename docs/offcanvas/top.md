@@ -1,11 +1,11 @@
 ```html
-<Open trigger='top-offcanvas'>
+<Trigger open='top-offcanvas'>
   <a className='button'>Open Top Off-canvas</a>
-</Open>
+</Trigger>
 <Offcanvas id='top-offcanvas' position ='top'>
-  <Close trigger='top-offcanvas'>
+  <Trigger close='top-offcanvas'>
     <a className='close-button'>&times;</a>
-  </Close>
+  </Trigger>
   <br />
   <p>This is Top offcanvas menu</p>
 </Offcanvas>

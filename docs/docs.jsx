@@ -51,7 +51,7 @@ var Docs = React.createClass({
                   <section>
                     <ul className='menu-bar vertical'>
                       <li><Link to='install'>Installation &amp; Usage</Link></li>
-                      <li><Link to='triggers'>Triggers</Link></li>
+                      <li><Link to='trigger'>Trigger</Link></li>
                       <li><Link to='modal'>Modal</Link></li>
                       <li><Link to='panel'>Panel</Link></li>
                       <li><Link to='offcanvas'>Off-canvas Menu</Link></li>

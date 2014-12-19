@@ -11,14 +11,14 @@ var Modal = require('./modal');
 var Panel = require('./panel');
 var ActionSheet = require('./action-sheet');
 var Tabs = require('./tabs');
-var Triggers = require('./triggers');
+var Trigger = require('./trigger');
 var Popup = require('./popup');
 var Docs = require('./docs');
 
 var routes = (
   <Route name='app' path='/' handler={Docs}>
     <Route name='install' handler={Install} />
-    <Route name='triggers' handler={Triggers} />
+    <Route name='trigger' handler={Trigger} />
     <Route name='modal' handler={Modal} />
     <Route name='panel' handler={Panel} />
     <Route name='offcanvas' handler={Offcanvas} />

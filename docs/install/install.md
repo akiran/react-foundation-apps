@@ -32,7 +32,6 @@ var Accordion = require('react-foundation-apps/lib/accordion');
 ```javascript
 var React = require('react');
 var Accordion = require('react-foundation-apps/lib/accordion');
-var Accordion.Item = require('react-foundation-apps/lib/accordion-item');
 
 var SampleAccordion = React.createClass({
   render: function () {

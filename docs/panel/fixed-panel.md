@@ -1,11 +1,11 @@
 ```html
-<Open trigger='fixed-panel'>
+<Trigger open='fixed-panel'>
   <a className="button">Fixed Panel</a>
-</Open>
+</Trigger>
 <Panel id='fixed-panel' className='panel-fixed'>
-  <Close trigger='fixed-panel'>
+  <Trigger close='fixed-panel'>
     <a className='close-button'>&times;</a>
-  </Close>
+  </Trigger>
   <p>Fixed Panel content</p>
 </Panel>
 ```

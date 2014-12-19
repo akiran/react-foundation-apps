@@ -70,8 +70,12 @@ var PanelDocs = React.createClass({
         <hr />
 
         <h4>Panel Trigger</h4>
+        <p>Place the markup for panel component inside the block where panel should be revealed. You can trigger the panel with actions such as open, toggle, hardToggle using Trigger component</p>
         <div className='grid-block'>
           <div className='grid-content'>
+            <Highlight innerHTML={true}>
+              {require('./trigger.md')} 
+            </Highlight>
           </div>
           <div className='grid-content'>
             <Trigger hardToggle='example-top-panel'>

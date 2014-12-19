@@ -5,8 +5,8 @@ var TriggersDocs = React.createClass({
   render: function () {
     return (
       <div>
-        <h2>Triggers</h2>
-        <h4 className='subheader'>These are these of components that trigger state change of components like modal, panel. Unique id of target components should be passed trigger attribute of these components</h4>
+        <h2>Trigger</h2>
+        <h4 className='subheader'>Trigger component publish actions such as open, close to the target components. Unique id of target component should be passed to the corresponding action attribute</h4>
         <hr />
         <h3>Open</h3>
         <p>Open the target component</p>
@@ -30,6 +30,12 @@ var TriggersDocs = React.createClass({
         <p>Close all the opened components except target component and then toggle the target component</p>
         <Highlight innerHTML={true}>
           {require('./hard-toggle.md')}
+        </Highlight>
+        <hr />
+        <h3>Notify</h3>
+        <p>Send a notification</p>
+        <Highlight innerHTML={true}>
+          {require('./notify.md')}
         </Highlight>
       </div>
     );

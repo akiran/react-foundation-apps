@@ -1,8 +1,8 @@
 ```html
 <Panel id='example-left-panel'>
-  <Close trigger='example-left-panel'>
+  <Trigger close='example-left-panel'>
     <a className='close-button'>&times;</a>
-  </Close>
+  </Trigger>
   Basic Left Panel content
 </Panel>
 ```
