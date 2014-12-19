@@ -9,7 +9,7 @@ var BasicIconic = React.createClass({
     }
     return (
       <Iconic>
-        <img data-src="/img/iconic/thumb.svg" className="iconic-md" />
+        <img data-src={baseUrl + "/img/iconic/thumb.svg"} className="iconic-md" />
       </Iconic>
     );
   }
