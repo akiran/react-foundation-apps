@@ -1,6 +1,5 @@
 var React = require('react');
 var Accordion = require('../../lib/accordion');
-// var Accordion.Item = require('../../lib/accordion-item');
 
 var MultiSelect = React.createClass({
   render: function () {

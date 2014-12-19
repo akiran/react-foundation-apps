@@ -2,36 +2,34 @@ var React = require('react');
 var Highlight = require('react-highlight');
 var FixedPanel = require('./fixed-panel');
 var Panel = require('../../lib/panel');
-var Open = require('../../lib/triggers/open');
-var Close = require('../../lib/triggers/close');
-var HardToggle = require('../../lib/triggers/hard-toggle');
+var Trigger = require('../../lib/trigger');
 
 var PanelDocs = React.createClass({
   render: function () {
     return (
       <div>
         <Panel id='example-top-panel' position='top'>
-          <Close trigger='example-top-panel'>
+          <Trigger close='example-top-panel'>
             <a className='close-button'>&times;</a>
-          </Close>
+          </Trigger>
           Top Panel content
         </Panel> 
         <Panel id='example-right-panel' position='right'>
-          <Close trigger='example-right-panel'>
+          <Trigger close='example-right-panel'>
             <a className='close-button'>&times;</a>
-          </Close>
+          </Trigger>
           Right Panel content
         </Panel> 
         <Panel id='example-bottom-panel' position='bottom'>
-          <Close trigger='example-bottom-panel'>
+          <Trigger close='example-bottom-panel'>
             <a className='close-button'>&times;</a>
-          </Close>
+          </Trigger>
           Bottom Panel content
         </Panel> 
         <Panel id='example-left-panel'>
-          <Close trigger='example-left-panel'>
+          <Trigger close='example-left-panel'>
             <a className='close-button'>&times;</a>
-          </Close>
+          </Trigger>
           Basic Left Panel content
         </Panel> 
         <h2>Panel</h2>
@@ -40,18 +38,18 @@ var PanelDocs = React.createClass({
         </h4> 
         <hr />
         <div className='grid-block'>
-          <HardToggle trigger='example-top-panel'>
+          <Trigger hardToggle='example-top-panel'>
             <a className="button">Top Panel</a>
-          </HardToggle>
-          <HardToggle trigger='example-right-panel'>
+          </Trigger>
+          <Trigger hardToggle='example-right-panel'>
             <a className="button">Right Panel</a>
-          </HardToggle>
-          <HardToggle trigger='example-bottom-panel'>
+          </Trigger>
+          <Trigger hardToggle='example-bottom-panel'>
             <a className="button">Bottom Panel</a>
-          </HardToggle>
-          <HardToggle trigger='example-left-panel'>
+          </Trigger>
+          <Trigger hardToggle='example-left-panel'>
             <a className="button">Left Panel</a>
-          </HardToggle>
+          </Trigger>
         </div>
         <hr />
 
@@ -64,22 +62,21 @@ var PanelDocs = React.createClass({
             </Highlight>
           </div>
           <div className='grid-content'>
-            <HardToggle trigger='example-left-panel'>
+            <Trigger hardToggle='example-left-panel'>
               <a className="button">Basic Panel</a>
-            </HardToggle>
+            </Trigger>
           </div>
         </div>
         <hr />
 
         <h4>Panel Trigger</h4>
-        <p>You can trigger the panel by passing panel id to any trigger components like Open, Toggle, HardToggle, Close</p>
         <div className='grid-block'>
           <div className='grid-content'>
           </div>
           <div className='grid-content'>
-            <HardToggle trigger='example-top-panel'>
+            <Trigger hardToggle='example-top-panel'>
               <a className="button">Top Panel</a>
-            </HardToggle>
+            </Trigger>
           </div>
         </div>
         <hr />

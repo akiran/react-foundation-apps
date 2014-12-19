@@ -1,27 +1,26 @@
 var React = require('react');
 var Modal = require('../../lib/modal');
-var Open = require('../../lib/triggers/open');
-var Close = require('../../lib/triggers/close');
+var Trigger = require('../../lib/trigger');
 
 var AdvancedModal = React.createClass({
   render: function () {
     return (
       <div>
-        <Open trigger='advancedModal'>
+        <Trigger open='advancedModal'>
           <a className="button">Open Modal</a>
-        </Open>  
+        </Trigger>  
         <Modal id='advancedModal' overlay={true} overlayClose={true}>
           <div className="grid-block vertical">
             <div className="shrink grid-content">
               <img src="http://fc07.deviantart.net/fs70/i/2012/014/b/e/snowy_peak_by_cassiopeiaart-d4mb6aq.jpg" />
             </div>
             <div className="grid-content button-group">
-              <Close trigger='advancedModal'>
+              <Trigger close='advancedModal'>
                 <a className="button">Ok</a>
-              </Close>
-              <Close trigger='advancedModal'>
+              </Trigger>
+              <Trigger close='advancedModal'>
                 <a className="button">Cancel</a>
-              </Close>
+              </Trigger>
             </div>
           </div>  
         </Modal>

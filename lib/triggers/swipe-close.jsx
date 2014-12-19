@@ -1,1 +1,0 @@
-// Need  Hammer.js intergration

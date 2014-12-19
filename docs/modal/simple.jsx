@@ -1,15 +1,14 @@
 var React = require('react');
 var Modal = require('../../lib/modal');
-var Open = require('../../lib/triggers/open');
-var Close = require('../../lib/triggers/close');
+var Trigger = require('../../lib/trigger');
 
 var SimpleModal = React.createClass({
   render: function () {
     return (
       <div>
-        <Open trigger="basicModal"><a className='button'>Open Modal</a></Open>
+        <Trigger open="basicModal"><a className='button'>Open Modal</a></Trigger>
         <Modal id="basicModal" overlay={true}>
-          <Close trigger="basicModal"><a href="#" className='close-button'>&times;</a></Close>
+          <Trigger close="basicModal"><a href="#" className='close-button'>&times;</a></Trigger>
           <section className='grid-content'>
             <p> This is modal content </p>
           </section>

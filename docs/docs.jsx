@@ -5,7 +5,7 @@ var Route = Router.Route;
 var DefaultRoute = Router.DefaultRoute;
 var RouteHandler = Router.RouteHandler;
 var Offcanvas = require('../lib/offcanvas');
-var Close = require('../lib/triggers/close');
+var Trigger = require('../lib/trigger');
 var Panel = require('../lib/panel');
 
 var Docs = React.createClass({
@@ -13,30 +13,30 @@ var Docs = React.createClass({
     return (
       <div className='wrapper'>
         <Offcanvas id='top-offcanvas' position ='top'>
-          <Close trigger='top-offcanvas'>
+          <Trigger close='top-offcanvas'>
             <a className='close-button'>&times;</a>
-          </Close>
+          </Trigger>
           <br />
           <p>This is Top offcanvas menu</p>
         </Offcanvas>
         <Offcanvas id='right-offcanvas' position ='right'>
-          <Close trigger='right-offcanvas'>
+          <Trigger close='right-offcanvas'>
             <a className='close-button'>&times;</a>
-          </Close>
+          </Trigger>
           <br />
           <p>This is Right offcanvas menu</p>
         </Offcanvas>
         <Offcanvas id='bottom-offcanvas' position ='bottom'>
-          <Close trigger='bottom-offcanvas'>
+          <Trigger close='bottom-offcanvas'>
             <a className='close-button'>&times;</a>
-          </Close>
+          </Trigger>
           <br />
           <p>This is Bottom offcanvas menu</p>
         </Offcanvas>
         <Offcanvas id='left-offcanvas'>
-          <Close trigger='left-offcanvas'>
+          <Trigger close='left-offcanvas'>
             <a className='close-button'>&times;</a>
-          </Close>
+          </Trigger>
           <br />
           <p>This is Left offcanvas menu</p>
         </Offcanvas>

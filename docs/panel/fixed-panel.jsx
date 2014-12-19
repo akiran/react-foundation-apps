@@ -1,19 +1,18 @@
 var React = require('react');
 var Panel = require('../../lib/panel');
-var Open = require('../../lib/triggers/open');
-var Close = require('../../lib/triggers/close');
+var Trigger = require('../../lib/trigger');
 
 var FixedPa = React.createClass({
   render: function () {
     return (
       <div>
-        <Open trigger='fixed-panel'>
+        <Trigger open='fixed-panel'>
           <a className="button">Fixed Panel</a>
-        </Open>
+        </Trigger>
         <Panel id='fixed-panel' className='panel-fixed'>
-          <Close trigger='fixed-panel'>
+          <Trigger close='fixed-panel'>
             <a className='close-button'>&times;</a>
-          </Close>
+          </Trigger>
           <p>Fixed Panel content</p>
         </Panel>
       </div>

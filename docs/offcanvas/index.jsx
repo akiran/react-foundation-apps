@@ -1,11 +1,6 @@
 var React = require('react');
 var Highlight = require('react-highlight');
-var Open = require('../../lib/triggers/open');
-var HardToggle = require('../../lib/triggers/hard-toggle');
-// var LeftOffcanavas = require('./left');
-// var RightOffcanavas = require('./right');
-// var TopOffcanavas = require('./top');
-// var BottomOffcanavas = require('./bottom');
+var Trigger = require('../../lib/trigger');
 
 var OffcanvasDocs = React.createClass({
   render: function () {
@@ -18,18 +13,18 @@ var OffcanvasDocs = React.createClass({
         <hr />
         
         <div className='grid-block'>
-          <HardToggle trigger='top-offcanvas'>
+          <Trigger hardToggle='top-offcanvas'>
             <a className='button'>Top Off-canvas</a>
-          </HardToggle>
-          <HardToggle trigger='right-offcanvas'>
+          </Trigger>
+          <Trigger hardToggle='right-offcanvas'>
             <a className='button'>Right Off-canvas</a>
-          </HardToggle>
-          <HardToggle trigger='bottom-offcanvas'>
+          </Trigger>
+          <Trigger hardToggle='bottom-offcanvas'>
             <a className='button'>Bottom Off-canvas</a>
-          </HardToggle>
-          <HardToggle trigger='left-offcanvas'>
+          </Trigger>
+          <Trigger hardToggle='left-offcanvas'>
             <a className='button'>Left Off-canvas</a>
-          </HardToggle>
+          </Trigger>
         </div>
         <hr />
 
@@ -41,9 +36,9 @@ var OffcanvasDocs = React.createClass({
             </Highlight>
           </div>
           <div className='grid-content'>
-            <HardToggle trigger='top-offcanvas'>
+            <Trigger hardToggle='top-offcanvas'>
               <a className='button'>Top Off-canvas</a>
-            </HardToggle>
+            </Trigger>
           </div>
         </div>
         <hr />
