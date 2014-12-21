@@ -12,9 +12,6 @@ var ModalDocs = React.createClass({
           Modal allows you to create dialogs or pop-up windows that focuses the user on the content.
         </h4>
         <hr />
-        <AdvancedModal />
-        <hr />
-
         <h3>Basic</h3>
         <div className='grid-block'>
           <div className='small-8 grid-content'>
