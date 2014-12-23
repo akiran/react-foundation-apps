@@ -24,11 +24,6 @@ var NotificationDocs = React.createClass({
             <StaticNotification />
           </div>
         </div>
-
-        <hr/>
-        <div className='grid-block'>
-          <AdvancedNotification />
-        </div>
       </div>
     );
   }
