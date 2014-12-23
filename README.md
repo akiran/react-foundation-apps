@@ -1,7 +1,5 @@
 > React Foundation Apps is a react port of Foundation Apps
 
-### Work in progress. Not yet production ready
-
 Foundation Apps is a new framework for building web apps. It has awesome new features like 
 flexbox based grid, motion-ui, and several core components for building web apps.
 But, javascript components of foundation-apps are built with angular.
@@ -58,4 +56,11 @@ var SampleAccordion = React.createClass({
 });
 
 module.exports = SampleAccordion;
+
 ```
+
+### Looking for sponsor.
+I am looking for a sponsor for this project. 
+Sponsorship will help me in spending more time on this project to keep this project in sync with the updates of foundation-apps.
+
+Let me know If your company likes to sponsor this project.

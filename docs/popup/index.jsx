@@ -1,9 +1,12 @@
 var React = require('react');
+var BasicPopup = require('./basic');
 
 var Popup = React.createClass({
   render: function () {
     return (
-      <div>Work in progress</div>
+      <div>
+        <BasicPopup />
+      </div>
     );
   }
 });

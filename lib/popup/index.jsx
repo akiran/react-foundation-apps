@@ -1,30 +1,34 @@
 var React = require('react');
 var cx = require('react/lib/cx');
+var foundationApi = require('../utils/foundation-api');
 
 var Popup = React.createClass({
+  getInitialState: function () {
+    return { active: false };
+  },
   getDefaultProps: function () {
     return {
       pinTo: 'top center',
-      footer: null,
-      title: null
+      pinAt:''
     };
   },
+  componentDidMount: function () {
+    foundationApi.subscribe(this.props.id, function (name, msg) {
+      console.log(name, msg);
+      if (msg === 'popup-toggle') {
+        this.setState({active: !this.state.active});
+      }
+    }.bind(this));
+  },
   render: function () {
+    console.log(this.state.active);
     var classes = {
       popup: true,
-      'is-active': this.props.active
+      'is-active': this.state.active
     };
     return (
-      <div className={cx(classes)}>
-        <div className="panel panel-bottom">
-          {this.props.footer}
-        </div>
-        <div className="title-bar">
-          {this.props.title}
-        </div>
-        <div className="grid-content grid-block">
-          {this.props.children}
-        </div>
+      <div id={this.props.id} className={cx(classes)} data-closable='popup'>
+        {this.props.children}
       </div>
     );
   },
