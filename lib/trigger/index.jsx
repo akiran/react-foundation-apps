@@ -14,12 +14,31 @@ var Trigger = React.createClass({
       notify: null
     };
   },
+  getCloseId: function () {
+    if (this.props.close) {
+      return this.props.close;
+    } else {
+      var parentElement= false;
+      var tempElement = this.getDOMNode().parentNode;
+      while(parentElement === false) {
+        if(tempElement.nodeName == 'BODY') {
+          parentElement = '';
+        }
+        if(typeof tempElement.getAttribute('data-closable') !== 'undefined' && tempElement.getAttribute('data-closable') !== false) {
+          parentElement = tempElement;
+        }
+
+        tempElement = tempElement.parentNode;
+      }
+      return parentElement.getAttribute('id');
+    }
+  },
   clickHandler: function (e) {
     e.preventDefault();
     if (this.props.open) {
       foundationApi.publish(this.props.open, 'open');
-    } else if (this.props.close) {
-      foundationApi.publish(this.props.close, 'close');
+    } else if (this.props.close !== null) {
+      foundationApi.publish(this.getCloseId(), 'close');
     } else if (this.props.toggle) {
       foundationApi.publish(this.props.toggle, 'toggle');
     } else if (this.props.hardToggle) {
