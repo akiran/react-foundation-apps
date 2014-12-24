@@ -9,25 +9,25 @@ var PanelDocs = React.createClass({
     return (
       <div>
         <Panel id='example-top-panel' position='top'>
-          <Trigger close='example-top-panel'>
+          <Trigger close=''>
             <a className='close-button'>&times;</a>
           </Trigger>
           Top Panel content
         </Panel> 
         <Panel id='example-right-panel' position='right'>
-          <Trigger close='example-right-panel'>
+          <Trigger close=''>
             <a className='close-button'>&times;</a>
           </Trigger>
           Right Panel content
         </Panel> 
         <Panel id='example-bottom-panel' position='bottom'>
-          <Trigger close='example-bottom-panel'>
+          <Trigger close=''>
             <a className='close-button'>&times;</a>
           </Trigger>
           Bottom Panel content
         </Panel> 
         <Panel id='example-left-panel'>
-          <Trigger close='example-left-panel'>
+          <Trigger close=''>
             <a className='close-button'>&times;</a>
           </Trigger>
           Basic Left Panel content
