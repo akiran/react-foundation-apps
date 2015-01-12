@@ -45,10 +45,8 @@ var Docs = React.createClass({
             <span className='title'>React Foundation Apps</span>
           </div>
           <div className='grid-block'>
-            
-            <div className='small-2 grid-block sidebar'>
-                <div className='vertical grid-block'>
-                  <section>
+            <Panel className='medium-3 large-2 medium-grid-block sidebar vertical'>
+                <div className='grid-content'>
                     <ul className='menu-bar vertical'>
                       <li><Link to='install'>Installation &amp; Usage</Link></li>
                       <li><Link to='trigger'>Trigger</Link></li>
@@ -63,17 +61,13 @@ var Docs = React.createClass({
                       <li><Link to='interchange'>Interchange</Link></li>
                       <li><Link to='popup'>Popup</Link></li>
                     </ul>
-                  </section>
                 </div>
-            </div>
-            <div className='small-10 grid-block'>
-              <div className='grid-content'>
-                <div className='grid-container main-docs-section'>
-                  <RouteHandler />
-                </div>
+            </Panel>
+            <div className='medium-9 large-10 grid-content'>
+              <div className='grid-container main-docs-section'>
+                <RouteHandler />
               </div>
             </div>
-            
           </div>
         </div>
       </div>
