@@ -16,8 +16,9 @@ var Popup = require('./popup');
 var Iconic = require('./iconic');
 var Docs = require('./docs');
 
+var path = (process.env.NODE_ENV==='dev_docs') ? '/': '/opensource/react-foundation-apps';
 var routes = (
-  <Route name='app' path='/' handler={Docs}>
+  <Route name='app' path={path} handler={Docs}>
     <Route name='install' handler={Install} />
     <Route name='trigger' handler={Trigger} />
     <Route name='modal' handler={Modal} />

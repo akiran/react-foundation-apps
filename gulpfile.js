@@ -28,7 +28,13 @@ gulp.task('sass', function () {
 
 gulp.task('server', ['copy', 'sass'], function (callback) {
   var myConfig = require('./webpack.config.js');
-  
+  myConfig.plugins = myConfig.plugins.concat(
+    new webpack.DefinePlugin({
+      "process.env": {
+        "NODE_ENV": JSON.stringify("dev_docs")
+      }
+    })
+  );
   var webpackCompiler = webpack(myConfig, function(err, stats) {
   });
 
