@@ -1,6 +1,6 @@
 {
   "name": "react-foundation-apps",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "'React port of foundation-apps'",
   "main": "index.js",
   "scripts": {
@@ -14,6 +14,14 @@
   "keywords": [
     "react",
     "foundation-apps",
+    "modal",
+    "panel",
+    "accordion",
+    "tabs",
+    "offcanvas",
+    "interchange",
+    "notification",
+    "actionsheet",
     "react-component"
   ],
   "author": {
@@ -43,7 +51,7 @@
     "react-highlight": "git+https://github.com/akiran/react-highlight.git",
     "react-hot-loader": "^0.5.0",
     "react-layer-mixin": "*",
-    "react-responsive-mixin": "*",
+    "react-responsive-mixin": "^0.3.1",
     "react-router": "^0.11.4",
     "sass-loader": "^0.3.1",
     "style-loader": "^0.8.2",
