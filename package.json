@@ -32,6 +32,7 @@
     "gulp": "^3.8.10",
     "gulp-ruby-sass": "^0.7.1",
     "highlight.js": "^8.4.0",
+    "highlightjs-themes": "git+https://github.com/akiran/highlightjs-themes",
     "html-loader": "^0.2.3",
     "jsx-loader": "^0.12.2",
     "markdown-loader": "^0.1.2",
@@ -61,7 +62,12 @@
   },
   "browserify": {
     "transform": [
-      ["reactify", {"es6": true}]
+      [
+        "reactify",
+        {
+          "es6": true
+        }
+      ]
     ]
   }
 }
