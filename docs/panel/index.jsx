@@ -1,5 +1,5 @@
 var React = require('react');
-var Highlight = require('react-highlight');
+var Highlight = require('react-highlight/optimized');
 var FixedPanel = require('./fixed-panel');
 var Panel = require('../../lib/panel');
 var Trigger = require('../../lib/trigger');
@@ -57,7 +57,7 @@ var PanelDocs = React.createClass({
         <p>Each panel should have unique id you can use to target it</p>
         <div className='grid-block'>
           <div className='grid-content'>
-            <Highlight innerHTML={true}>
+            <Highlight innerHTML={true} languages={['xml']}>
               {require('./basic.md')} 
             </Highlight>
           </div>
@@ -73,7 +73,7 @@ var PanelDocs = React.createClass({
         <p>Place the markup for panel component inside the block where panel should be revealed. You can trigger the panel with actions such as open, toggle, hardToggle using Trigger component</p>
         <div className='grid-block'>
           <div className='grid-content'>
-            <Highlight innerHTML={true}>
+            <Highlight innerHTML={true} languages={['xml']}>
               {require('./trigger.md')} 
             </Highlight>
           </div>
@@ -88,7 +88,7 @@ var PanelDocs = React.createClass({
         <h4>Fixed Panel</h4>
         <div className='grid-block'>
           <div className='grid-content'>
-            <Highlight innerHTML={true}>
+            <Highlight innerHTML={true} languages={['xml']}>
               {require('./fixed-panel.md')}
             </Highlight>
           </div>

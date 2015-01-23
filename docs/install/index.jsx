@@ -1,5 +1,5 @@
 var React = require('react');
-var Highlight = require('react-highlight');
+var Highlight = require('react-highlight/optimized');
 
 var InstallationDocs = React.createClass({
   render: function () {
@@ -8,7 +8,7 @@ var InstallationDocs = React.createClass({
         <h4 className='subheader'>
           React Foundation Apps is a react port of Foundation Apps
         </h4>
-        <Highlight innerHTML={true}>
+        <Highlight innerHTML={true} languages={['xml', 'javascript', 'bash']}>
           {require('./install.md')}
         </Highlight>
       </div>

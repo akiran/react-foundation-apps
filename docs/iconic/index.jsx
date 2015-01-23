@@ -1,6 +1,6 @@
 var React = require('react');
 var BasicIconic = require('./basic');
-var Highlight = require('react-highlight');
+var Highlight = require('react-highlight/optimized');
 
 var IconicDocs = React.createClass({
   render: function () {
@@ -12,7 +12,7 @@ var IconicDocs = React.createClass({
         <h3>Basic</h3> 
         <div className='grid-block'>
           <div className='small-8 grid-content'>
-            <Highlight innerHTML={true}>
+            <Highlight innerHTML={true} languages={['xml']}>
               {require('./basic.md')}
             </Highlight>
           </div>

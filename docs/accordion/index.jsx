@@ -1,7 +1,7 @@
 var React = require('react');
 var BasicAccordion = require('./basic');
 var AdvancedAccordion = require('./advanced');
-var Highlight = require('react-highlight');
+var Highlight = require('react-highlight/optimized');
 
 var Accordion = React.createClass({
   render: function () {
@@ -17,7 +17,7 @@ var Accordion = React.createClass({
         <h3>Basic</h3>
         <div className='grid-block'>
           <div className='grid-content'>
-            <Highlight innerHTML={true}>
+            <Highlight innerHTML={true} languages={['xml']}>
               {require('./basic.md')}
             </Highlight>
           </div>
@@ -30,7 +30,7 @@ var Accordion = React.createClass({
         <h3>Advanced</h3>
         <div className='grid-block'>
           <div className='grid-content' >
-            <Highlight innerHTML={true}>
+            <Highlight innerHTML={true} languages={['xml']}>
               {require('./advanced.md')}
             </Highlight>
           </div>

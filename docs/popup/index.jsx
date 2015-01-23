@@ -1,6 +1,6 @@
 var React = require('react');
 var BasicPopup = require('./basic');
-var Highlight = require('react-highlight');
+var Highlight = require('react-highlight/optimized');
 
 var Popup = React.createClass({
   render: function () {
@@ -11,7 +11,7 @@ var Popup = React.createClass({
         <hr />
         <div className='grid-block'>
           <div className='grid-content'>
-            <Highlight innerHTML={true}>
+            <Highlight innerHTML={true} languages={['xml']} >
               {require('./basic.md')}
             </Highlight>
           </div>

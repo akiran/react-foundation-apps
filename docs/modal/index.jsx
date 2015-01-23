@@ -1,5 +1,5 @@
 var React = require('react');
-var Highlight = require('react-highlight');
+var Highlight = require('react-highlight/optimized');
 var SimpleModal = require('./simple');
 var AdvancedModal = require('./advanced');
 
@@ -15,7 +15,7 @@ var ModalDocs = React.createClass({
         <h3>Basic</h3>
         <div className='grid-block'>
           <div className='small-8 grid-content'>
-            <Highlight innerHTML={true}>
+            <Highlight innerHTML={true} languages={['xml']}>
              {require('./simple.md')}
              </Highlight>
           </div>
@@ -28,7 +28,7 @@ var ModalDocs = React.createClass({
         <h3>Advanced</h3>
         <div className='grid-block'>
           <div className='small-8 grid-content'>
-            <Highlight innerHTML={true}>
+            <Highlight innerHTML={true} languages={['xml']}>
              {require('./advanced.md')}
             </Highlight>
           </div>

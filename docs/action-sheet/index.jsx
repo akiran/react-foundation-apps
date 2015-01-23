@@ -1,5 +1,5 @@
 var React = require('react');
-var Highlight = require('react-highlight');
+var Highlight = require('react-highlight/optimized');
 var BasicActionSheet = require('./basic');
 
 var ActionSheetDocs = React.createClass({
@@ -18,7 +18,7 @@ var ActionSheetDocs = React.createClass({
         <h3>Basic</h3>
         <div className='grid-block'>
           <div className='grid-content'>
-            <Highlight innerHTML={true}>
+            <Highlight innerHTML={true} languages={['xml']}>
              {require('./basic.md')}
             </Highlight>
           </div>

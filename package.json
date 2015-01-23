@@ -1,6 +1,6 @@
 {
   "name": "react-foundation-apps",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "'React port of foundation-apps'",
   "main": "index.js",
   "scripts": {
@@ -13,7 +13,8 @@
   },
   "keywords": [
     "react",
-    "foundation-apps"
+    "foundation-apps",
+    "react-component"
   ],
   "author": {
     "name": "Kiran Abburi"
@@ -38,7 +39,7 @@
     "postcss-loader": "^0.2.0",
     "raw-loader": "^0.5.1",
     "react": "*",
-    "react-highlight": "^0.1.0",
+    "react-highlight": "git+https://github.com/akiran/react-highlight.git",
     "react-hot-loader": "^0.5.0",
     "react-layer-mixin": "*",
     "react-responsive-mixin": "*",
@@ -57,5 +58,10 @@
   },
   "dependencies": {
     "tether": "^0.6.5"
+  },
+  "browserify": {
+    "transform": [
+      ["reactify", {"es6": true}]
+    ]
   }
 }

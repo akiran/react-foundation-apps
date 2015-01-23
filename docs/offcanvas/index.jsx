@@ -1,5 +1,5 @@
 var React = require('react');
-var Highlight = require('react-highlight');
+var Highlight = require('react-highlight/optimized');
 var Trigger = require('../../lib/trigger');
 
 var OffcanvasDocs = React.createClass({
@@ -31,7 +31,7 @@ var OffcanvasDocs = React.createClass({
         <h4>Basic</h4>
         <div className='grid-block'>
           <div className='grid-content'>
-            <Highlight innerHTML={true}>
+            <Highlight innerHTML={true} languages={['xml']}>
               {require('./top.md')}
             </Highlight>
           </div>

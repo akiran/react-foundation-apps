@@ -1,6 +1,6 @@
 var React = require('react');
 var BasicInterchange = require('./basic');
-var Highlight = require('react-highlight');
+var Highlight = require('react-highlight/optimized');
 
 var InterchangeDocs = React.createClass({
   render: function () {
@@ -15,7 +15,7 @@ var InterchangeDocs = React.createClass({
         <h3>Basic</h3>
         <div className='grid-block'>
           <div className='grid-content'>
-            <Highlight innerHTML={true}>
+            <Highlight innerHTML={true} languages={['xml']}>
               {require('./basic.md')}
             </Highlight>
           </div>
