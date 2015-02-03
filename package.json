@@ -51,7 +51,7 @@
     "react-highlight": "git+https://github.com/akiran/react-highlight.git",
     "react-hot-loader": "^0.5.0",
     "react-layer-mixin": "*",
-    "react-responsive-mixin": "^0.3.1",
+    "react-responsive-mixin": "^0.3.*",
     "react-router": "^0.11.4",
     "sass-loader": "^0.3.1",
     "style-loader": "^0.8.2",
