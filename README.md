@@ -58,3 +58,6 @@ var SampleAccordion = React.createClass({
 module.exports = SampleAccordion;
 
 ```
+
+### Sponsors
+If your company likes to sponsor this project, contact me. 
