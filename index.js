@@ -1,20 +1,19 @@
 // Local Imports
-var
-    accordion = require( './lib/accordion' ),
-    actionSheet = require( './lib/action-sheet' ),
-    iconic = require( './lib/iconic' ),
-    interchange = require( './lib/interchange' ),
-    modal = require( './lib/modal' ),
-    notification = require( './lib/notification' ),
-    offcanvas = require( './lib/offcanvas' ),
-    panel = require( './lib/panel' ),
-    popup = require( './lib/popup' ),
-    tabs = require( './lib/tabs' ),
-    trigger = require( './lib/trigger' ),
-    animationUtil = require( './lib/utils/animation' ),
-    foundationAPI = require( './lib/utils/foundation-api' ),
-    mqHelpers = require( './lib/utils/mq-helpers' ),
-    mqInit = require( './lib/utils/mq-init' )
+var accordion = require('./lib/accordion');
+var actionSheet = require('./lib/action-sheet');
+var iconic = require('./lib/iconic');
+var interchange = require('./lib/interchange');
+var modal = require('./lib/modal');
+var notification = require('./lib/notification');
+var offcanvas = require('./lib/offcanvas');
+var panel = require('./lib/panel');
+var popup = require('./lib/popup');
+var tabs = require('./lib/tabs');
+var trigger = require('./lib/trigger');
+var animationUtil = require('./lib/utils/animation');
+var foundationAPI = require('./lib/utils/foundation-api');
+var mqHelpers = require('./lib/utils/mq-helpers');
+var mqInit = require('./lib/utils/mq-init');
 
 module.exports = {
     Accordion: accordion,
@@ -34,4 +33,4 @@ module.exports = {
         mqHelpers: mqHelpers,
         mqInit: mqInit
     }
-}
+};
