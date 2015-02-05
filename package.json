@@ -65,6 +65,8 @@
     "object-assign": "^2.0.*"
   },
   "dependencies": {
+    "object-assign": "^2.0.0",
+    "pubsub-js": "^1.5.0",
     "tether": "^0.6.5"
   },
   "browserify": {

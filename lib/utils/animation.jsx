@@ -57,10 +57,12 @@ var Animation = React.createClass({
     
     ReactTransitionEvents.addEndEventListener(node, this.finishAnimation);
   },
-  componentDidUpdate: function () {
-    var animationClass = this.props.active ? this.props.animationIn: this.props.animationOut;
-    var animationType = this.props.active ? 'enter': 'leave';
-    this.animate(animationClass, animationType);
+  componentDidUpdate: function (prevProps) {
+    if (prevProps.active !== this.props.active) {
+      var animationClass = this.props.active ? this.props.animationIn: this.props.animationOut;
+      var animationType = this.props.active ? 'enter': 'leave';
+      this.animate(animationClass, animationType);
+    }
   },
   render: function () {
     var child = React.Children.only(this.props.children);

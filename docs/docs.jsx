@@ -45,26 +45,34 @@ var Docs = React.createClass({
             <span className='title'>React Foundation Apps</span>
           </div>
           <div className='grid-block'>
-            <Panel className='medium-3 large-2 medium-grid-block sidebar vertical'>
-                <div className='grid-content'>
-                    <ul className='menu-bar vertical'>
-                      <li><Link to='install'>Installation &amp; Usage</Link></li>
-                      <li><Link to='trigger'>Trigger</Link></li>
-                      <li><Link to='modal'>Modal</Link></li>
-                      <li><Link to='panel'>Panel</Link></li>
-                      <li><Link to='offcanvas'>Off-canvas Menu</Link></li>
-                      <li><Link to='notification'>Notification</Link></li>
-                      <li><Link to='action-sheet'>Action Sheet</Link></li>
-                      <li><Link to='tabs'>Tabs</Link></li>
-                      <li><Link to='iconic'>Iconic</Link></li>
-                      <li><Link to='accordion'>Accordion</Link></li>
-                      <li><Link to='interchange'>Interchange</Link></li>
-                      <li><Link to='popup'>Popup</Link></li>
-                    </ul>
-                </div>
+            <Panel id='sidebar' className='medium-3 large-2 medium-grid-block sidebar vertical'>
+              <div className='grid-content collapse'>
+                <Trigger close='sidebar'>
+                  <a className='close-button hide-for-medium'>&times;</a>
+                </Trigger>
+                <section>
+                  <ul className='menu-bar vertical'>
+                    <li><Link to='install'>Installation &amp; Usage</Link></li>
+                    <li><Link to='trigger'>Trigger</Link></li>
+                    <li><Link to='modal'>Modal</Link></li>
+                    <li><Link to='panel'>Panel</Link></li>
+                    <li><Link to='offcanvas'>Off-canvas Menu</Link></li>
+                    <li><Link to='notification'>Notification</Link></li>
+                    <li><Link to='action-sheet'>Action Sheet</Link></li>
+                    <li><Link to='tabs'>Tabs</Link></li>
+                    <li><Link to='iconic'>Iconic</Link></li>
+                    <li><Link to='accordion'>Accordion</Link></li>
+                    <li><Link to='interchange'>Interchange</Link></li>
+                    <li><Link to='popup'>Popup</Link></li>
+                  </ul>
+                </section>
+              </div>
             </Panel>
             <div className='medium-9 large-10 grid-content'>
               <div className='grid-container main-docs-section'>
+                <Trigger toggle='sidebar'>
+                  <a className="small secondary expand button hide-for-medium">Show Components</a>
+                </Trigger>
                 <RouteHandler />
               </div>
             </div>
