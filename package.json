@@ -79,5 +79,12 @@
         }
       ]
     ]
-  }
+  },
+  "npmName": "react-foundation-apps",
+  "npmFileMap": [{
+    "basePath": "/dist/",
+    "files": [
+      "*.js"
+    ]
+  }]
 }

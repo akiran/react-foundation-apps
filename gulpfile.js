@@ -63,7 +63,7 @@ gulp.task('dist-clean', function () {
 var distConfig = require('./webpack.config.dist.js');
 gulp.task('dist-unmin', function (cb) {
   var unminConfig = assign({}, distConfig);
-  unminConfig.output.filename = 'react-foundation-apps-' + version + '.js';
+  unminConfig.output.filename = 'react-foundation-apps.js';
   return webpack(unminConfig, function (err, stat) {
     cb();
   });
@@ -72,7 +72,7 @@ gulp.task('dist-unmin', function (cb) {
 
 gulp.task('dist-min', function (cb) {
   var minConfig = assign({}, distConfig);
-  minConfig.output.filename = 'react-foundation-apps-' + version + '.min.js';
+  minConfig.output.filename = 'react-foundation-apps.min.js';
   minConfig.plugins = minConfig.plugins.concat(
     new webpack.optimize.UglifyJsPlugin({
       compressor: {
