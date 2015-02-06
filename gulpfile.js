@@ -5,6 +5,7 @@ var webpack = require('webpack');
 var WebpackDevServer = require('webpack-dev-server');
 var assign = require('object-assign');
 var runSequence = require('run-sequence');
+var version = require('./package.json').version;
 
 gulp.task('clean', function () {
   del(['./build/*']);
@@ -55,11 +56,15 @@ gulp.task('watch', function () {
 });
 
 // gulp tasks for building dist files
+gulp.task('dist-clean', function () {
+  return del(['./dist/*']);
+});
+
 var distConfig = require('./webpack.config.dist.js');
 gulp.task('dist-unmin', function (cb) {
   var unminConfig = assign({}, distConfig);
-  unminConfig.output.filename = 'react-foundation-apps.js';
-  webpack(unminConfig, function (err, stat) {
+  unminConfig.output.filename = 'react-foundation-apps-' + version + '.js';
+  return webpack(unminConfig, function (err, stat) {
     cb();
   });
 });
@@ -67,7 +72,7 @@ gulp.task('dist-unmin', function (cb) {
 
 gulp.task('dist-min', function (cb) {
   var minConfig = assign({}, distConfig);
-  minConfig.output.filename = 'react-foundation-apps.min.js';
+  minConfig.output.filename = 'react-foundation-apps-' + version + '.min.js';
   minConfig.plugins = minConfig.plugins.concat(
     new webpack.optimize.UglifyJsPlugin({
       compressor: {
@@ -75,9 +80,9 @@ gulp.task('dist-min', function (cb) {
       }
     })
   );
-  webpack(minConfig, function (err, stat) {
+  return webpack(minConfig, function (err, stat) {
     cb();
   });
 });
 
-gulp.task('dist', runSequence('dist-unmin', 'dist-min'));
+gulp.task('dist', runSequence('dist-clean', 'dist-unmin', 'dist-min'));
