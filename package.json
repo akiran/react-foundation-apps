@@ -33,6 +33,8 @@
   },
   "homepage": "https://github.com/akiran/react-foundation-apps",
   "devDependencies": {
+    "6to5-core": "^3.6.5",
+    "6to5-loader": "^3.0.0",
     "autoprefixer-core": "^4.0.1",
     "css-loader": "^0.9.0",
     "del": "^1.1.0",
@@ -81,10 +83,12 @@
     ]
   },
   "npmName": "react-foundation-apps",
-  "npmFileMap": [{
-    "basePath": "/dist/",
-    "files": [
-      "*.js"
-    ]
-  }]
+  "npmFileMap": [
+    {
+      "basePath": "/dist/",
+      "files": [
+        "*.js"
+      ]
+    }
+  ]
 }

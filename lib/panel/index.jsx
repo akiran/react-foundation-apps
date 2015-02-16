@@ -27,6 +27,7 @@ var Panel = React.createClass({
     foundationApi.unsubscribe(this.props.id);
   },
   render: function() {
+    var animationIn, animationOut;
     var classes = 'panel panel-' + this.props.position;
     if (this.props.className) {
       classes += ' ' + this.props.className;

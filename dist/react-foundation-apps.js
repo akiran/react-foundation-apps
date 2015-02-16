@@ -64,15 +64,18 @@ var RFA =
 /* 1 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var React = __webpack_require__(12);
-	var cloneWithProps = __webpack_require__(24);
+	"use strict";
 
-	var Accordion = React.createClass({displayName: "Accordion",
+	var React = __webpack_require__(12);
+	var cloneWithProps = __webpack_require__(25);
+
+	var Accordion = React.createClass({
+	  displayName: "Accordion",
 	  getInitialState: function () {
 	    return { sections: [] };
 	  },
 	  getDefaultProps: function () {
-	    return { 
+	    return {
 	      autoOpen: true,
 	      multiOpen: false,
 	      collapsible: false
@@ -81,39 +84,41 @@ var RFA =
 	  componentDidMount: function () {
 	    var sections = [];
 	    React.Children.forEach(this.props.children, function (child, index) {
-	      sections.push({active: false});
+	      sections.push({ active: false });
 	    });
 	    if (this.props.autoOpen) {
 	      sections[0].active = true;
 	    }
-	    this.setState({sections: sections});
+	    this.setState({ sections: sections });
 	  },
 	  select: function (selectSection) {
 	    var sections = this.state.sections;
-	    sections.forEach(function (section, index) {
-	      if(this.props.multiOpen) {
-	        if(index === selectSection) {
+	    sections.forEach((function (section, index) {
+	      if (this.props.multiOpen) {
+	        if (index === selectSection) {
 	          section.active = !section.active;
 	        }
 	      } else {
-	        if(index === selectSection) {
-	          section.active = (this.props.collapsible === true)? !section.active: true;
+	        if (index === selectSection) {
+	          section.active = this.props.collapsible === true ? !section.active : true;
 	        } else {
 	          section.active = false;
 	        }
 	      }
-	    }.bind(this));
-	    this.setState({sections: sections});
+	    }).bind(this));
+	    this.setState({ sections: sections });
 	  },
 	  render: function () {
-	    var children = React.Children.map(this.props.children, function (child, index) {
+	    var children = React.Children.map(this.props.children, (function (child, index) {
 	      return cloneWithProps(child, {
-	        active: this.state.sections[index]? this.state.sections[index].active: false,
+	        active: this.state.sections[index] ? this.state.sections[index].active : false,
 	        activate: this.select.bind(this, index)
 	      });
-	    }.bind(this));
-	    return (
-	      React.createElement("div", {className: "accordion"}, children)
+	    }).bind(this));
+	    return React.createElement(
+	      "div",
+	      { className: "accordion" },
+	      children
 	    );
 	  }
 	});
@@ -125,28 +130,31 @@ var RFA =
 /* 2 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var React = __webpack_require__(12);
-	var cloneWithProps = __webpack_require__(24);
+	"use strict";
 
-	var ActionSheet = React.createClass({displayName: "ActionSheet",
+	var React = __webpack_require__(12);
+	var cloneWithProps = __webpack_require__(25);
+
+	var ActionSheet = React.createClass({
+	  displayName: "ActionSheet",
 	  getInitialState: function () {
-	    return {active: false};
+	    return { active: false };
 	  },
 	  setActiveState: function (active) {
-	    this.setState({active: active});
+	    this.setState({ active: active });
 	  },
 	  render: function () {
-	    var children = React.Children.map(this.props.children, function (child, index) {
-	      var extraProps = {active: this.state.active};
-	      if (child.type.displayName === 'ActionSheetButton') {
+	    var children = React.Children.map(this.props.children, (function (child, index) {
+	      var extraProps = { active: this.state.active };
+	      if (child.type.displayName === "ActionSheetButton") {
 	        extraProps.setActiveState = this.setActiveState;
 	      }
 	      return cloneWithProps(child, extraProps);
-	    }.bind(this));
-	    return (
-	      React.createElement("div", {className: "action-sheet-container"}, 
-	        children
-	      )
+	    }).bind(this));
+	    return React.createElement(
+	      "div",
+	      { className: "action-sheet-container" },
+	      children
 	    );
 	  }
 	});
@@ -159,12 +167,15 @@ var RFA =
 /* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var React = __webpack_require__(12);
-	var ExecutionEnvironment = __webpack_require__(25);
-	var IconicJs = ExecutionEnvironment.canUseDOM && __webpack_require__(14);
-	var cloneWithProps = __webpack_require__(24);
+	"use strict";
 
-	var Iconic = React.createClass({displayName: "Iconic",
+	var React = __webpack_require__(12);
+	var ExecutionEnvironment = __webpack_require__(26);
+	var IconicJs = ExecutionEnvironment.canUseDOM && __webpack_require__(13);
+	var cloneWithProps = __webpack_require__(25);
+
+	var Iconic = React.createClass({
+	  displayName: "Iconic",
 	  inject: function () {
 	    var ico = IconicJs();
 	    ico.inject(this.getDOMNode());
@@ -186,28 +197,18 @@ var RFA =
 /* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
+	"use strict";
+
 	var React = __webpack_require__(12);
 	var ResponsiveMixin = __webpack_require__(23);
 
-	var namedQueries = {
-	  // small: '(min-width: 0) and  (max-width: 640px)',
-	  // medium: '(min-width: 641px) and  (max-width: 1200px)',
-	  // large: '(min-width: 1201px) and  (max-width: 1440px)',
-	  // 'default' : 'only screen',
-	  // landscape : 'only screen and (orientation: landscape)',
-	  // portrait : 'only screen and (orientation: portrait)',
-	  // retina : 'only screen and (-webkit-min-device-pixel-ratio: 2),' +
-	  //   'only screen and (min--moz-device-pixel-ratio: 2),' +
-	  //   'only screen and (-o-min-device-pixel-ratio: 2/1),' +
-	  //   'only screen and (min-device-pixel-ratio: 2),' +
-	  //   'only screen and (min-resolution: 192dpi),' +
-	  //   'only screen and (min-resolution: 2dppx)'
-	};
+	var namedQueries = {};
 
-	var Interchange = React.createClass({displayName: "Interchange",
+	var Interchange = React.createClass({
+	  displayName: "Interchange",
 	  mixins: [ResponsiveMixin],
 	  getInitialState: function () {
-	    return {matchedMedia: 'large'};
+	    return { matchedMedia: "large" };
 	  },
 	  componentDidMount: function () {
 	    // for (var name in namedQueries) {
@@ -215,39 +216,54 @@ var RFA =
 	    //     this.setState({matchedMedia: name});
 	    //   }.bind(this));
 	    // }
-	    this.media({minWidth: 0, maxWidth: 640}, function () {
-	      this.setState({matchedMedia: 'small'});  
-	    }.bind(this));
-	    this.media({minWidth: 641, maxWidth: 1200}, function () {
-	      this.setState({matchedMedia: 'medium'});  
-	    }.bind(this));
-	    this.media({minWidth: 1200, maxWidth: 1440}, function () {
-	      this.setState({matchedMedia: 'large'});  
-	    }.bind(this));
+	    this.media({ minWidth: 0, maxWidth: 640 }, (function () {
+	      this.setState({ matchedMedia: "small" });
+	    }).bind(this));
+	    this.media({ minWidth: 641, maxWidth: 1200 }, (function () {
+	      this.setState({ matchedMedia: "medium" });
+	    }).bind(this));
+	    this.media({ minWidth: 1200, maxWidth: 1440 }, (function () {
+	      this.setState({ matchedMedia: "large" });
+	    }).bind(this));
 	  },
 	  render: function () {
 	    var matchedNode = null;
-	    React.Children.forEach(this.props.children, function (child) {
-	      if(child.props.media === this.state.matchedMedia) {
+	    React.Children.forEach(this.props.children, (function (child) {
+	      if (child.props.media === this.state.matchedMedia) {
 	        matchedNode = child;
 	      }
-	    }.bind(this));
+	    }).bind(this));
 	    return matchedNode;
 	  }
 	});
 
 	module.exports = Interchange;
+	// small: '(min-width: 0) and  (max-width: 640px)',
+	// medium: '(min-width: 641px) and  (max-width: 1200px)',
+	// large: '(min-width: 1201px) and  (max-width: 1440px)',
+	// 'default' : 'only screen',
+	// landscape : 'only screen and (orientation: landscape)',
+	// portrait : 'only screen and (orientation: portrait)',
+	// retina : 'only screen and (-webkit-min-device-pixel-ratio: 2),' +
+	//   'only screen and (min--moz-device-pixel-ratio: 2),' +
+	//   'only screen and (-o-min-device-pixel-ratio: 2/1),' +
+	//   'only screen and (min-device-pixel-ratio: 2),' +
+	//   'only screen and (min-resolution: 192dpi),' +
+	//   'only screen and (min-resolution: 2dppx)'
 
 /***/ },
 /* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var React = __webpack_require__(12);
-	var cx = __webpack_require__(26);
-	var Animation = __webpack_require__(18);
-	var foundationApi = __webpack_require__(13);
+	"use strict";
 
-	var Modal = React.createClass({displayName: "Modal",
+	var React = __webpack_require__(12);
+	var cx = __webpack_require__(27);
+	var Animation = __webpack_require__(18);
+	var foundationApi = __webpack_require__(14);
+
+	var Modal = React.createClass({
+	  displayName: "Modal",
 	  getInitialState: function () {
 	    return { open: false };
 	  },
@@ -255,55 +271,60 @@ var RFA =
 	    return { overlay: false, overlayClose: false };
 	  },
 	  componentDidMount: function () {
-	    foundationApi.subscribe(this.props.id, function (name, msg) {
-	      if (msg === 'open') {
-	        this.setState({open: true});
-	      } else if (msg === 'close') {
-	        this.setState({open: false});
-	      } else if (msg === 'toggle') {
-	        this.setState({open: !this.state.open});
+	    foundationApi.subscribe(this.props.id, (function (name, msg) {
+	      if (msg === "open") {
+	        this.setState({ open: true });
+	      } else if (msg === "close") {
+	        this.setState({ open: false });
+	      } else if (msg === "toggle") {
+	        this.setState({ open: !this.state.open });
 	      }
-	    }.bind(this));
+	    }).bind(this));
 	  },
 	  componentWillUnmount: function () {
 	    foundationApi.unsubscribe(this.props.id);
 	  },
 	  hideOverlay: function () {
 	    if (this.props.overlayClose) {
-	      this.setState({open: false});   
+	      this.setState({ open: false });
 	    }
 	  },
-	  render: function() {
-	    var overlay = (this.props.overlay === true || this.props.overlayClose === true) ? true : false;
+	  render: function () {
+	    var overlay = this.props.overlay === true || this.props.overlayClose === true ? true : false;
 	    var overlayClasses = {
-	      'modal-overlay': true,
-	    };
+	      "modal-overlay": true };
 	    var modalClasses = {
-	      'modal': true,
-	    };
+	      modal: true };
 	    var overlayStyle = {};
 	    if (!overlay) {
-	      overlayStyle.background = 'transparent';
+	      overlayStyle.background = "transparent";
 	    }
-	    return (
-	      React.createElement(Animation, {active: this.state.open, animationIn: "fadeIn", animationOut: "fadeOut"}, 
-	        React.createElement("div", {className: cx(overlayClasses), style: overlayStyle, onClick: this.hideOverlay}, 
-	          React.createElement(Animation, {active: this.state.open, animationIn: "fadeIn", animationOut: "fadeOut"}, 
-	            React.createElement("div", {id: this.props.id, "data-closable": true, className: cx(modalClasses)}, 
-	              this.props.children
-	            )
+	    return React.createElement(
+	      Animation,
+	      { active: this.state.open, animationIn: "fadeIn", animationOut: "fadeOut" },
+	      React.createElement(
+	        "div",
+	        { className: cx(overlayClasses), style: overlayStyle, onClick: this.hideOverlay },
+	        React.createElement(
+	          Animation,
+	          { active: this.state.open, animationIn: "fadeIn", animationOut: "fadeOut" },
+	          React.createElement(
+	            "div",
+	            { id: this.props.id, "data-closable": true, className: cx(modalClasses) },
+	            this.props.children
 	          )
 	        )
 	      )
 	    );
-	  },
-	});
+	  } });
 
 	module.exports = Modal;
 
 /***/ },
 /* 6 */
 /***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
 
 	module.exports = {
 	  Set: __webpack_require__(19),
@@ -314,51 +335,52 @@ var RFA =
 /* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var React = __webpack_require__(12);
-	var cx = __webpack_require__(26);
-	// var LayerMixin = require('react-layer-mixin');
-	var foundationApi = __webpack_require__(13);
+	"use strict";
 
-	var Offcanvas = React.createClass({displayName: "Offcanvas",
+	var React = __webpack_require__(12);
+	var cx = __webpack_require__(27);
+	// var LayerMixin = require('react-layer-mixin');
+	var foundationApi = __webpack_require__(14);
+
+	var Offcanvas = React.createClass({
+	  displayName: "Offcanvas",
 	  // mixins: [LayerMixin],
 	  getInitialState: function () {
-	    return {open: false};
+	    return { open: false };
 	  },
 	  getDefaultProps: function () {
 	    return {
-	      position: 'left'
+	      position: "left"
 	    };
 	  },
 	  componentDidMount: function () {
-	    foundationApi.subscribe(this.props.id, function (name, msg) {
-	      if (msg === 'open') {
-	        this.setState({open: true});
-	      } else if (msg === 'close') {
-	        this.setState({open: false});
-	      } else if (msg === 'toggle') {
-	        this.setState({open: !this.state.open});
+	    foundationApi.subscribe(this.props.id, (function (name, msg) {
+	      if (msg === "open") {
+	        this.setState({ open: true });
+	      } else if (msg === "close") {
+	        this.setState({ open: false });
+	      } else if (msg === "toggle") {
+	        this.setState({ open: !this.state.open });
 	      }
-	    }.bind(this));
+	    }).bind(this));
 	  },
 	  componentWillUnmount: function () {
 	    foundationApi.unsubscribe(this.props.id);
 	  },
-	  render: function() {
+	  render: function () {
 	    var classes = {
-	      'off-canvas': true,
-	      'is-active': this.state.open,
-	    };
+	      "off-canvas": true,
+	      "is-active": this.state.open };
 	    classes[this.props.position] = true;
 	    if (this.props.className) {
 	      classes[this.props.className] = true;
 	    }
-	    return (
-	      React.createElement("div", {id: this.props.id, "data-closable": true, className: cx(classes)}, 
-	          this.props.children
-	      )
+	    return React.createElement(
+	      "div",
+	      { id: this.props.id, "data-closable": true, className: cx(classes) },
+	      this.props.children
 	    );
-	  },
-	});
+	  } });
 
 	module.exports = Offcanvas;
 
@@ -366,61 +388,66 @@ var RFA =
 /* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var React = __webpack_require__(12);
-	var cx = __webpack_require__(26);
-	var Animation = __webpack_require__(18);
-	var foundationApi = __webpack_require__(13);
+	"use strict";
 
-	var Panel = React.createClass({displayName: "Panel",
+	var React = __webpack_require__(12);
+	var cx = __webpack_require__(27);
+	var Animation = __webpack_require__(18);
+	var foundationApi = __webpack_require__(14);
+
+	var Panel = React.createClass({
+	  displayName: "Panel",
 	  getInitialState: function () {
-	    return {open: false};
+	    return { open: false };
 	  },
 	  getDefaultProps: function () {
 	    return {
-	      position: 'left'
+	      position: "left"
 	    };
 	  },
 	  componentDidMount: function () {
-	    foundationApi.subscribe(this.props.id, function (name, msg) {
-	      if (msg === 'open') {
-	        this.setState({open: true});
-	      } else if (msg === 'close') {
-	        this.setState({open: false});
-	      } else if (msg === 'toggle') {
-	        this.setState({open: !this.state.open});
+	    foundationApi.subscribe(this.props.id, (function (name, msg) {
+	      if (msg === "open") {
+	        this.setState({ open: true });
+	      } else if (msg === "close") {
+	        this.setState({ open: false });
+	      } else if (msg === "toggle") {
+	        this.setState({ open: !this.state.open });
 	      }
-	    }.bind(this));
+	    }).bind(this));
 	  },
 	  componentWillUnmount: function () {
 	    foundationApi.unsubscribe(this.props.id);
 	  },
-	  render: function() {
-	    var classes = 'panel panel-' + this.props.position;
+	  render: function () {
+	    var animationIn, animationOut;
+	    var classes = "panel panel-" + this.props.position;
 	    if (this.props.className) {
-	      classes += ' ' + this.props.className;
-	    } 
-	    if(this.props.position === 'left') {
-	      animationIn  = this.props.animationIn || 'slideInRight';
-	      animationOut = this.props.animationOut || 'slideOutLeft';
-	    } else if (this.props.position === 'right') {
-	      animationIn  = this.props.animationIn || 'slideInLeft';
-	      animationOut = this.props.animationOut || 'slideOutRight';
-	    } else if (this.props.position === 'top') {
-	      animationIn  = this.props.animationIn || 'slideInDown';
-	      animationOut = this.props.animationOut || 'slideOutUp';
-	    } else if (this.props.position === 'bottom') {
-	      animationIn  = this.props.animationIn || 'slideInUp';
-	      animationOut = this.props.animationOut || 'slideOutBottom';
+	      classes += " " + this.props.className;
 	    }
-	    return (
-	      React.createElement(Animation, {active: this.state.open, animationIn: animationIn, animationOut: animationOut}, 
-	        React.createElement("div", {"data-closable": true, id: this.props.id, className: classes}, 
-	            this.props.children
-	        )
+	    if (this.props.position === "left") {
+	      animationIn = this.props.animationIn || "slideInRight";
+	      animationOut = this.props.animationOut || "slideOutLeft";
+	    } else if (this.props.position === "right") {
+	      animationIn = this.props.animationIn || "slideInLeft";
+	      animationOut = this.props.animationOut || "slideOutRight";
+	    } else if (this.props.position === "top") {
+	      animationIn = this.props.animationIn || "slideInDown";
+	      animationOut = this.props.animationOut || "slideOutUp";
+	    } else if (this.props.position === "bottom") {
+	      animationIn = this.props.animationIn || "slideInUp";
+	      animationOut = this.props.animationOut || "slideOutBottom";
+	    }
+	    return React.createElement(
+	      Animation,
+	      { active: this.state.open, animationIn: animationIn, animationOut: animationOut },
+	      React.createElement(
+	        "div",
+	        { "data-closable": true, id: this.props.id, className: classes },
+	        this.props.children
 	      )
 	    );
-	  },
-	});
+	  } });
 
 	module.exports = Panel;
 
@@ -428,13 +455,16 @@ var RFA =
 /* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var React = __webpack_require__(12);
-	var cx = __webpack_require__(26);
-	var ExecutionEnvironment = __webpack_require__(25);
-	var foundationApi = __webpack_require__(13);
-	var Tether = ExecutionEnvironment.canUseDOM && __webpack_require__(27);
+	"use strict";
 
-	var Popup = React.createClass({displayName: "Popup",
+	var React = __webpack_require__(12);
+	var cx = __webpack_require__(27);
+	var ExecutionEnvironment = __webpack_require__(26);
+	var foundationApi = __webpack_require__(14);
+	var Tether = ExecutionEnvironment.canUseDOM && __webpack_require__(24);
+
+	var Popup = React.createClass({
+	  displayName: "Popup",
 	  getInitialState: function () {
 	    return {
 	      active: false,
@@ -443,49 +473,47 @@ var RFA =
 	  },
 	  getDefaultProps: function () {
 	    return {
-	      pinTo: 'top center',
-	      pinAt:''
+	      pinTo: "top center",
+	      pinAt: ""
 	    };
 	  },
 	  componentDidMount: function () {
 	    this.tether = {};
-	    foundationApi.subscribe(this.props.id, function (name, msg) {
-	      if (msg[0] === 'toggle') {
+	    foundationApi.subscribe(this.props.id, (function (name, msg) {
+	      if (msg[0] === "toggle") {
 	        this.toggle(msg[1]);
 	      }
-	    }.bind(this));
+	    }).bind(this));
 	  },
 	  toggle: function (target) {
 	    var active = !this.state.active;
-	    this.setState({active: active}, function () {
+	    this.setState({ active: active }, (function () {
 	      if (active) {
 	        this.tetherElement(target);
 	      } else {
 	        this.tether.destroy();
 	      }
-	    }.bind(this));
+	    }).bind(this));
 	  },
-	  tetherElement: function(target) {
+	  tetherElement: function (target) {
 	    var targetElement = document.getElementById(target);
-	    var attachment = 'top center';
+	    var attachment = "top center";
 	    this.tether = new Tether({
 	      element: this.getDOMNode(),
 	      target: targetElement,
-	      attachment: attachment,
-	    });
+	      attachment: attachment });
 	  },
 	  render: function () {
 	    var classes = {
 	      popup: true,
-	      'is-active': this.state.active
+	      "is-active": this.state.active
 	    };
-	    return (
-	      React.createElement("div", {id: this.props.id, className: cx(classes), "data-closable": "popup"}, 
-	        this.props.children
-	      )
+	    return React.createElement(
+	      "div",
+	      { id: this.props.id, className: cx(classes), "data-closable": "popup" },
+	      this.props.children
 	    );
-	  },
-	});
+	  } });
 
 	module.exports = Popup;
 
@@ -493,10 +521,13 @@ var RFA =
 /* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var React = __webpack_require__(12);
-	var cloneWithProps = __webpack_require__(24);
+	"use strict";
 
-	var Tabs = React.createClass({displayName: "Tabs",
+	var React = __webpack_require__(12);
+	var cloneWithProps = __webpack_require__(25);
+
+	var Tabs = React.createClass({
+	  displayName: "Tabs",
 	  getInitialState: function () {
 	    return {
 	      selectedTab: 0,
@@ -507,17 +538,25 @@ var RFA =
 	    this.setState(options);
 	  },
 	  render: function () {
-	    var children = React.Children.map(this.props.children, function (child, index) {
+	    var children = React.Children.map(this.props.children, (function (child, index) {
 	      return cloneWithProps(child, {
-	        active: (index === this.state.selectedTab),
+	        active: index === this.state.selectedTab,
 	        index: index,
 	        selectTab: this.selectTab
 	      });
-	    }.bind(this));
-	    return (
-	      React.createElement("div", null, 
-	        React.createElement("div", {className: "tabs"}, children), 
-	        React.createElement("div", null, this.state.content)
+	    }).bind(this));
+	    return React.createElement(
+	      "div",
+	      null,
+	      React.createElement(
+	        "div",
+	        { className: "tabs" },
+	        children
+	      ),
+	      React.createElement(
+	        "div",
+	        null,
+	        this.state.content
 	      )
 	    );
 	  }
@@ -530,12 +569,15 @@ var RFA =
 /* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
+	"use strict";
+
 	var React = __webpack_require__(12);
-	var cloneWithProps = __webpack_require__(24);
-	var foundationApi = __webpack_require__(13);
+	var cloneWithProps = __webpack_require__(25);
+	var foundationApi = __webpack_require__(14);
 	var PopupToggle = __webpack_require__(22);
 
-	var Trigger = React.createClass({displayName: "Trigger",
+	var Trigger = React.createClass({
+	  displayName: "Trigger",
 	  getDefaultProps: function () {
 	    return {
 	      open: null,
@@ -550,32 +592,32 @@ var RFA =
 	    if (this.props.close) {
 	      return this.props.close;
 	    } else {
-	      var parentElement= false;
+	      var parentElement = false;
 	      var tempElement = this.getDOMNode().parentNode;
-	      while(parentElement === false) {
-	        if(tempElement.nodeName == 'BODY') {
-	          parentElement = '';
+	      while (parentElement === false) {
+	        if (tempElement.nodeName == "BODY") {
+	          parentElement = "";
 	        }
-	        if(typeof tempElement.getAttribute('data-closable') !== 'undefined' && tempElement.getAttribute('data-closable') !== false) {
+	        if (typeof tempElement.getAttribute("data-closable") !== "undefined" && tempElement.getAttribute("data-closable") !== false) {
 	          parentElement = tempElement;
 	        }
 
 	        tempElement = tempElement.parentNode;
 	      }
-	      return parentElement.getAttribute('id');
+	      return parentElement.getAttribute("id");
 	    }
 	  },
 	  clickHandler: function (e) {
 	    e.preventDefault();
 	    if (this.props.open) {
-	      foundationApi.publish(this.props.open, 'open');
+	      foundationApi.publish(this.props.open, "open");
 	    } else if (this.props.close !== null) {
-	      foundationApi.publish(this.getCloseId(), 'close');
+	      foundationApi.publish(this.getCloseId(), "close");
 	    } else if (this.props.toggle) {
-	      foundationApi.publish(this.props.toggle, 'toggle');
+	      foundationApi.publish(this.props.toggle, "toggle");
 	    } else if (this.props.hardToggle) {
-	      foundationApi.closeActiveElements({exclude: this.props.hardToggle});
-	      foundationApi.publish(this.props.hardToggle, 'toggle');
+	      foundationApi.closeActiveElements({ exclude: this.props.hardToggle });
+	      foundationApi.publish(this.props.hardToggle, "toggle");
 	    } else if (this.props.notify) {
 	      foundationApi.publish(this.props.notify, {
 	        title: this.props.title,
@@ -588,7 +630,7 @@ var RFA =
 	  },
 	  render: function () {
 	    if (this.props.popupToggle) {
-	      return React.createElement(PopupToggle, React.__spread({},  this.props));
+	      return React.createElement(PopupToggle, this.props);
 	    } else {
 	      var child = React.Children.only(this.props.children);
 	      return cloneWithProps(child, {
@@ -608,6 +650,17 @@ var RFA =
 
 /***/ },
 /* 13 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var require;var require;/*!
+	 * iconic.js v0.4.0 - The Iconic JavaScript library
+	 * Copyright (c) 2014 Waybury - http://useiconic.com
+	 */
+
+	!function(a){true?module.exports=a():"function"==typeof define&&define.amd?define(a):"undefined"!=typeof window?window.IconicJS=a():"undefined"!=typeof global?global.IconicJS=a():"undefined"!=typeof self&&(self.IconicJS=a())}(function(){var a;return function b(a,c,d){function e(g,h){if(!c[g]){if(!a[g]){var i="function"==typeof require&&require;if(!h&&i)return require(g,!0);if(f)return f(g,!0);throw new Error("Cannot find module '"+g+"'")}var j=c[g]={exports:{}};a[g][0].call(j.exports,function(b){var c=a[g][1][b];return e(c?c:b)},j,j.exports,b,a,c,d)}return c[g].exports}for(var f="function"==typeof require&&require,g=0;g<d.length;g++)e(d[g]);return e}({1:[function(a,b){var c=(a("./modules/polyfills"),a("./modules/svg-injector")),d=a("./modules/extend"),e=a("./modules/responsive"),f=a("./modules/position"),g=a("./modules/container"),h=a("./modules/log"),i={},j=window.iconicSmartIconApis={},k=("file:"===window.location.protocol,0),l=function(a,b,e){b=d({},i,b||{});var f={evalScripts:b.evalScripts,pngFallback:b.pngFallback};f.each=function(a){if(a)if("string"==typeof a)h.debug(a);else if(a instanceof SVGSVGElement){var c=a.getAttribute("data-icon");if(c&&j[c]){var d=j[c](a);for(var e in d)a[e]=d[e]}/iconic-bg-/.test(a.getAttribute("class"))&&g.addBackground(a),m(a),k++,b&&b.each&&"function"==typeof b.each&&b.each(a)}},"string"==typeof a&&(a=document.querySelectorAll(a)),c(a,f,e)},m=function(a){var b=[];a?"string"==typeof a?b=document.querySelectorAll(a):void 0!==a.length?b=a:"object"==typeof a&&b.push(a):b=document.querySelectorAll("svg.iconic"),Array.prototype.forEach.call(b,function(a){a instanceof SVGSVGElement&&(a.update&&a.update(),e.refresh(a),f.refresh(a))})},n=function(){i.debug&&console.time&&console.time("autoInjectSelector - "+i.autoInjectSelector);var a=k;l(i.autoInjectSelector,{},function(){if(i.debug&&console.timeEnd&&console.timeEnd("autoInjectSelector - "+i.autoInjectSelector),h.debug("AutoInjected: "+(k-a)),e.refreshAll(),i.autoInjectDone&&"function"==typeof i.autoInjectDone){var b=k-a;i.autoInjectDone(b)}})},o=function(a){a&&""!==a&&"complete"!==document.readyState?document.addEventListener("DOMContentLoaded",n):document.removeEventListener("DOMContentLoaded",n)},p=function(a){return a=a||{},d(i,a),o(i.autoInjectSelector),h.enableDebug(i.debug),window._Iconic?window._Iconic:{inject:l,update:m,smartIconApis:j,svgInjectedCount:k}};b.exports=p,window._Iconic=new p({autoInjectSelector:"img.iconic",evalScripts:"once",pngFallback:!1,each:null,autoInjectDone:null,debug:!1})},{"./modules/container":2,"./modules/extend":3,"./modules/log":4,"./modules/polyfills":5,"./modules/position":6,"./modules/responsive":7,"./modules/svg-injector":8}],2:[function(a,b){var c=function(a){var b=a.getAttribute("class").split(" "),c=-1!==b.indexOf("iconic-fluid"),d=[],e=["iconic-bg"];Array.prototype.forEach.call(b,function(a){switch(a){case"iconic-sm":case"iconic-md":case"iconic-lg":d.push(a),c||e.push(a.replace(/-/,"-bg-"));break;case"iconic-fluid":d.push(a),e.push(a.replace(/-/,"-bg-"));break;case"iconic-bg-circle":case"iconic-bg-rounded-rect":case"iconic-bg-badge":e.push(a);break;default:d.push(a)}}),a.setAttribute("class",d.join(" "));var f=a.parentNode,g=Array.prototype.indexOf.call(f.childNodes,a),h=document.createElement("span");h.setAttribute("class",e.join(" ")),h.appendChild(a),f.insertBefore(h,f.childNodes[g])};b.exports={addBackground:c}},{}],3:[function(a,b){b.exports=function(a){return Array.prototype.forEach.call(Array.prototype.slice.call(arguments,1),function(b){if(b)for(var c in b)b.hasOwnProperty(c)&&(a[c]=b[c])}),a}},{}],4:[function(a,b){var c=!1,d=function(a){console&&console.log&&console.log(a)},e=function(a){d("Iconic INFO: "+a)},f=function(a){d("Iconic WARNING: "+a)},g=function(a){c&&d("Iconic DEBUG: "+a)},h=function(a){c=a};b.exports={info:e,warn:f,debug:g,enableDebug:h}},{}],5:[function(){Array.prototype.forEach||(Array.prototype.forEach=function(a,b){"use strict";if(void 0===this||null===this||"function"!=typeof a)throw new TypeError;var c,d=this.length>>>0;for(c=0;d>c;++c)c in this&&a.call(b,this[c],c,this)}),function(){if(Event.prototype.preventDefault||(Event.prototype.preventDefault=function(){this.returnValue=!1}),Event.prototype.stopPropagation||(Event.prototype.stopPropagation=function(){this.cancelBubble=!0}),!Element.prototype.addEventListener){var a=[],b=function(b,c){var d=this,e=function(a){a.target=a.srcElement,a.currentTarget=d,c.handleEvent?c.handleEvent(a):c.call(d,a)};if("DOMContentLoaded"==b){var f=function(a){"complete"==document.readyState&&e(a)};if(document.attachEvent("onreadystatechange",f),a.push({object:this,type:b,listener:c,wrapper:f}),"complete"==document.readyState){var g=new Event;g.srcElement=window,f(g)}}else this.attachEvent("on"+b,e),a.push({object:this,type:b,listener:c,wrapper:e})},c=function(b,c){for(var d=0;d<a.length;){var e=a[d];if(e.object==this&&e.type==b&&e.listener==c){"DOMContentLoaded"==b?this.detachEvent("onreadystatechange",e.wrapper):this.detachEvent("on"+b,e.wrapper);break}++d}};Element.prototype.addEventListener=b,Element.prototype.removeEventListener=c,HTMLDocument&&(HTMLDocument.prototype.addEventListener=b,HTMLDocument.prototype.removeEventListener=c),Window&&(Window.prototype.addEventListener=b,Window.prototype.removeEventListener=c)}}()},{}],6:[function(a,b){var c=function(a){var b=a.getAttribute("data-position");if(b&&""!==b){var c,d,e,f,g,h,i,j=a.getAttribute("width"),k=a.getAttribute("height"),l=b.split("-"),m=a.querySelectorAll("g.iconic-container");Array.prototype.forEach.call(m,function(a){if(c=a.getAttribute("data-width"),d=a.getAttribute("data-height"),c!==j||d!==k){if(e=a.getAttribute("transform"),f=1,e){var b=e.match(/scale\((\d)/);f=b&&b[1]?b[1]:1}g=Math.floor((j/f-c)/2),h=Math.floor((k/f-d)/2),Array.prototype.forEach.call(l,function(a){switch(a){case"top":h=0;break;case"bottom":h=k/f-d;break;case"left":g=0;break;case"right":g=j/f-c;break;case"center":break;default:console&&console.log&&console.log("Unknown position: "+a)}}),i=0===h?g:g+" "+h,i="translate("+i+")",e?/translate/.test(e)?e=e.replace(/translate\(.*?\)/,i):e+=" "+i:e=i,a.setAttribute("transform",e)}})}};b.exports={refresh:c}},{}],7:[function(a,b){var c=/(iconic-sm\b|iconic-md\b|iconic-lg\b)/,d=function(a,b){var c="undefined"!=typeof window.getComputedStyle&&window.getComputedStyle(a,null).getPropertyValue(b);return!c&&a.currentStyle&&(c=a.currentStyle[b.replace(/([a-z])\-([a-z])/,function(a,b,c){return b+c.toUpperCase()})]||a.currentStyle[b]),c},e=function(a){var b=a.style.display;a.style.display="block";var c=parseFloat(d(a,"width").slice(0,-2)),e=parseFloat(d(a,"height").slice(0,-2));return a.style.display=b,{width:c,height:e}},f=function(){var a="/* Iconic Responsive Support Styles */\n.iconic-property-fill, .iconic-property-text {stroke: none !important;}\n.iconic-property-stroke {fill: none !important;}\nsvg.iconic.iconic-fluid {height:100% !important;width:100% !important;}\nsvg.iconic.iconic-sm:not(.iconic-size-md):not(.iconic-size-lg), svg.iconic.iconic-size-sm{width:16px;height:16px;}\nsvg.iconic.iconic-md:not(.iconic-size-sm):not(.iconic-size-lg), svg.iconic.iconic-size-md{width:32px;height:32px;}\nsvg.iconic.iconic-lg:not(.iconic-size-sm):not(.iconic-size-md), svg.iconic.iconic-size-lg{width:128px;height:128px;}\nsvg.iconic-sm > g.iconic-md, svg.iconic-sm > g.iconic-lg, svg.iconic-md > g.iconic-sm, svg.iconic-md > g.iconic-lg, svg.iconic-lg > g.iconic-sm, svg.iconic-lg > g.iconic-md {display: none;}\nsvg.iconic.iconic-icon-sm > g.iconic-lg, svg.iconic.iconic-icon-md > g.iconic-lg {display:none;}\nsvg.iconic-sm:not(.iconic-icon-md):not(.iconic-icon-lg) > g.iconic-sm, svg.iconic-md.iconic-icon-sm > g.iconic-sm, svg.iconic-lg.iconic-icon-sm > g.iconic-sm {display:inline;}\nsvg.iconic-md:not(.iconic-icon-sm):not(.iconic-icon-lg) > g.iconic-md, svg.iconic-sm.iconic-icon-md > g.iconic-md, svg.iconic-lg.iconic-icon-md > g.iconic-md {display:inline;}\nsvg.iconic-lg:not(.iconic-icon-sm):not(.iconic-icon-md) > g.iconic-lg, svg.iconic-sm.iconic-icon-lg > g.iconic-lg, svg.iconic-md.iconic-icon-lg > g.iconic-lg {display:inline;}";navigator&&navigator.userAgent&&/MSIE 10\.0/.test(navigator.userAgent)&&(a+="svg.iconic{zoom:1.0001;}");var b=document.createElement("style");b.id="iconic-responsive-css",b.type="text/css",b.styleSheet?b.styleSheet.cssText=a:b.appendChild(document.createTextNode(a)),(document.head||document.getElementsByTagName("head")[0]).appendChild(b)},g=function(a){if(/iconic-fluid/.test(a.getAttribute("class"))){var b,d=e(a),f=a.viewBox.baseVal.width/a.viewBox.baseVal.height;b=1===f?Math.min(d.width,d.height):1>f?d.width:d.height;var g;g=32>b?"iconic-sm":b>=32&&128>b?"iconic-md":"iconic-lg";var h=a.getAttribute("class"),i=c.test(h)?h.replace(c,g):h+" "+g;a.setAttribute("class",i)}},h=function(){var a=document.querySelectorAll(".injected-svg.iconic-fluid");Array.prototype.forEach.call(a,function(a){g(a)})};document.addEventListener("DOMContentLoaded",function(){f()}),window.addEventListener("resize",function(){h()}),b.exports={refresh:g,refreshAll:h}},{}],8:[function(b,c,d){!function(b,e){"use strict";function f(a){a=a.split(" ");for(var b={},c=a.length,d=[];c--;)b.hasOwnProperty(a[c])||(b[a[c]]=1,d.unshift(a[c]));return d.join(" ")}var g="file:"===b.location.protocol,h=e.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#BasicStructure","1.1"),i=Array.prototype.forEach||function(a,b){if(void 0===this||null===this||"function"!=typeof a)throw new TypeError;var c,d=this.length>>>0;for(c=0;d>c;++c)c in this&&a.call(b,this[c],c,this)},j={},k=0,l=[],m=[],n={},o=function(a){return a.cloneNode(!0)},p=function(a,b){m[a]=m[a]||[],m[a].push(b)},q=function(a){for(var b=0,c=m[a].length;c>b;b++)!function(b){setTimeout(function(){m[a][b](o(j[a]))},0)}(b)},r=function(a,c){if(void 0!==j[a])j[a]instanceof SVGSVGElement?c(o(j[a])):p(a,c);else{if(!b.XMLHttpRequest)return c("Browser does not support XMLHttpRequest"),!1;j[a]={},p(a,c);var d=new XMLHttpRequest;d.onreadystatechange=function(){if(4===d.readyState){if(404===d.status||null===d.responseXML)return c("Unable to load SVG file: "+a),g&&c("Note: SVG injection ajax calls do not work locally without adjusting security setting in your browser. Or consider using a local webserver."),c(),!1;if(!(200===d.status||g&&0===d.status))return c("There was a problem injecting the SVG: "+d.status+" "+d.statusText),!1;if(d.responseXML instanceof Document)j[a]=d.responseXML.documentElement;else if(DOMParser&&DOMParser instanceof Function){var b;try{var e=new DOMParser;b=e.parseFromString(d.responseText,"text/xml")}catch(f){b=void 0}if(!b||b.getElementsByTagName("parsererror").length)return c("Unable to parse SVG file: "+a),!1;j[a]=b.documentElement}q(a)}},d.open("GET",a),d.overrideMimeType&&d.overrideMimeType("text/xml"),d.send()}},s=function(a,c,d,e){var g=a.getAttribute("data-src")||a.getAttribute("src");if(!/svg$/i.test(g))return e("Attempted to inject a file with a non-svg extension: "+g),void 0;if(!h){var j=a.getAttribute("data-fallback")||a.getAttribute("data-png");return j?(a.setAttribute("src",j),e(null)):d?(a.setAttribute("src",d+"/"+g.split("/").pop().replace(".svg",".png")),e(null)):e("This browser does not support SVG and no PNG fallback was defined."),void 0}-1===l.indexOf(a)&&(l.push(a),a.setAttribute("src",""),r(g,function(d){if("undefined"==typeof d||"string"==typeof d)return e(d),!1;var h=a.getAttribute("id");h&&d.setAttribute("id",h);var j=a.getAttribute("title");j&&d.setAttribute("title",j);var m=[].concat(d.getAttribute("class")||[],"injected-svg",a.getAttribute("class")||[]).join(" ");d.setAttribute("class",f(m));var o=a.getAttribute("style");o&&d.setAttribute("style",o);var p=[].filter.call(a.attributes,function(a){return/^data-\w[\w\-]*$/.test(a.name)});i.call(p,function(a){a.name&&a.value&&d.setAttribute(a.name,a.value)});for(var q,r=d.querySelectorAll("defs clipPath[id]"),s=0,t=r.length;t>s;s++){q=r[s].id+"-"+k;for(var u=d.querySelectorAll('[clip-path*="'+r[s].id+'"]'),v=0,w=u.length;w>v;v++)u[v].setAttribute("clip-path","url(#"+q+")");r[s].id=q}d.removeAttribute("xmlns:a");for(var x,y,z=d.querySelectorAll("script"),A=[],B=0,C=z.length;C>B;B++)y=z[B].getAttribute("type"),y&&"application/ecmascript"!==y&&"application/javascript"!==y||(x=z[B].innerText||z[B].textContent,A.push(x),d.removeChild(z[B]));if(A.length>0&&("always"===c||"once"===c&&!n[g])){for(var D=0,E=A.length;E>D;D++)new Function(A[D])(b);n[g]=!0}a.parentNode.replaceChild(d,a),delete l[l.indexOf(a)],a=null,k++,e(d)}))},t=function(a,b,c){b=b||{};var d=b.evalScripts||"always",e=b.pngFallback||!1,f=b.each;if(void 0!==a.length){var g=0;i.call(a,function(b){s(b,d,e,function(b){f&&"function"==typeof f&&f(b),c&&a.length===++g&&c(g)})})}else a?s(a,d,e,function(b){f&&"function"==typeof f&&f(b),c&&c(1),a=null}):c&&c(0)};"object"==typeof c&&"object"==typeof c.exports?c.exports=d=t:"function"==typeof a&&a.amd?a(function(){return t}):"object"==typeof b&&(b.SVGInjector=t)}(window,document)},{}]},{},[1])(1)});
+
+/***/ },
+/* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//From https://github.com/zurb/foundation-apps/blob/master/js/angular/common/common.services.js
@@ -658,37 +711,33 @@ var RFA =
 	module.exports = foundationApi;
 
 /***/ },
-/* 14 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var require;var require;/*!
-	 * iconic.js v0.4.0 - The Iconic JavaScript library
-	 * Copyright (c) 2014 Waybury - http://useiconic.com
-	 */
-
-	!function(a){true?module.exports=a():"function"==typeof define&&define.amd?define(a):"undefined"!=typeof window?window.IconicJS=a():"undefined"!=typeof global?global.IconicJS=a():"undefined"!=typeof self&&(self.IconicJS=a())}(function(){var a;return function b(a,c,d){function e(g,h){if(!c[g]){if(!a[g]){var i="function"==typeof require&&require;if(!h&&i)return require(g,!0);if(f)return f(g,!0);throw new Error("Cannot find module '"+g+"'")}var j=c[g]={exports:{}};a[g][0].call(j.exports,function(b){var c=a[g][1][b];return e(c?c:b)},j,j.exports,b,a,c,d)}return c[g].exports}for(var f="function"==typeof require&&require,g=0;g<d.length;g++)e(d[g]);return e}({1:[function(a,b){var c=(a("./modules/polyfills"),a("./modules/svg-injector")),d=a("./modules/extend"),e=a("./modules/responsive"),f=a("./modules/position"),g=a("./modules/container"),h=a("./modules/log"),i={},j=window.iconicSmartIconApis={},k=("file:"===window.location.protocol,0),l=function(a,b,e){b=d({},i,b||{});var f={evalScripts:b.evalScripts,pngFallback:b.pngFallback};f.each=function(a){if(a)if("string"==typeof a)h.debug(a);else if(a instanceof SVGSVGElement){var c=a.getAttribute("data-icon");if(c&&j[c]){var d=j[c](a);for(var e in d)a[e]=d[e]}/iconic-bg-/.test(a.getAttribute("class"))&&g.addBackground(a),m(a),k++,b&&b.each&&"function"==typeof b.each&&b.each(a)}},"string"==typeof a&&(a=document.querySelectorAll(a)),c(a,f,e)},m=function(a){var b=[];a?"string"==typeof a?b=document.querySelectorAll(a):void 0!==a.length?b=a:"object"==typeof a&&b.push(a):b=document.querySelectorAll("svg.iconic"),Array.prototype.forEach.call(b,function(a){a instanceof SVGSVGElement&&(a.update&&a.update(),e.refresh(a),f.refresh(a))})},n=function(){i.debug&&console.time&&console.time("autoInjectSelector - "+i.autoInjectSelector);var a=k;l(i.autoInjectSelector,{},function(){if(i.debug&&console.timeEnd&&console.timeEnd("autoInjectSelector - "+i.autoInjectSelector),h.debug("AutoInjected: "+(k-a)),e.refreshAll(),i.autoInjectDone&&"function"==typeof i.autoInjectDone){var b=k-a;i.autoInjectDone(b)}})},o=function(a){a&&""!==a&&"complete"!==document.readyState?document.addEventListener("DOMContentLoaded",n):document.removeEventListener("DOMContentLoaded",n)},p=function(a){return a=a||{},d(i,a),o(i.autoInjectSelector),h.enableDebug(i.debug),window._Iconic?window._Iconic:{inject:l,update:m,smartIconApis:j,svgInjectedCount:k}};b.exports=p,window._Iconic=new p({autoInjectSelector:"img.iconic",evalScripts:"once",pngFallback:!1,each:null,autoInjectDone:null,debug:!1})},{"./modules/container":2,"./modules/extend":3,"./modules/log":4,"./modules/polyfills":5,"./modules/position":6,"./modules/responsive":7,"./modules/svg-injector":8}],2:[function(a,b){var c=function(a){var b=a.getAttribute("class").split(" "),c=-1!==b.indexOf("iconic-fluid"),d=[],e=["iconic-bg"];Array.prototype.forEach.call(b,function(a){switch(a){case"iconic-sm":case"iconic-md":case"iconic-lg":d.push(a),c||e.push(a.replace(/-/,"-bg-"));break;case"iconic-fluid":d.push(a),e.push(a.replace(/-/,"-bg-"));break;case"iconic-bg-circle":case"iconic-bg-rounded-rect":case"iconic-bg-badge":e.push(a);break;default:d.push(a)}}),a.setAttribute("class",d.join(" "));var f=a.parentNode,g=Array.prototype.indexOf.call(f.childNodes,a),h=document.createElement("span");h.setAttribute("class",e.join(" ")),h.appendChild(a),f.insertBefore(h,f.childNodes[g])};b.exports={addBackground:c}},{}],3:[function(a,b){b.exports=function(a){return Array.prototype.forEach.call(Array.prototype.slice.call(arguments,1),function(b){if(b)for(var c in b)b.hasOwnProperty(c)&&(a[c]=b[c])}),a}},{}],4:[function(a,b){var c=!1,d=function(a){console&&console.log&&console.log(a)},e=function(a){d("Iconic INFO: "+a)},f=function(a){d("Iconic WARNING: "+a)},g=function(a){c&&d("Iconic DEBUG: "+a)},h=function(a){c=a};b.exports={info:e,warn:f,debug:g,enableDebug:h}},{}],5:[function(){Array.prototype.forEach||(Array.prototype.forEach=function(a,b){"use strict";if(void 0===this||null===this||"function"!=typeof a)throw new TypeError;var c,d=this.length>>>0;for(c=0;d>c;++c)c in this&&a.call(b,this[c],c,this)}),function(){if(Event.prototype.preventDefault||(Event.prototype.preventDefault=function(){this.returnValue=!1}),Event.prototype.stopPropagation||(Event.prototype.stopPropagation=function(){this.cancelBubble=!0}),!Element.prototype.addEventListener){var a=[],b=function(b,c){var d=this,e=function(a){a.target=a.srcElement,a.currentTarget=d,c.handleEvent?c.handleEvent(a):c.call(d,a)};if("DOMContentLoaded"==b){var f=function(a){"complete"==document.readyState&&e(a)};if(document.attachEvent("onreadystatechange",f),a.push({object:this,type:b,listener:c,wrapper:f}),"complete"==document.readyState){var g=new Event;g.srcElement=window,f(g)}}else this.attachEvent("on"+b,e),a.push({object:this,type:b,listener:c,wrapper:e})},c=function(b,c){for(var d=0;d<a.length;){var e=a[d];if(e.object==this&&e.type==b&&e.listener==c){"DOMContentLoaded"==b?this.detachEvent("onreadystatechange",e.wrapper):this.detachEvent("on"+b,e.wrapper);break}++d}};Element.prototype.addEventListener=b,Element.prototype.removeEventListener=c,HTMLDocument&&(HTMLDocument.prototype.addEventListener=b,HTMLDocument.prototype.removeEventListener=c),Window&&(Window.prototype.addEventListener=b,Window.prototype.removeEventListener=c)}}()},{}],6:[function(a,b){var c=function(a){var b=a.getAttribute("data-position");if(b&&""!==b){var c,d,e,f,g,h,i,j=a.getAttribute("width"),k=a.getAttribute("height"),l=b.split("-"),m=a.querySelectorAll("g.iconic-container");Array.prototype.forEach.call(m,function(a){if(c=a.getAttribute("data-width"),d=a.getAttribute("data-height"),c!==j||d!==k){if(e=a.getAttribute("transform"),f=1,e){var b=e.match(/scale\((\d)/);f=b&&b[1]?b[1]:1}g=Math.floor((j/f-c)/2),h=Math.floor((k/f-d)/2),Array.prototype.forEach.call(l,function(a){switch(a){case"top":h=0;break;case"bottom":h=k/f-d;break;case"left":g=0;break;case"right":g=j/f-c;break;case"center":break;default:console&&console.log&&console.log("Unknown position: "+a)}}),i=0===h?g:g+" "+h,i="translate("+i+")",e?/translate/.test(e)?e=e.replace(/translate\(.*?\)/,i):e+=" "+i:e=i,a.setAttribute("transform",e)}})}};b.exports={refresh:c}},{}],7:[function(a,b){var c=/(iconic-sm\b|iconic-md\b|iconic-lg\b)/,d=function(a,b){var c="undefined"!=typeof window.getComputedStyle&&window.getComputedStyle(a,null).getPropertyValue(b);return!c&&a.currentStyle&&(c=a.currentStyle[b.replace(/([a-z])\-([a-z])/,function(a,b,c){return b+c.toUpperCase()})]||a.currentStyle[b]),c},e=function(a){var b=a.style.display;a.style.display="block";var c=parseFloat(d(a,"width").slice(0,-2)),e=parseFloat(d(a,"height").slice(0,-2));return a.style.display=b,{width:c,height:e}},f=function(){var a="/* Iconic Responsive Support Styles */\n.iconic-property-fill, .iconic-property-text {stroke: none !important;}\n.iconic-property-stroke {fill: none !important;}\nsvg.iconic.iconic-fluid {height:100% !important;width:100% !important;}\nsvg.iconic.iconic-sm:not(.iconic-size-md):not(.iconic-size-lg), svg.iconic.iconic-size-sm{width:16px;height:16px;}\nsvg.iconic.iconic-md:not(.iconic-size-sm):not(.iconic-size-lg), svg.iconic.iconic-size-md{width:32px;height:32px;}\nsvg.iconic.iconic-lg:not(.iconic-size-sm):not(.iconic-size-md), svg.iconic.iconic-size-lg{width:128px;height:128px;}\nsvg.iconic-sm > g.iconic-md, svg.iconic-sm > g.iconic-lg, svg.iconic-md > g.iconic-sm, svg.iconic-md > g.iconic-lg, svg.iconic-lg > g.iconic-sm, svg.iconic-lg > g.iconic-md {display: none;}\nsvg.iconic.iconic-icon-sm > g.iconic-lg, svg.iconic.iconic-icon-md > g.iconic-lg {display:none;}\nsvg.iconic-sm:not(.iconic-icon-md):not(.iconic-icon-lg) > g.iconic-sm, svg.iconic-md.iconic-icon-sm > g.iconic-sm, svg.iconic-lg.iconic-icon-sm > g.iconic-sm {display:inline;}\nsvg.iconic-md:not(.iconic-icon-sm):not(.iconic-icon-lg) > g.iconic-md, svg.iconic-sm.iconic-icon-md > g.iconic-md, svg.iconic-lg.iconic-icon-md > g.iconic-md {display:inline;}\nsvg.iconic-lg:not(.iconic-icon-sm):not(.iconic-icon-md) > g.iconic-lg, svg.iconic-sm.iconic-icon-lg > g.iconic-lg, svg.iconic-md.iconic-icon-lg > g.iconic-lg {display:inline;}";navigator&&navigator.userAgent&&/MSIE 10\.0/.test(navigator.userAgent)&&(a+="svg.iconic{zoom:1.0001;}");var b=document.createElement("style");b.id="iconic-responsive-css",b.type="text/css",b.styleSheet?b.styleSheet.cssText=a:b.appendChild(document.createTextNode(a)),(document.head||document.getElementsByTagName("head")[0]).appendChild(b)},g=function(a){if(/iconic-fluid/.test(a.getAttribute("class"))){var b,d=e(a),f=a.viewBox.baseVal.width/a.viewBox.baseVal.height;b=1===f?Math.min(d.width,d.height):1>f?d.width:d.height;var g;g=32>b?"iconic-sm":b>=32&&128>b?"iconic-md":"iconic-lg";var h=a.getAttribute("class"),i=c.test(h)?h.replace(c,g):h+" "+g;a.setAttribute("class",i)}},h=function(){var a=document.querySelectorAll(".injected-svg.iconic-fluid");Array.prototype.forEach.call(a,function(a){g(a)})};document.addEventListener("DOMContentLoaded",function(){f()}),window.addEventListener("resize",function(){h()}),b.exports={refresh:g,refreshAll:h}},{}],8:[function(b,c,d){!function(b,e){"use strict";function f(a){a=a.split(" ");for(var b={},c=a.length,d=[];c--;)b.hasOwnProperty(a[c])||(b[a[c]]=1,d.unshift(a[c]));return d.join(" ")}var g="file:"===b.location.protocol,h=e.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#BasicStructure","1.1"),i=Array.prototype.forEach||function(a,b){if(void 0===this||null===this||"function"!=typeof a)throw new TypeError;var c,d=this.length>>>0;for(c=0;d>c;++c)c in this&&a.call(b,this[c],c,this)},j={},k=0,l=[],m=[],n={},o=function(a){return a.cloneNode(!0)},p=function(a,b){m[a]=m[a]||[],m[a].push(b)},q=function(a){for(var b=0,c=m[a].length;c>b;b++)!function(b){setTimeout(function(){m[a][b](o(j[a]))},0)}(b)},r=function(a,c){if(void 0!==j[a])j[a]instanceof SVGSVGElement?c(o(j[a])):p(a,c);else{if(!b.XMLHttpRequest)return c("Browser does not support XMLHttpRequest"),!1;j[a]={},p(a,c);var d=new XMLHttpRequest;d.onreadystatechange=function(){if(4===d.readyState){if(404===d.status||null===d.responseXML)return c("Unable to load SVG file: "+a),g&&c("Note: SVG injection ajax calls do not work locally without adjusting security setting in your browser. Or consider using a local webserver."),c(),!1;if(!(200===d.status||g&&0===d.status))return c("There was a problem injecting the SVG: "+d.status+" "+d.statusText),!1;if(d.responseXML instanceof Document)j[a]=d.responseXML.documentElement;else if(DOMParser&&DOMParser instanceof Function){var b;try{var e=new DOMParser;b=e.parseFromString(d.responseText,"text/xml")}catch(f){b=void 0}if(!b||b.getElementsByTagName("parsererror").length)return c("Unable to parse SVG file: "+a),!1;j[a]=b.documentElement}q(a)}},d.open("GET",a),d.overrideMimeType&&d.overrideMimeType("text/xml"),d.send()}},s=function(a,c,d,e){var g=a.getAttribute("data-src")||a.getAttribute("src");if(!/svg$/i.test(g))return e("Attempted to inject a file with a non-svg extension: "+g),void 0;if(!h){var j=a.getAttribute("data-fallback")||a.getAttribute("data-png");return j?(a.setAttribute("src",j),e(null)):d?(a.setAttribute("src",d+"/"+g.split("/").pop().replace(".svg",".png")),e(null)):e("This browser does not support SVG and no PNG fallback was defined."),void 0}-1===l.indexOf(a)&&(l.push(a),a.setAttribute("src",""),r(g,function(d){if("undefined"==typeof d||"string"==typeof d)return e(d),!1;var h=a.getAttribute("id");h&&d.setAttribute("id",h);var j=a.getAttribute("title");j&&d.setAttribute("title",j);var m=[].concat(d.getAttribute("class")||[],"injected-svg",a.getAttribute("class")||[]).join(" ");d.setAttribute("class",f(m));var o=a.getAttribute("style");o&&d.setAttribute("style",o);var p=[].filter.call(a.attributes,function(a){return/^data-\w[\w\-]*$/.test(a.name)});i.call(p,function(a){a.name&&a.value&&d.setAttribute(a.name,a.value)});for(var q,r=d.querySelectorAll("defs clipPath[id]"),s=0,t=r.length;t>s;s++){q=r[s].id+"-"+k;for(var u=d.querySelectorAll('[clip-path*="'+r[s].id+'"]'),v=0,w=u.length;w>v;v++)u[v].setAttribute("clip-path","url(#"+q+")");r[s].id=q}d.removeAttribute("xmlns:a");for(var x,y,z=d.querySelectorAll("script"),A=[],B=0,C=z.length;C>B;B++)y=z[B].getAttribute("type"),y&&"application/ecmascript"!==y&&"application/javascript"!==y||(x=z[B].innerText||z[B].textContent,A.push(x),d.removeChild(z[B]));if(A.length>0&&("always"===c||"once"===c&&!n[g])){for(var D=0,E=A.length;E>D;D++)new Function(A[D])(b);n[g]=!0}a.parentNode.replaceChild(d,a),delete l[l.indexOf(a)],a=null,k++,e(d)}))},t=function(a,b,c){b=b||{};var d=b.evalScripts||"always",e=b.pngFallback||!1,f=b.each;if(void 0!==a.length){var g=0;i.call(a,function(b){s(b,d,e,function(b){f&&"function"==typeof f&&f(b),c&&a.length===++g&&c(g)})})}else a?s(a,d,e,function(b){f&&"function"==typeof f&&f(b),c&&c(1),a=null}):c&&c(0)};"object"==typeof c&&"object"==typeof c.exports?c.exports=d=t:"function"==typeof a&&a.amd?a(function(){return t}):"object"==typeof b&&(b.SVGInjector=t)}(window,document)},{}]},{},[1])(1)});
-
-/***/ },
 /* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var React = __webpack_require__(12);
-	var cx = __webpack_require__(26);
+	"use strict";
 
-	var AccordionItem = React.createClass({displayName: "AccordionItem",
+	var React = __webpack_require__(12);
+	var cx = __webpack_require__(27);
+
+	var AccordionItem = React.createClass({
+	  displayName: "AccordionItem",
 	  render: function () {
 	    var itemClasses = {
-	      'accordion-item': true,
-	      'is-active': this.props.active
+	      "accordion-item": true,
+	      "is-active": this.props.active
 	    };
-	    return (
-	      React.createElement("div", {className: cx(itemClasses)}, 
-	        React.createElement("div", {className: "accordion-title", onClick: this.props.activate}, 
-	          this.props.title
-	        ), 
-	        React.createElement("div", {className: "accordion-content"}, 
-	          this.props.children
-	        )
+	    return React.createElement(
+	      "div",
+	      { className: cx(itemClasses) },
+	      React.createElement(
+	        "div",
+	        { className: "accordion-title", onClick: this.props.activate },
+	        this.props.title
+	      ),
+	      React.createElement(
+	        "div",
+	        { className: "accordion-content" },
+	        this.props.children
 	      )
 	    );
 	  }
@@ -700,21 +749,32 @@ var RFA =
 /* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
+	"use strict";
+
 	var React = __webpack_require__(12);
 
-	var ActionSheetButton = React.createClass({displayName: "ActionSheetButton",
+	var ActionSheetButton = React.createClass({
+	  displayName: "ActionSheetButton",
 	  toggle: function () {
 	    this.props.setActiveState(!this.props.active);
 	  },
 	  render: function () {
 	    var Title = null;
 	    if (this.props.title.length > 0) {
-	      Title = React.createElement("a", {className: "button"}, this.props.title);
+	      Title = React.createElement(
+	        "a",
+	        { className: "button" },
+	        this.props.title
+	      );
 	    }
-	    return (
-	      React.createElement("div", {onClick: this.toggle}, 
-	        Title, 
-	        React.createElement("div", null, this.props.children)
+	    return React.createElement(
+	      "div",
+	      { onClick: this.toggle },
+	      Title,
+	      React.createElement(
+	        "div",
+	        null,
+	        this.props.children
 	      )
 	    );
 	  }
@@ -726,20 +786,25 @@ var RFA =
 /* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var React = __webpack_require__(12);
-	var cx = __webpack_require__(26);
+	"use strict";
 
-	var ActionSheetContent = React.createClass({displayName: "ActionSheetContent",
+	var React = __webpack_require__(12);
+	var cx = __webpack_require__(27);
+
+	var ActionSheetContent = React.createClass({
+	  displayName: "ActionSheetContent",
 	  getDefaultProps: function () {
-	    return {position: 'bottom'};
+	    return { position: "bottom" };
 	  },
 	  render: function () {
 	    var classes = {
-	      'action-sheet': true,
-	      'is-active': this.props.active
+	      "action-sheet": true,
+	      "is-active": this.props.active
 	    };
-	    return (
-	      React.createElement("div", {className: cx(classes)}, this.props.children)
+	    return React.createElement(
+	      "div",
+	      { className: cx(classes) },
+	      this.props.children
 	    );
 	  }
 	});
@@ -750,24 +815,26 @@ var RFA =
 /* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
+	"use strict";
+
 	// some parts of code from react/lib/ReactCSSTransitionGroupChild.js
 	var React = __webpack_require__(12);
-	var ReactTransitionEvents = __webpack_require__(29);
-	var CSSCore = __webpack_require__(30);
-	var cloneWithProps = __webpack_require__(24);
-	var cx = __webpack_require__(26);
+	var ReactTransitionEvents = __webpack_require__(28);
+	var CSSCore = __webpack_require__(29);
+	var cloneWithProps = __webpack_require__(25);
+	var cx = __webpack_require__(27);
 	var TICK = 17;
 
-	var Animation = React.createClass({displayName: "Animation",
+	var Animation = React.createClass({
+	  displayName: "Animation",
 	  getInitialState: function () {
-	    return {
-	    };
+	    return {};
 	  },
 	  getDefaultProps: function () {
 	    return {
 	      active: false,
-	      animationIn: '',
-	      animationOut: ''
+	      animationIn: "",
+	      animationOut: ""
 	    };
 	  },
 	  reflow: function (node) {
@@ -775,44 +842,44 @@ var RFA =
 	  },
 	  reset: function (node) {
 	    node.style.transitionDuration = 0;
-	    CSSCore.removeClass(node, 'ng-enter');
-	    CSSCore.removeClass(node, 'ng-leave');
-	    CSSCore.removeClass(node, 'ng-enter-active');
-	    CSSCore.removeClass(node, 'ng-leave-active');
+	    CSSCore.removeClass(node, "ng-enter");
+	    CSSCore.removeClass(node, "ng-leave");
+	    CSSCore.removeClass(node, "ng-enter-active");
+	    CSSCore.removeClass(node, "ng-leave-active");
 	    CSSCore.removeClass(node, this.props.animationIn);
 	    CSSCore.removeClass(node, this.props.animationOut);
 	  },
 	  finishAnimation: function () {
 	    var node = this.getDOMNode();
 	    this.reset(node);
-	    CSSCore.removeClass(node, this.props.active? '' : 'is-active');
+	    CSSCore.removeClass(node, this.props.active ? "" : "is-active");
 	    this.reflow(node);
 	    ReactTransitionEvents.removeEndEventListener(node, this.finishAnimation);
 	  },
-	  animate: function(animationClass, animationType) {
+	  animate: function (animationClass, animationType) {
 	    var node = this.getDOMNode();
-	    var initClass = 'ng-' + animationType;
-	    var activeClass = initClass + '-active';
-	  
+	    var initClass = "ng-" + animationType;
+	    var activeClass = initClass + "-active";
+
 
 	    this.reset(node);
 	    CSSCore.addClass(node, animationClass);
 	    CSSCore.addClass(node, initClass);
-	    CSSCore.addClass(node, 'is-active');
+	    CSSCore.addClass(node, "is-active");
 
 	    //force a "tick"
 	    this.reflow(node);
 
 	    //activate
-	    node.style.transitionDuration = '';
+	    node.style.transitionDuration = "";
 	    CSSCore.addClass(node, activeClass);
-	    
+
 	    ReactTransitionEvents.addEndEventListener(node, this.finishAnimation);
 	  },
 	  componentDidUpdate: function (prevProps) {
 	    if (prevProps.active !== this.props.active) {
-	      var animationClass = this.props.active ? this.props.animationIn: this.props.animationOut;
-	      var animationType = this.props.active ? 'enter': 'leave';
+	      var animationClass = this.props.active ? this.props.animationIn : this.props.animationOut;
+	      var animationType = this.props.active ? "enter" : "leave";
 	      this.animate(animationClass, animationType);
 	    }
 	  },
@@ -829,23 +896,28 @@ var RFA =
 /* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
+	"use strict";
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 	var React = __webpack_require__(12);
-	var foundationApi = __webpack_require__(13);
-	var Notification = __webpack_require__(28);
+	var foundationApi = __webpack_require__(14);
+	var Notification = __webpack_require__(30);
 	var Animation = __webpack_require__(18);
 
-	var NotificationSet = React.createClass({displayName: "NotificationSet",
+	var NotificationSet = React.createClass({
+	  displayName: "NotificationSet",
 	  getInitialState: function () {
-	    return {notifications: []};
+	    return { notifications: [] };
 	  },
 	  componentDidMount: function () {
-	    foundationApi.subscribe(this.props.id, function(name, msg) {
-	      if(msg === 'clearall') {
+	    foundationApi.subscribe(this.props.id, (function (name, msg) {
+	      if (msg === "clearall") {
 	        this.clearAll();
 	      } else {
 	        this.addNotification(msg);
 	      }
-	    }.bind(this));
+	    }).bind(this));
 	  },
 	  addNotification: function (notification) {
 	    notification.id = foundationApi.generateUuid();
@@ -855,33 +927,35 @@ var RFA =
 	    });
 	  },
 	  removeNotifcation: function (id) {
-	    return function (e) {
-	      var notifications = []
+	    return (function (e) {
+	      var notifications = [];
 	      this.state.notifications.forEach(function (notification) {
 	        if (notification.id !== id) {
-	          notifications.push(notification)
+	          notifications.push(notification);
 	        }
 	      });
 	      this.setState({
 	        notifications: notifications
 	      });
 	      e.preventDefault();
-	    }.bind(this);
+	    }).bind(this);
 	  },
 	  clearAll: function () {
-	    this.setState({notifications: []});
+	    this.setState({ notifications: [] });
 	  },
 	  render: function () {
-	    var notifications = this.state.notifications.map(function (notification) {
-	      return (
-	        React.createElement(Notification, React.__spread({key: notification.id},  notification, {closeHandler: this.removeNotifcation(notification.id), className: "is-active"}), 
-	          notification.content
-	        )
+	    var notifications = this.state.notifications.map((function (notification) {
+	      return React.createElement(
+	        Notification,
+	        _extends({ key: notification.id }, notification, { closeHandler: this.removeNotifcation(notification.id), className: "is-active" }),
+	        notification.content
 	      );
-	    }.bind(this));
-	    return (
-	        React.createElement("div", null, notifications)
-	    )  
+	    }).bind(this));
+	    return React.createElement(
+	      "div",
+	      null,
+	      notifications
+	    );
 	  }
 	});
 
@@ -891,39 +965,46 @@ var RFA =
 /* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var React = __webpack_require__(12);
-	var cx = __webpack_require__(26);
-	var foundationApi = __webpack_require__(13);
-	var Animation = __webpack_require__(18);
-	var Notification = __webpack_require__(28);
+	"use strict";
 
-	var NotificationStatic = React.createClass({displayName: "NotificationStatic",
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var React = __webpack_require__(12);
+	var cx = __webpack_require__(27);
+	var foundationApi = __webpack_require__(14);
+	var Animation = __webpack_require__(18);
+	var Notification = __webpack_require__(30);
+
+	var NotificationStatic = React.createClass({
+	  displayName: "NotificationStatic",
 	  getInitialState: function () {
 	    return { open: false };
 	  },
 	  componentDidMount: function () {
-	    foundationApi.subscribe(this.props.id, function (name, msg) {
-	      if (msg === 'open') {
-	        this.setState({open: true});
-	      } else if (msg === 'close') {
-	        this.setState({open: false});
+	    foundationApi.subscribe(this.props.id, (function (name, msg) {
+	      if (msg === "open") {
+	        this.setState({ open: true });
+	      } else if (msg === "close") {
+	        this.setState({ open: false });
 	      }
-	    }.bind(this)); 
+	    }).bind(this));
 	  },
 	  componentWillUnmount: function () {
 	    foundationApi.unsubscribe(this.props.id);
 	  },
 	  closeHandler: function (e) {
-	    this.setState({open: false});
+	    this.setState({ open: false });
 	    e.preventDefault();
 	    e.stopPropagation();
 	  },
 	  render: function () {
-	    return (
-	      React.createElement(Animation, {active: this.state.open, animationIn: "fadeIn", animationOut: "fadeOut"}, 
-	        React.createElement(Notification, React.__spread({},  this.props, {closeHandler: this.closeHandler}), 
-	          this.props.children
-	        )
+	    return React.createElement(
+	      Animation,
+	      { active: this.state.open, animationIn: "fadeIn", animationOut: "fadeOut" },
+	      React.createElement(
+	        Notification,
+	        _extends({}, this.props, { closeHandler: this.closeHandler }),
+	        this.props.children
 	      )
 	    );
 	  }
@@ -935,10 +1016,13 @@ var RFA =
 /* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var React = __webpack_require__(12);
-	var cx = __webpack_require__(26);
+	"use strict";
 
-	var Tab = React.createClass({displayName: "Tab",
+	var React = __webpack_require__(12);
+	var cx = __webpack_require__(27);
+
+	var Tab = React.createClass({
+	  displayName: "Tab",
 	  componentDidMount: function () {
 	    if (this.props.active) {
 	      this.select();
@@ -953,32 +1037,34 @@ var RFA =
 	  },
 	  render: function () {
 	    var classes = {
-	      'tab-item': true,
-	      'is-active': this.props.active
+	      "tab-item": true,
+	      "is-active": this.props.active
 	    };
-	    return (
-	      React.createElement("div", {className: cx(classes), onClick: this.select}, 
-	        this.props.title
-	      )
+	    return React.createElement(
+	      "div",
+	      { className: cx(classes), onClick: this.select },
+	      this.props.title
 	    );
 	  }
 	});
 
 	module.exports = Tab;
 
-
 /***/ },
 /* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var React = __webpack_require__(12);
-	var foundationApi = __webpack_require__(13);
-	var cloneWithProps = __webpack_require__(24);
+	"use strict";
 
-	var PopupToggle = React.createClass({displayName: "PopupToggle",
+	var React = __webpack_require__(12);
+	var foundationApi = __webpack_require__(14);
+	var cloneWithProps = __webpack_require__(25);
+
+	var PopupToggle = React.createClass({
+	  displayName: "PopupToggle",
 	  clickHandler: function (id, e) {
 	    e.preventDefault();
-	    foundationApi.publish(this.props.popupToggle, ['toggle', id]);
+	    foundationApi.publish(this.props.popupToggle, ["toggle", id]);
 	  },
 	  render: function () {
 	    var child = React.Children.only(this.props.children);
@@ -996,9 +1082,9 @@ var RFA =
 /* 23 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var canUseDOM = __webpack_require__(38);
+	var canUseDOM = __webpack_require__(37);
 	var enquire = canUseDOM && __webpack_require__(40);
-	var json2mq = __webpack_require__(39);
+	var json2mq = __webpack_require__(38);
 
 	var ResponsiveMixin = {
 	  media: function (query, handler) {
@@ -1027,159 +1113,6 @@ var RFA =
 
 /***/ },
 /* 24 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Copyright 2013-2014, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	 * @typechecks
-	 * @providesModule cloneWithProps
-	 */
-
-	"use strict";
-
-	var ReactElement = __webpack_require__(33);
-	var ReactPropTransferer = __webpack_require__(32);
-
-	var keyOf = __webpack_require__(34);
-	var warning = __webpack_require__(35);
-
-	var CHILDREN_PROP = keyOf({children: null});
-
-	/**
-	 * Sometimes you want to change the props of a child passed to you. Usually
-	 * this is to add a CSS class.
-	 *
-	 * @param {object} child child component you'd like to clone
-	 * @param {object} props props you'd like to modify. They will be merged
-	 * as if you used `transferPropsTo()`.
-	 * @return {object} a clone of child with props merged in.
-	 */
-	function cloneWithProps(child, props) {
-	  if ("production" !== (undefined)) {
-	    ("production" !== (undefined) ? warning(
-	      !child.ref,
-	      'You are calling cloneWithProps() on a child with a ref. This is ' +
-	      'dangerous because you\'re creating a new child which will not be ' +
-	      'added as a ref to its parent.'
-	    ) : null);
-	  }
-
-	  var newProps = ReactPropTransferer.mergeProps(props, child.props);
-
-	  // Use `child.props.children` if it is provided.
-	  if (!newProps.hasOwnProperty(CHILDREN_PROP) &&
-	      child.props.hasOwnProperty(CHILDREN_PROP)) {
-	    newProps.children = child.props.children;
-	  }
-
-	  // The current API doesn't retain _owner and _context, which is why this
-	  // doesn't use ReactElement.cloneAndReplaceProps.
-	  return ReactElement.createElement(child.type, newProps);
-	}
-
-	module.exports = cloneWithProps;
-
-
-/***/ },
-/* 25 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Copyright 2013-2014, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	 * @providesModule ExecutionEnvironment
-	 */
-
-	/*jslint evil: true */
-
-	"use strict";
-
-	var canUseDOM = !!(
-	  typeof window !== 'undefined' &&
-	  window.document &&
-	  window.document.createElement
-	);
-
-	/**
-	 * Simple, lightweight module assisting with the detection and context of
-	 * Worker. Helps avoid circular dependencies and allows code to reason about
-	 * whether or not they are in a Worker, even if they never include the main
-	 * `ReactWorker` dependency.
-	 */
-	var ExecutionEnvironment = {
-
-	  canUseDOM: canUseDOM,
-
-	  canUseWorkers: typeof Worker !== 'undefined',
-
-	  canUseEventListeners:
-	    canUseDOM && !!(window.addEventListener || window.attachEvent),
-
-	  canUseViewport: canUseDOM && !!window.screen,
-
-	  isInWorker: !canUseDOM // For now, this is true - might change in the future.
-
-	};
-
-	module.exports = ExecutionEnvironment;
-
-
-/***/ },
-/* 26 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Copyright 2013-2014, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	 * @providesModule cx
-	 */
-
-	/**
-	 * This function is used to mark string literals representing CSS class names
-	 * so that they can be transformed statically. This allows for modularization
-	 * and minification of CSS class names.
-	 *
-	 * In static_upstream, this function is actually implemented, but it should
-	 * eventually be replaced with something more descriptive, and the transform
-	 * that is used in the main stack should be ported for use elsewhere.
-	 *
-	 * @param string|object className to modularize, or an object of key/values.
-	 *                      In the object case, the values are conditions that
-	 *                      determine if the className keys should be included.
-	 * @param [string ...]  Variable list of classNames in the string case.
-	 * @return string       Renderable space-separated CSS className.
-	 */
-	function cx(classNames) {
-	  if (typeof classNames == 'object') {
-	    return Object.keys(classNames).filter(function(className) {
-	      return classNames[className];
-	    }).join(' ');
-	  } else {
-	    return Array.prototype.join.call(arguments, ' ');
-	  }
-	}
-
-	module.exports = cx;
-
-
-/***/ },
-/* 27 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! tether 0.6.5 */
@@ -2642,49 +2575,160 @@ var RFA =
 
 
 /***/ },
-/* 28 */
+/* 25 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var React = __webpack_require__(12);
+	/**
+	 * Copyright 2013-2014, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 * @typechecks
+	 * @providesModule cloneWithProps
+	 */
 
-	var Notification = React.createClass({displayName: "Notification",
-	  getDefaultProps: function () {
-	    return {
-	      position: 'top-right',
-	      color: 'success',
-	      title: null,
-	      image: null,
-	      content: null
-	    };
-	  },
-	  render: function () {
-	    var classes = 'notification ' + this.props.position + ' ' + this.props.color;
-	    classes +=  ' ' + (this.props.className || '');
-	    var imageNode = null;
-	    if (this.props.image) {
-	      imageNode = (
-	        React.createElement("div", {className: "notification-icon"}, 
-	          React.createElement("img", {src: "{{ image }}"})
-	        )
-	      );
-	    }
-	    return (
-	      React.createElement("div", {id: this.props.id, "data-closable": true, className: classes}, 
-	        React.createElement("a", {href: "#", className: "close-button", onClick: this.props.closeHandler}, "×"), 
-	        imageNode, 
-	        React.createElement("div", {className: "notification-content"}, 
-	          React.createElement("h1", null, this.props.title), 
-	          React.createElement("p", null, this.props.children)
-	        )
-	      )
-	    );
+	"use strict";
+
+	var ReactElement = __webpack_require__(32);
+	var ReactPropTransferer = __webpack_require__(33);
+
+	var keyOf = __webpack_require__(34);
+	var warning = __webpack_require__(35);
+
+	var CHILDREN_PROP = keyOf({children: null});
+
+	/**
+	 * Sometimes you want to change the props of a child passed to you. Usually
+	 * this is to add a CSS class.
+	 *
+	 * @param {object} child child component you'd like to clone
+	 * @param {object} props props you'd like to modify. They will be merged
+	 * as if you used `transferPropsTo()`.
+	 * @return {object} a clone of child with props merged in.
+	 */
+	function cloneWithProps(child, props) {
+	  if ("production" !== (undefined)) {
+	    ("production" !== (undefined) ? warning(
+	      !child.ref,
+	      'You are calling cloneWithProps() on a child with a ref. This is ' +
+	      'dangerous because you\'re creating a new child which will not be ' +
+	      'added as a ref to its parent.'
+	    ) : null);
 	  }
-	});
 
-	module.exports = Notification;
+	  var newProps = ReactPropTransferer.mergeProps(props, child.props);
+
+	  // Use `child.props.children` if it is provided.
+	  if (!newProps.hasOwnProperty(CHILDREN_PROP) &&
+	      child.props.hasOwnProperty(CHILDREN_PROP)) {
+	    newProps.children = child.props.children;
+	  }
+
+	  // The current API doesn't retain _owner and _context, which is why this
+	  // doesn't use ReactElement.cloneAndReplaceProps.
+	  return ReactElement.createElement(child.type, newProps);
+	}
+
+	module.exports = cloneWithProps;
+
 
 /***/ },
-/* 29 */
+/* 26 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Copyright 2013-2014, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 * @providesModule ExecutionEnvironment
+	 */
+
+	/*jslint evil: true */
+
+	"use strict";
+
+	var canUseDOM = !!(
+	  typeof window !== 'undefined' &&
+	  window.document &&
+	  window.document.createElement
+	);
+
+	/**
+	 * Simple, lightweight module assisting with the detection and context of
+	 * Worker. Helps avoid circular dependencies and allows code to reason about
+	 * whether or not they are in a Worker, even if they never include the main
+	 * `ReactWorker` dependency.
+	 */
+	var ExecutionEnvironment = {
+
+	  canUseDOM: canUseDOM,
+
+	  canUseWorkers: typeof Worker !== 'undefined',
+
+	  canUseEventListeners:
+	    canUseDOM && !!(window.addEventListener || window.attachEvent),
+
+	  canUseViewport: canUseDOM && !!window.screen,
+
+	  isInWorker: !canUseDOM // For now, this is true - might change in the future.
+
+	};
+
+	module.exports = ExecutionEnvironment;
+
+
+/***/ },
+/* 27 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Copyright 2013-2014, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 * @providesModule cx
+	 */
+
+	/**
+	 * This function is used to mark string literals representing CSS class names
+	 * so that they can be transformed statically. This allows for modularization
+	 * and minification of CSS class names.
+	 *
+	 * In static_upstream, this function is actually implemented, but it should
+	 * eventually be replaced with something more descriptive, and the transform
+	 * that is used in the main stack should be ported for use elsewhere.
+	 *
+	 * @param string|object className to modularize, or an object of key/values.
+	 *                      In the object case, the values are conditions that
+	 *                      determine if the className keys should be included.
+	 * @param [string ...]  Variable list of classNames in the string case.
+	 * @return string       Renderable space-separated CSS className.
+	 */
+	function cx(classNames) {
+	  if (typeof classNames == 'object') {
+	    return Object.keys(classNames).filter(function(className) {
+	      return classNames[className];
+	    }).join(' ');
+	  } else {
+	    return Array.prototype.join.call(arguments, ' ');
+	  }
+	}
+
+	module.exports = cx;
+
+
+/***/ },
+/* 28 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -2700,7 +2744,7 @@ var RFA =
 
 	"use strict";
 
-	var ExecutionEnvironment = __webpack_require__(25);
+	var ExecutionEnvironment = __webpack_require__(26);
 
 	/**
 	 * EVENT_NAME_MAP is used to determine which event fired when a
@@ -2799,7 +2843,7 @@ var RFA =
 
 
 /***/ },
-/* 30 */
+/* 29 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -2814,7 +2858,7 @@ var RFA =
 	 * @typechecks
 	 */
 
-	var invariant = __webpack_require__(37);
+	var invariant = __webpack_require__(39);
 
 	/**
 	 * The CSSCore module specifies the API (and implements most of the methods)
@@ -2913,6 +2957,65 @@ var RFA =
 
 
 /***/ },
+/* 30 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var React = __webpack_require__(12);
+
+	var Notification = React.createClass({
+	  displayName: "Notification",
+	  getDefaultProps: function () {
+	    return {
+	      position: "top-right",
+	      color: "success",
+	      title: null,
+	      image: null,
+	      content: null
+	    };
+	  },
+	  render: function () {
+	    var classes = "notification " + this.props.position + " " + this.props.color;
+	    classes += " " + (this.props.className || "");
+	    var imageNode = null;
+	    if (this.props.image) {
+	      imageNode = React.createElement(
+	        "div",
+	        { className: "notification-icon" },
+	        React.createElement("img", { src: "{{ image }}" })
+	      );
+	    }
+	    return React.createElement(
+	      "div",
+	      { id: this.props.id, "data-closable": true, className: classes },
+	      React.createElement(
+	        "a",
+	        { href: "#", className: "close-button", onClick: this.props.closeHandler },
+	        "×"
+	      ),
+	      imageNode,
+	      React.createElement(
+	        "div",
+	        { className: "notification-content" },
+	        React.createElement(
+	          "h1",
+	          null,
+	          this.props.title
+	        ),
+	        React.createElement(
+	          "p",
+	          null,
+	          this.props.children
+	        )
+	      )
+	    );
+	  }
+	});
+
+	module.exports = Notification;
+
+/***/ },
 /* 31 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -2946,175 +3049,6 @@ var RFA =
 
 /***/ },
 /* 32 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Copyright 2013-2014, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	 * @providesModule ReactPropTransferer
-	 */
-
-	"use strict";
-
-	var assign = __webpack_require__(44);
-	var emptyFunction = __webpack_require__(43);
-	var invariant = __webpack_require__(37);
-	var joinClasses = __webpack_require__(45);
-	var warning = __webpack_require__(35);
-
-	var didWarn = false;
-
-	/**
-	 * Creates a transfer strategy that will merge prop values using the supplied
-	 * `mergeStrategy`. If a prop was previously unset, this just sets it.
-	 *
-	 * @param {function} mergeStrategy
-	 * @return {function}
-	 */
-	function createTransferStrategy(mergeStrategy) {
-	  return function(props, key, value) {
-	    if (!props.hasOwnProperty(key)) {
-	      props[key] = value;
-	    } else {
-	      props[key] = mergeStrategy(props[key], value);
-	    }
-	  };
-	}
-
-	var transferStrategyMerge = createTransferStrategy(function(a, b) {
-	  // `merge` overrides the first object's (`props[key]` above) keys using the
-	  // second object's (`value`) keys. An object's style's existing `propA` would
-	  // get overridden. Flip the order here.
-	  return assign({}, b, a);
-	});
-
-	/**
-	 * Transfer strategies dictate how props are transferred by `transferPropsTo`.
-	 * NOTE: if you add any more exceptions to this list you should be sure to
-	 * update `cloneWithProps()` accordingly.
-	 */
-	var TransferStrategies = {
-	  /**
-	   * Never transfer `children`.
-	   */
-	  children: emptyFunction,
-	  /**
-	   * Transfer the `className` prop by merging them.
-	   */
-	  className: createTransferStrategy(joinClasses),
-	  /**
-	   * Transfer the `style` prop (which is an object) by merging them.
-	   */
-	  style: transferStrategyMerge
-	};
-
-	/**
-	 * Mutates the first argument by transferring the properties from the second
-	 * argument.
-	 *
-	 * @param {object} props
-	 * @param {object} newProps
-	 * @return {object}
-	 */
-	function transferInto(props, newProps) {
-	  for (var thisKey in newProps) {
-	    if (!newProps.hasOwnProperty(thisKey)) {
-	      continue;
-	    }
-
-	    var transferStrategy = TransferStrategies[thisKey];
-
-	    if (transferStrategy && TransferStrategies.hasOwnProperty(thisKey)) {
-	      transferStrategy(props, thisKey, newProps[thisKey]);
-	    } else if (!props.hasOwnProperty(thisKey)) {
-	      props[thisKey] = newProps[thisKey];
-	    }
-	  }
-	  return props;
-	}
-
-	/**
-	 * ReactPropTransferer are capable of transferring props to another component
-	 * using a `transferPropsTo` method.
-	 *
-	 * @class ReactPropTransferer
-	 */
-	var ReactPropTransferer = {
-
-	  TransferStrategies: TransferStrategies,
-
-	  /**
-	   * Merge two props objects using TransferStrategies.
-	   *
-	   * @param {object} oldProps original props (they take precedence)
-	   * @param {object} newProps new props to merge in
-	   * @return {object} a new object containing both sets of props merged.
-	   */
-	  mergeProps: function(oldProps, newProps) {
-	    return transferInto(assign({}, oldProps), newProps);
-	  },
-
-	  /**
-	   * @lends {ReactPropTransferer.prototype}
-	   */
-	  Mixin: {
-
-	    /**
-	     * Transfer props from this component to a target component.
-	     *
-	     * Props that do not have an explicit transfer strategy will be transferred
-	     * only if the target component does not already have the prop set.
-	     *
-	     * This is usually used to pass down props to a returned root component.
-	     *
-	     * @param {ReactElement} element Component receiving the properties.
-	     * @return {ReactElement} The supplied `component`.
-	     * @final
-	     * @protected
-	     */
-	    transferPropsTo: function(element) {
-	      ("production" !== (undefined) ? invariant(
-	        element._owner === this,
-	        '%s: You can\'t call transferPropsTo() on a component that you ' +
-	        'don\'t own, %s. This usually means you are calling ' +
-	        'transferPropsTo() on a component passed in as props or children.',
-	        this.constructor.displayName,
-	        typeof element.type === 'string' ?
-	        element.type :
-	        element.type.displayName
-	      ) : invariant(element._owner === this));
-
-	      if ("production" !== (undefined)) {
-	        if (!didWarn) {
-	          didWarn = true;
-	          ("production" !== (undefined) ? warning(
-	            false,
-	            'transferPropsTo is deprecated. ' +
-	            'See http://fb.me/react-transferpropsto for more information.'
-	          ) : null);
-	        }
-	      }
-
-	      // Because elements are immutable we have to merge into the existing
-	      // props object rather than clone it.
-	      transferInto(element.props, this.props);
-
-	      return element;
-	    }
-
-	  }
-	};
-
-	module.exports = ReactPropTransferer;
-
-
-/***/ },
-/* 33 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -3362,6 +3296,175 @@ var RFA =
 
 
 /***/ },
+/* 33 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Copyright 2013-2014, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 * @providesModule ReactPropTransferer
+	 */
+
+	"use strict";
+
+	var assign = __webpack_require__(43);
+	var emptyFunction = __webpack_require__(44);
+	var invariant = __webpack_require__(39);
+	var joinClasses = __webpack_require__(45);
+	var warning = __webpack_require__(35);
+
+	var didWarn = false;
+
+	/**
+	 * Creates a transfer strategy that will merge prop values using the supplied
+	 * `mergeStrategy`. If a prop was previously unset, this just sets it.
+	 *
+	 * @param {function} mergeStrategy
+	 * @return {function}
+	 */
+	function createTransferStrategy(mergeStrategy) {
+	  return function(props, key, value) {
+	    if (!props.hasOwnProperty(key)) {
+	      props[key] = value;
+	    } else {
+	      props[key] = mergeStrategy(props[key], value);
+	    }
+	  };
+	}
+
+	var transferStrategyMerge = createTransferStrategy(function(a, b) {
+	  // `merge` overrides the first object's (`props[key]` above) keys using the
+	  // second object's (`value`) keys. An object's style's existing `propA` would
+	  // get overridden. Flip the order here.
+	  return assign({}, b, a);
+	});
+
+	/**
+	 * Transfer strategies dictate how props are transferred by `transferPropsTo`.
+	 * NOTE: if you add any more exceptions to this list you should be sure to
+	 * update `cloneWithProps()` accordingly.
+	 */
+	var TransferStrategies = {
+	  /**
+	   * Never transfer `children`.
+	   */
+	  children: emptyFunction,
+	  /**
+	   * Transfer the `className` prop by merging them.
+	   */
+	  className: createTransferStrategy(joinClasses),
+	  /**
+	   * Transfer the `style` prop (which is an object) by merging them.
+	   */
+	  style: transferStrategyMerge
+	};
+
+	/**
+	 * Mutates the first argument by transferring the properties from the second
+	 * argument.
+	 *
+	 * @param {object} props
+	 * @param {object} newProps
+	 * @return {object}
+	 */
+	function transferInto(props, newProps) {
+	  for (var thisKey in newProps) {
+	    if (!newProps.hasOwnProperty(thisKey)) {
+	      continue;
+	    }
+
+	    var transferStrategy = TransferStrategies[thisKey];
+
+	    if (transferStrategy && TransferStrategies.hasOwnProperty(thisKey)) {
+	      transferStrategy(props, thisKey, newProps[thisKey]);
+	    } else if (!props.hasOwnProperty(thisKey)) {
+	      props[thisKey] = newProps[thisKey];
+	    }
+	  }
+	  return props;
+	}
+
+	/**
+	 * ReactPropTransferer are capable of transferring props to another component
+	 * using a `transferPropsTo` method.
+	 *
+	 * @class ReactPropTransferer
+	 */
+	var ReactPropTransferer = {
+
+	  TransferStrategies: TransferStrategies,
+
+	  /**
+	   * Merge two props objects using TransferStrategies.
+	   *
+	   * @param {object} oldProps original props (they take precedence)
+	   * @param {object} newProps new props to merge in
+	   * @return {object} a new object containing both sets of props merged.
+	   */
+	  mergeProps: function(oldProps, newProps) {
+	    return transferInto(assign({}, oldProps), newProps);
+	  },
+
+	  /**
+	   * @lends {ReactPropTransferer.prototype}
+	   */
+	  Mixin: {
+
+	    /**
+	     * Transfer props from this component to a target component.
+	     *
+	     * Props that do not have an explicit transfer strategy will be transferred
+	     * only if the target component does not already have the prop set.
+	     *
+	     * This is usually used to pass down props to a returned root component.
+	     *
+	     * @param {ReactElement} element Component receiving the properties.
+	     * @return {ReactElement} The supplied `component`.
+	     * @final
+	     * @protected
+	     */
+	    transferPropsTo: function(element) {
+	      ("production" !== (undefined) ? invariant(
+	        element._owner === this,
+	        '%s: You can\'t call transferPropsTo() on a component that you ' +
+	        'don\'t own, %s. This usually means you are calling ' +
+	        'transferPropsTo() on a component passed in as props or children.',
+	        this.constructor.displayName,
+	        typeof element.type === 'string' ?
+	        element.type :
+	        element.type.displayName
+	      ) : invariant(element._owner === this));
+
+	      if ("production" !== (undefined)) {
+	        if (!didWarn) {
+	          didWarn = true;
+	          ("production" !== (undefined) ? warning(
+	            false,
+	            'transferPropsTo is deprecated. ' +
+	            'See http://fb.me/react-transferpropsto for more information.'
+	          ) : null);
+	        }
+	      }
+
+	      // Because elements are immutable we have to merge into the existing
+	      // props object rather than clone it.
+	      transferInto(element.props, this.props);
+
+	      return element;
+	    }
+
+	  }
+	};
+
+	module.exports = ReactPropTransferer;
+
+
+/***/ },
 /* 34 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -3418,7 +3521,7 @@ var RFA =
 
 	"use strict";
 
-	var emptyFunction = __webpack_require__(43);
+	var emptyFunction = __webpack_require__(44);
 
 	/**
 	 * Similar to invariant but only logs a warning if the condition is not met.
@@ -3697,6 +3800,74 @@ var RFA =
 /* 37 */
 /***/ function(module, exports, __webpack_require__) {
 
+	var canUseDOM = !!(
+	  typeof window !== 'undefined' &&
+	  window.document &&
+	  window.document.createElement
+	);
+
+	module.exports = canUseDOM;
+
+/***/ },
+/* 38 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var camel2hyphen = __webpack_require__(46);
+
+	var isDimension = function (feature) {
+	  var re = /[height|width]$/;
+	  return re.test(feature);
+	};
+
+	var obj2mq = function (obj) {
+	  var mq = '';
+	  var features = Object.keys(obj);
+	  features.forEach(function (feature, index) {
+	    var value = obj[feature];
+	    feature = camel2hyphen(feature);
+	    // Add px to dimension features
+	    if (isDimension(feature) && typeof value === 'number') {
+	      value = value + 'px';
+	    }
+	    if (value === true) {
+	      mq += feature;
+	    } else if (value === false) {
+	      mq += 'not ' + feature;
+	    } else {
+	      mq += '(' + feature + ': ' + value + ')';
+	    }
+	    if (index < features.length-1) {
+	      mq += ' and '
+	    }
+	  });
+	  return mq;
+	};
+
+	var json2mq = function (query) {
+	  var mq = '';
+	  if (typeof query === 'string') {
+	    return query;
+	  }
+	  // Handling array of media queries
+	  if (query instanceof Array) {
+	    query.forEach(function (q, index) {
+	      mq += obj2mq(q);
+	      if (index < query.length-1) {
+	        mq += ', '
+	      }
+	    });
+	    return mq;
+	  }
+	  // Handling single media query
+	  return obj2mq(query);
+	};
+
+	module.exports = json2mq;
+
+/***/ },
+/* 39 */
+/***/ function(module, exports, __webpack_require__) {
+
 	/**
 	 * Copyright 2013-2014, Facebook, Inc.
 	 * All rights reserved.
@@ -3751,74 +3922,6 @@ var RFA =
 
 	module.exports = invariant;
 
-
-/***/ },
-/* 38 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var canUseDOM = !!(
-	  typeof window !== 'undefined' &&
-	  window.document &&
-	  window.document.createElement
-	);
-
-	module.exports = canUseDOM;
-
-/***/ },
-/* 39 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var camel2hyphen = __webpack_require__(46);
-
-	var isDimension = function (feature) {
-	  var re = /[height|width]$/;
-	  return re.test(feature);
-	};
-
-	var obj2mq = function (obj) {
-	  var mq = '';
-	  var features = Object.keys(obj);
-	  features.forEach(function (feature, index) {
-	    var value = obj[feature];
-	    feature = camel2hyphen(feature);
-	    // Add px to dimension features
-	    if (isDimension(feature) && typeof value === 'number') {
-	      value = value + 'px';
-	    }
-	    if (value === true) {
-	      mq += feature;
-	    } else if (value === false) {
-	      mq += 'not ' + feature;
-	    } else {
-	      mq += '(' + feature + ': ' + value + ')';
-	    }
-	    if (index < features.length-1) {
-	      mq += ' and '
-	    }
-	  });
-	  return mq;
-	};
-
-	var json2mq = function (query) {
-	  var mq = '';
-	  if (typeof query === 'string') {
-	    return query;
-	  }
-	  // Handling array of media queries
-	  if (query instanceof Array) {
-	    query.forEach(function (q, index) {
-	      mq += obj2mq(q);
-	      if (index < query.length-1) {
-	        mq += ', '
-	      }
-	    });
-	    return mq;
-	  }
-	  // Handling single media query
-	  return obj2mq(query);
-	};
-
-	module.exports = json2mq;
 
 /***/ },
 /* 40 */
@@ -4135,7 +4238,7 @@ var RFA =
 
 	"use strict";
 
-	var assign = __webpack_require__(44);
+	var assign = __webpack_require__(43);
 
 	/**
 	 * Keeps track of the current context.
@@ -4227,44 +4330,6 @@ var RFA =
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * Copyright 2013-2014, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	 * @providesModule emptyFunction
-	 */
-
-	function makeEmptyFunction(arg) {
-	  return function() {
-	    return arg;
-	  };
-	}
-
-	/**
-	 * This function accepts and discards inputs; it has no side effects. This is
-	 * primarily useful idiomatically for overridable function endpoints which
-	 * always need to be callable, since JS lacks a null-call idiom ala Cocoa.
-	 */
-	function emptyFunction() {}
-
-	emptyFunction.thatReturns = makeEmptyFunction;
-	emptyFunction.thatReturnsFalse = makeEmptyFunction(false);
-	emptyFunction.thatReturnsTrue = makeEmptyFunction(true);
-	emptyFunction.thatReturnsNull = makeEmptyFunction(null);
-	emptyFunction.thatReturnsThis = function() { return this; };
-	emptyFunction.thatReturnsArgument = function(arg) { return arg; };
-
-	module.exports = emptyFunction;
-
-
-/***/ },
-/* 44 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
 	 * Copyright 2014, Facebook, Inc.
 	 * All rights reserved.
 	 *
@@ -4309,6 +4374,44 @@ var RFA =
 	};
 
 	module.exports = assign;
+
+
+/***/ },
+/* 44 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Copyright 2013-2014, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 * @providesModule emptyFunction
+	 */
+
+	function makeEmptyFunction(arg) {
+	  return function() {
+	    return arg;
+	  };
+	}
+
+	/**
+	 * This function accepts and discards inputs; it has no side effects. This is
+	 * primarily useful idiomatically for overridable function endpoints which
+	 * always need to be callable, since JS lacks a null-call idiom ala Cocoa.
+	 */
+	function emptyFunction() {}
+
+	emptyFunction.thatReturns = makeEmptyFunction;
+	emptyFunction.thatReturnsFalse = makeEmptyFunction(false);
+	emptyFunction.thatReturnsTrue = makeEmptyFunction(true);
+	emptyFunction.thatReturnsNull = makeEmptyFunction(null);
+	emptyFunction.thatReturnsThis = function() { return this; };
+	emptyFunction.thatReturnsArgument = function(arg) { return arg; };
+
+	module.exports = emptyFunction;
 
 
 /***/ },

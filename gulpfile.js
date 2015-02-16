@@ -51,10 +51,11 @@ gulp.task('server', ['copy', 'sass'], function (callback) {
 });
 
 gulp.task('watch', function () {
-  gulp.watch(['./docs/**/*{scss,sass}'], ['sass']);
-  gulp.watch(['./docs/index.html'], ['copy']);
+  gulp.watch(['./docs/**/*{scss,sass}', './scss/**/*{scss,sass}'], ['sass']);
+  gulp.watch(['./docs/index.html', './docs/img/*'], ['copy']);
 });
 
+gulp.task('default', ['watch', 'server'])
 // gulp tasks for building dist files
 gulp.task('dist-clean', function () {
   return del(['./dist/*']);
