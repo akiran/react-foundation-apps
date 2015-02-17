@@ -12,7 +12,7 @@ var Accordion = React.createClass({
       collapsible: false
     };
   },
-  componentDidMount: function () {
+  componentWillMount: function () {
     var sections = [];
     React.Children.forEach(this.props.children, function (child, index) {
       sections.push({active: false});
