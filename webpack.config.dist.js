@@ -6,7 +6,7 @@ module.exports = {
 
   output: {
     library: 'RFA',
-    libraryTarget: 'var',
+    libraryTarget: 'umd',
     path: path.join(__dirname, 'dist'),
   },
 
@@ -21,9 +21,16 @@ module.exports = {
     extensions: ['', '.js', '.jsx']
   },
 
-  externals: {
-    react: 'React'
-  },
+  externals: [
+    {
+      "react": {
+        root: "React",
+        commonjs2: "react",
+        commonjs: "react",
+        amd: "react"
+      }
+    }
+  ],
 
   node: {
     Buffer: false
