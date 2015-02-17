@@ -13,7 +13,7 @@ module.exports = {
   },
   module: {
     loaders: [
-      {test: /\.jsx$/, loaders: ['6to5']},
+      {test: /\.jsx$/, loaders: ['babel']},
       {
         test: /\.scss$/,
         loader: "style!css!postcss!sass?outputStyle=expanded&includePaths[]=" + 

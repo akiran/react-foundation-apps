@@ -12,8 +12,9 @@ module.exports = {
 
   module: {
     loaders: [
-      {test: /\.jsx$/, loaders: ['6to5']},
+      {test: /\.jsx$/, loaders: ['babel']},
     ],
+    noParse: /\.min\.js/
   },
 
   resolve : {
