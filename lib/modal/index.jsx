@@ -8,7 +8,12 @@ var Modal = React.createClass({
     return { open: false };
   },
   getDefaultProps: function () {
-    return { overlay: true, overlayClose: true };
+    return { 
+      overlay: true,
+      overlayClose: true,
+      animationIn: 'fadeIn',
+      animationOut: 'fadeOut'
+    };
   },
   componentDidMount: function () {
     foundationApi.subscribe(this.props.id, function (name, msg) {
@@ -35,22 +40,19 @@ var Modal = React.createClass({
     e.stopProppagation();
   },
   render: function() {
-    var overlay = (this.props.overlay === true || this.props.overlayClose === true) ? true : false;
-    var overlayClasses = {
-      'modal-overlay': true,
-    };
-    var modalClasses = {
-      'modal': true,
-    };
     var overlayStyle = {};
-    if (!overlay) {
+    if (!this.props.overlay) {
       overlayStyle.background = 'transparent';
     }
     return (
       <Animation active={this.state.open} animationIn="fadeIn" animationOut="fadeOut">
-        <div className={cx(overlayClasses)} style={overlayStyle} onClick={this.hideOverlay} >
-          <Animation active={this.state.open} animationIn="fadeIn" animationOut="fadeOut">
-            <div id={this.props.id} data-closable={true} className={cx(modalClasses)} onClick={this.stopClickPropagation}>
+        <div className='modal-overlay' style={overlayStyle} onClick={this.hideOverlay} >
+          <Animation
+            active={this.state.open}
+            animationIn={this.props.animationIn}
+            animationOut={this.props.animationOut}
+          >
+            <div id={this.props.id} data-closable={true} className='modal' onClick={this.stopClickPropagation}>
               {this.props.children}
             </div>
           </Animation>

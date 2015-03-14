@@ -133,7 +133,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 	module.exports = Accordion;
-	Accordion.Item = __webpack_require__(17);
+	Accordion.Item = __webpack_require__(15);
 
 /***/ },
 /* 2 */
@@ -169,8 +169,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 	module.exports = ActionSheet;
-	ActionSheet.Button = __webpack_require__(15);
-	ActionSheet.Content = __webpack_require__(16);
+	ActionSheet.Button = __webpack_require__(16);
+	ActionSheet.Content = __webpack_require__(17);
 
 /***/ },
 /* 3 */
@@ -268,7 +268,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var React = __webpack_require__(12);
 	var cx = __webpack_require__(27);
-	var Animation = __webpack_require__(20);
+	var Animation = __webpack_require__(18);
 	var foundationApi = __webpack_require__(14);
 
 	var Modal = React.createClass({
@@ -277,7 +277,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return { open: false };
 	  },
 	  getDefaultProps: function () {
-	    return { overlay: true, overlayClose: true };
+	    return {
+	      overlay: true,
+	      overlayClose: true,
+	      animationIn: "fadeIn",
+	      animationOut: "fadeOut"
+	    };
 	  },
 	  componentDidMount: function () {
 	    foundationApi.subscribe(this.props.id, (function (name, msg) {
@@ -321,7 +326,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	        { className: cx(overlayClasses), style: overlayStyle, onClick: this.hideOverlay },
 	        React.createElement(
 	          Animation,
-	          { active: this.state.open, animationIn: "fadeIn", animationOut: "fadeOut" },
+	          {
+	            active: this.state.open,
+	            animationIn: this.props.animationIn,
+	            animationOut: this.props.animationOut
+	          },
 	          React.createElement(
 	            "div",
 	            { id: this.props.id, "data-closable": true, className: cx(modalClasses), onClick: this.stopClickPropagation },
@@ -341,8 +350,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	"use strict";
 
 	module.exports = {
-	  Set: __webpack_require__(18),
-	  Static: __webpack_require__(19)
+	  Set: __webpack_require__(19),
+	  Static: __webpack_require__(20)
 	};
 
 /***/ },
@@ -406,7 +415,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var React = __webpack_require__(12);
 	var cx = __webpack_require__(27);
-	var Animation = __webpack_require__(20);
+	var Animation = __webpack_require__(18);
 	var foundationApi = __webpack_require__(14);
 
 	var Panel = React.createClass({
@@ -731,6 +740,41 @@ return /******/ (function(modules) { // webpackBootstrap
 	"use strict";
 
 	var React = __webpack_require__(12);
+	var cx = __webpack_require__(27);
+
+	var AccordionItem = React.createClass({
+	  displayName: "AccordionItem",
+	  render: function () {
+	    var itemClasses = {
+	      "accordion-item": true,
+	      "is-active": this.props.active
+	    };
+	    return React.createElement(
+	      "div",
+	      { className: cx(itemClasses) },
+	      React.createElement(
+	        "div",
+	        { className: "accordion-title", onClick: this.props.activate },
+	        this.props.title
+	      ),
+	      React.createElement(
+	        "div",
+	        { className: "accordion-content" },
+	        this.props.children
+	      )
+	    );
+	  }
+	});
+
+	module.exports = AccordionItem;
+
+/***/ },
+/* 16 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var React = __webpack_require__(12);
 
 	var ActionSheetButton = React.createClass({
 	  displayName: "ActionSheetButton",
@@ -762,7 +806,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = ActionSheetButton;
 
 /***/ },
-/* 16 */
+/* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -791,170 +835,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = ActionSheetContent;
 
 /***/ },
-/* 17 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	var React = __webpack_require__(12);
-	var cx = __webpack_require__(27);
-
-	var AccordionItem = React.createClass({
-	  displayName: "AccordionItem",
-	  render: function () {
-	    var itemClasses = {
-	      "accordion-item": true,
-	      "is-active": this.props.active
-	    };
-	    return React.createElement(
-	      "div",
-	      { className: cx(itemClasses) },
-	      React.createElement(
-	        "div",
-	        { className: "accordion-title", onClick: this.props.activate },
-	        this.props.title
-	      ),
-	      React.createElement(
-	        "div",
-	        { className: "accordion-content" },
-	        this.props.children
-	      )
-	    );
-	  }
-	});
-
-	module.exports = AccordionItem;
-
-/***/ },
 /* 18 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-	var React = __webpack_require__(12);
-	var foundationApi = __webpack_require__(14);
-	var Notification = __webpack_require__(28);
-	var Animation = __webpack_require__(20);
-
-	var NotificationSet = React.createClass({
-	  displayName: "NotificationSet",
-	  getInitialState: function () {
-	    return { notifications: [] };
-	  },
-	  componentDidMount: function () {
-	    foundationApi.subscribe(this.props.id, (function (name, msg) {
-	      if (msg === "clearall") {
-	        this.clearAll();
-	      } else {
-	        this.addNotification(msg);
-	      }
-	    }).bind(this));
-	  },
-	  addNotification: function (notification) {
-	    notification.id = foundationApi.generateUuid();
-	    var notifications = this.state.notifications.concat(notification);
-	    this.setState({
-	      notifications: notifications
-	    });
-	  },
-	  removeNotifcation: function (id) {
-	    return (function (e) {
-	      var notifications = [];
-	      this.state.notifications.forEach(function (notification) {
-	        if (notification.id !== id) {
-	          notifications.push(notification);
-	        }
-	      });
-	      this.setState({
-	        notifications: notifications
-	      });
-	      e.preventDefault();
-	    }).bind(this);
-	  },
-	  clearAll: function () {
-	    this.setState({ notifications: [] });
-	  },
-	  render: function () {
-	    var notifications = this.state.notifications.map((function (notification) {
-	      return React.createElement(
-	        Notification,
-	        _extends({ key: notification.id }, notification, { closeHandler: this.removeNotifcation(notification.id), className: "is-active" }),
-	        notification.content
-	      );
-	    }).bind(this));
-	    return React.createElement(
-	      "div",
-	      null,
-	      notifications
-	    );
-	  }
-	});
-
-	module.exports = NotificationSet;
-
-/***/ },
-/* 19 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-	var React = __webpack_require__(12);
-	var cx = __webpack_require__(27);
-	var foundationApi = __webpack_require__(14);
-	var Animation = __webpack_require__(20);
-	var Notification = __webpack_require__(28);
-
-	var NotificationStatic = React.createClass({
-	  displayName: "NotificationStatic",
-	  getInitialState: function () {
-	    return { open: false };
-	  },
-	  componentDidMount: function () {
-	    foundationApi.subscribe(this.props.id, (function (name, msg) {
-	      if (msg === "open") {
-	        this.setState({ open: true });
-	      } else if (msg === "close") {
-	        this.setState({ open: false });
-	      }
-	    }).bind(this));
-	  },
-	  componentWillUnmount: function () {
-	    foundationApi.unsubscribe(this.props.id);
-	  },
-	  closeHandler: function (e) {
-	    this.setState({ open: false });
-	    e.preventDefault();
-	    e.stopPropagation();
-	  },
-	  render: function () {
-	    return React.createElement(
-	      Animation,
-	      { active: this.state.open, animationIn: "fadeIn", animationOut: "fadeOut" },
-	      React.createElement(
-	        Notification,
-	        _extends({}, this.props, { closeHandler: this.closeHandler }),
-	        this.props.children
-	      )
-	    );
-	  }
-	});
-
-	module.exports = NotificationStatic;
-
-/***/ },
-/* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
 	// some parts of code from react/lib/ReactCSSTransitionGroupChild.js
 	var React = __webpack_require__(12);
-	var ReactTransitionEvents = __webpack_require__(29);
-	var CSSCore = __webpack_require__(30);
+	var ReactTransitionEvents = __webpack_require__(28);
+	var CSSCore = __webpack_require__(29);
 	var cloneWithProps = __webpack_require__(25);
 	var cx = __webpack_require__(27);
 	var TICK = 17;
@@ -1025,6 +914,126 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 	module.exports = Animation;
+
+/***/ },
+/* 19 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var React = __webpack_require__(12);
+	var foundationApi = __webpack_require__(14);
+	var Notification = __webpack_require__(30);
+	var Animation = __webpack_require__(18);
+
+	var NotificationSet = React.createClass({
+	  displayName: "NotificationSet",
+	  getInitialState: function () {
+	    return { notifications: [] };
+	  },
+	  componentDidMount: function () {
+	    foundationApi.subscribe(this.props.id, (function (name, msg) {
+	      if (msg === "clearall") {
+	        this.clearAll();
+	      } else {
+	        this.addNotification(msg);
+	      }
+	    }).bind(this));
+	  },
+	  addNotification: function (notification) {
+	    notification.id = foundationApi.generateUuid();
+	    var notifications = this.state.notifications.concat(notification);
+	    this.setState({
+	      notifications: notifications
+	    });
+	  },
+	  removeNotifcation: function (id) {
+	    return (function (e) {
+	      var notifications = [];
+	      this.state.notifications.forEach(function (notification) {
+	        if (notification.id !== id) {
+	          notifications.push(notification);
+	        }
+	      });
+	      this.setState({
+	        notifications: notifications
+	      });
+	      e.preventDefault();
+	    }).bind(this);
+	  },
+	  clearAll: function () {
+	    this.setState({ notifications: [] });
+	  },
+	  render: function () {
+	    var notifications = this.state.notifications.map((function (notification) {
+	      return React.createElement(
+	        Notification,
+	        _extends({ key: notification.id }, notification, { closeHandler: this.removeNotifcation(notification.id), className: "is-active" }),
+	        notification.content
+	      );
+	    }).bind(this));
+	    return React.createElement(
+	      "div",
+	      null,
+	      notifications
+	    );
+	  }
+	});
+
+	module.exports = NotificationSet;
+
+/***/ },
+/* 20 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var React = __webpack_require__(12);
+	var cx = __webpack_require__(27);
+	var foundationApi = __webpack_require__(14);
+	var Animation = __webpack_require__(18);
+	var Notification = __webpack_require__(30);
+
+	var NotificationStatic = React.createClass({
+	  displayName: "NotificationStatic",
+	  getInitialState: function () {
+	    return { open: false };
+	  },
+	  componentDidMount: function () {
+	    foundationApi.subscribe(this.props.id, (function (name, msg) {
+	      if (msg === "open") {
+	        this.setState({ open: true });
+	      } else if (msg === "close") {
+	        this.setState({ open: false });
+	      }
+	    }).bind(this));
+	  },
+	  componentWillUnmount: function () {
+	    foundationApi.unsubscribe(this.props.id);
+	  },
+	  closeHandler: function (e) {
+	    this.setState({ open: false });
+	    e.preventDefault();
+	    e.stopPropagation();
+	  },
+	  render: function () {
+	    return React.createElement(
+	      Animation,
+	      { active: this.state.open, animationIn: "fadeIn", animationOut: "fadeOut" },
+	      React.createElement(
+	        Notification,
+	        _extends({}, this.props, { closeHandler: this.closeHandler }),
+	        this.props.children
+	      )
+	    );
+	  }
+	});
+
+	module.exports = NotificationStatic;
 
 /***/ },
 /* 21 */
@@ -2745,65 +2754,6 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 28 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
-
-	var React = __webpack_require__(12);
-
-	var Notification = React.createClass({
-	  displayName: "Notification",
-	  getDefaultProps: function () {
-	    return {
-	      position: "top-right",
-	      color: "success",
-	      title: null,
-	      image: null,
-	      content: null
-	    };
-	  },
-	  render: function () {
-	    var classes = "notification " + this.props.position + " " + this.props.color;
-	    classes += " " + (this.props.className || "");
-	    var imageNode = null;
-	    if (this.props.image) {
-	      imageNode = React.createElement(
-	        "div",
-	        { className: "notification-icon" },
-	        React.createElement("img", { src: "{{ image }}" })
-	      );
-	    }
-	    return React.createElement(
-	      "div",
-	      { id: this.props.id, "data-closable": true, className: classes },
-	      React.createElement(
-	        "a",
-	        { href: "#", className: "close-button", onClick: this.props.closeHandler },
-	        "×"
-	      ),
-	      imageNode,
-	      React.createElement(
-	        "div",
-	        { className: "notification-content" },
-	        React.createElement(
-	          "h1",
-	          null,
-	          this.props.title
-	        ),
-	        React.createElement(
-	          "p",
-	          null,
-	          this.props.children
-	        )
-	      )
-	    );
-	  }
-	});
-
-	module.exports = Notification;
-
-/***/ },
-/* 29 */
-/***/ function(module, exports, __webpack_require__) {
-
 	/**
 	 * Copyright 2013-2014, Facebook, Inc.
 	 * All rights reserved.
@@ -2916,7 +2866,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 30 */
+/* 29 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -3030,6 +2980,65 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
+/* 30 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var React = __webpack_require__(12);
+
+	var Notification = React.createClass({
+	  displayName: "Notification",
+	  getDefaultProps: function () {
+	    return {
+	      position: "top-right",
+	      color: "success",
+	      title: null,
+	      image: null,
+	      content: null
+	    };
+	  },
+	  render: function () {
+	    var classes = "notification " + this.props.position + " " + this.props.color;
+	    classes += " " + (this.props.className || "");
+	    var imageNode = null;
+	    if (this.props.image) {
+	      imageNode = React.createElement(
+	        "div",
+	        { className: "notification-icon" },
+	        React.createElement("img", { src: "{{ image }}" })
+	      );
+	    }
+	    return React.createElement(
+	      "div",
+	      { id: this.props.id, "data-closable": true, className: classes },
+	      React.createElement(
+	        "a",
+	        { href: "#", className: "close-button", onClick: this.props.closeHandler },
+	        "×"
+	      ),
+	      imageNode,
+	      React.createElement(
+	        "div",
+	        { className: "notification-content" },
+	        React.createElement(
+	          "h1",
+	          null,
+	          this.props.title
+	        ),
+	        React.createElement(
+	          "p",
+	          null,
+	          this.props.children
+	        )
+	      )
+	    );
+	  }
+	});
+
+	module.exports = Notification;
+
+/***/ },
 /* 31 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -3078,8 +3087,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 
-	var ReactContext = __webpack_require__(44);
-	var ReactCurrentOwner = __webpack_require__(45);
+	var ReactContext = __webpack_require__(41);
+	var ReactCurrentOwner = __webpack_require__(42);
 
 	var warning = __webpack_require__(35);
 
@@ -3326,10 +3335,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 
-	var assign = __webpack_require__(41);
-	var emptyFunction = __webpack_require__(42);
+	var assign = __webpack_require__(43);
+	var emptyFunction = __webpack_require__(44);
 	var invariant = __webpack_require__(39);
-	var joinClasses = __webpack_require__(43);
+	var joinClasses = __webpack_require__(45);
 	var warning = __webpack_require__(35);
 
 	var didWarn = false;
@@ -3535,7 +3544,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 
-	var emptyFunction = __webpack_require__(42);
+	var emptyFunction = __webpack_require__(44);
 
 	/**
 	 * Similar to invariant but only logs a warning if the condition is not met.
@@ -4240,140 +4249,6 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * Copyright 2014, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	 * @providesModule Object.assign
-	 */
-
-	// https://people.mozilla.org/~jorendorff/es6-draft.html#sec-object.assign
-
-	function assign(target, sources) {
-	  if (target == null) {
-	    throw new TypeError('Object.assign target cannot be null or undefined');
-	  }
-
-	  var to = Object(target);
-	  var hasOwnProperty = Object.prototype.hasOwnProperty;
-
-	  for (var nextIndex = 1; nextIndex < arguments.length; nextIndex++) {
-	    var nextSource = arguments[nextIndex];
-	    if (nextSource == null) {
-	      continue;
-	    }
-
-	    var from = Object(nextSource);
-
-	    // We don't currently support accessors nor proxies. Therefore this
-	    // copy cannot throw. If we ever supported this then we must handle
-	    // exceptions and side-effects. We don't support symbols so they won't
-	    // be transferred.
-
-	    for (var key in from) {
-	      if (hasOwnProperty.call(from, key)) {
-	        to[key] = from[key];
-	      }
-	    }
-	  }
-
-	  return to;
-	};
-
-	module.exports = assign;
-
-
-/***/ },
-/* 42 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Copyright 2013-2014, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	 * @providesModule emptyFunction
-	 */
-
-	function makeEmptyFunction(arg) {
-	  return function() {
-	    return arg;
-	  };
-	}
-
-	/**
-	 * This function accepts and discards inputs; it has no side effects. This is
-	 * primarily useful idiomatically for overridable function endpoints which
-	 * always need to be callable, since JS lacks a null-call idiom ala Cocoa.
-	 */
-	function emptyFunction() {}
-
-	emptyFunction.thatReturns = makeEmptyFunction;
-	emptyFunction.thatReturnsFalse = makeEmptyFunction(false);
-	emptyFunction.thatReturnsTrue = makeEmptyFunction(true);
-	emptyFunction.thatReturnsNull = makeEmptyFunction(null);
-	emptyFunction.thatReturnsThis = function() { return this; };
-	emptyFunction.thatReturnsArgument = function(arg) { return arg; };
-
-	module.exports = emptyFunction;
-
-
-/***/ },
-/* 43 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Copyright 2013-2014, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	 * @providesModule joinClasses
-	 * @typechecks static-only
-	 */
-
-	"use strict";
-
-	/**
-	 * Combines multiple className strings into one.
-	 * http://jsperf.com/joinclasses-args-vs-array
-	 *
-	 * @param {...?string} classes
-	 * @return {string}
-	 */
-	function joinClasses(className/*, ... */) {
-	  if (!className) {
-	    className = '';
-	  }
-	  var nextClass;
-	  var argLength = arguments.length;
-	  if (argLength > 1) {
-	    for (var ii = 1; ii < argLength; ii++) {
-	      nextClass = arguments[ii];
-	      if (nextClass) {
-	        className = (className ? className + ' ' : '') + nextClass;
-	      }
-	    }
-	  }
-	  return className;
-	}
-
-	module.exports = joinClasses;
-
-
-/***/ },
-/* 44 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
 	 * Copyright 2013-2014, Facebook, Inc.
 	 * All rights reserved.
 	 *
@@ -4386,7 +4261,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 
-	var assign = __webpack_require__(41);
+	var assign = __webpack_require__(43);
 
 	/**
 	 * Keeps track of the current context.
@@ -4436,7 +4311,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 45 */
+/* 42 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -4471,6 +4346,140 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 	module.exports = ReactCurrentOwner;
+
+
+/***/ },
+/* 43 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Copyright 2014, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 * @providesModule Object.assign
+	 */
+
+	// https://people.mozilla.org/~jorendorff/es6-draft.html#sec-object.assign
+
+	function assign(target, sources) {
+	  if (target == null) {
+	    throw new TypeError('Object.assign target cannot be null or undefined');
+	  }
+
+	  var to = Object(target);
+	  var hasOwnProperty = Object.prototype.hasOwnProperty;
+
+	  for (var nextIndex = 1; nextIndex < arguments.length; nextIndex++) {
+	    var nextSource = arguments[nextIndex];
+	    if (nextSource == null) {
+	      continue;
+	    }
+
+	    var from = Object(nextSource);
+
+	    // We don't currently support accessors nor proxies. Therefore this
+	    // copy cannot throw. If we ever supported this then we must handle
+	    // exceptions and side-effects. We don't support symbols so they won't
+	    // be transferred.
+
+	    for (var key in from) {
+	      if (hasOwnProperty.call(from, key)) {
+	        to[key] = from[key];
+	      }
+	    }
+	  }
+
+	  return to;
+	};
+
+	module.exports = assign;
+
+
+/***/ },
+/* 44 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Copyright 2013-2014, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 * @providesModule emptyFunction
+	 */
+
+	function makeEmptyFunction(arg) {
+	  return function() {
+	    return arg;
+	  };
+	}
+
+	/**
+	 * This function accepts and discards inputs; it has no side effects. This is
+	 * primarily useful idiomatically for overridable function endpoints which
+	 * always need to be callable, since JS lacks a null-call idiom ala Cocoa.
+	 */
+	function emptyFunction() {}
+
+	emptyFunction.thatReturns = makeEmptyFunction;
+	emptyFunction.thatReturnsFalse = makeEmptyFunction(false);
+	emptyFunction.thatReturnsTrue = makeEmptyFunction(true);
+	emptyFunction.thatReturnsNull = makeEmptyFunction(null);
+	emptyFunction.thatReturnsThis = function() { return this; };
+	emptyFunction.thatReturnsArgument = function(arg) { return arg; };
+
+	module.exports = emptyFunction;
+
+
+/***/ },
+/* 45 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Copyright 2013-2014, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 * @providesModule joinClasses
+	 * @typechecks static-only
+	 */
+
+	"use strict";
+
+	/**
+	 * Combines multiple className strings into one.
+	 * http://jsperf.com/joinclasses-args-vs-array
+	 *
+	 * @param {...?string} classes
+	 * @return {string}
+	 */
+	function joinClasses(className/*, ... */) {
+	  if (!className) {
+	    className = '';
+	  }
+	  var nextClass;
+	  var argLength = arguments.length;
+	  if (argLength > 1) {
+	    for (var ii = 1; ii < argLength; ii++) {
+	      nextClass = arguments[ii];
+	      if (nextClass) {
+	        className = (className ? className + ' ' : '') + nextClass;
+	      }
+	    }
+	  }
+	  return className;
+	}
+
+	module.exports = joinClasses;
 
 
 /***/ },

@@ -5,7 +5,11 @@ var autoprefixer = require('autoprefixer-core');
 module.exports = {
   devtool: '#inline-source-map',
   entry: {
-    'docs.js': './docs/index.jsx'
+    'docs.js': [
+      'webpack-dev-server/client?http://192.168.0.100:8000',
+      'webpack/hot/only-dev-server',
+      './docs/index.jsx'
+    ]
   },
   output: {
     path: path.join(__dirname, 'build'),
@@ -13,7 +17,7 @@ module.exports = {
   },
   module: {
     loaders: [
-      {test: /\.jsx$/, loaders: ['babel']},
+      {test: /\.jsx$/, loaders: ['react-hot', 'babel']},
       {
         test: /\.scss$/,
         loader: "style!css!postcss!sass?outputStyle=expanded&includePaths[]=" + 
@@ -31,6 +35,5 @@ module.exports = {
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.IgnorePlugin(/vertx/)
   ]
 };
