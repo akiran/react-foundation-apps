@@ -4,7 +4,7 @@
   "description": "'React port of foundation-apps'",
   "main": "index.js",
   "scripts": {
-    "postinstall": "bower install",
+    "postinstall": "",
     "start": "./node_modules/.bin/gulp server"
   },
   "repository": {
@@ -70,6 +70,7 @@
     "object-assign": "^2.0.*"
   },
   "dependencies": {
+    "foundation-apps": "^1.1.0",
     "object-assign": "^2.0.0",
     "pubsub-js": "^1.5.0",
     "tether": "^0.6.5"
