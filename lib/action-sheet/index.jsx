@@ -1,5 +1,6 @@
 var React = require('react');
 var cloneWithProps = require('react/lib/cloneWithProps');
+var foundationApi = require('../utils/foundation-api');
 
 var ActionSheet = React.createClass({
   getInitialState: function () {
@@ -7,6 +8,40 @@ var ActionSheet = React.createClass({
   },
   setActiveState: function (active) {
     this.setState({active: active});
+  },
+  onBodyClick: function (e) {
+    var el = e.target;
+    var insideActionSheet = false;
+
+    do {
+      if(el.classList && el.classList.contains('action-sheet-container')) {
+        insideActionSheet = true;
+        break;
+      }
+
+    } while ((el = el.parentNode));
+
+    if(!insideActionSheet) {
+      this.setActiveState(false);
+    }
+  },
+  componentDidMount: function () {
+    if(this.props.id) {
+      foundationApi.subscribe(this.props.id, function (name, msg) {
+        if (msg === 'open') {
+          this.setState({active: true});
+        } else if (msg === 'close') {
+          this.setState({active: false});
+        } else if (msg === 'toggle') {
+          this.setState({active: !this.state.active});
+        }
+      }.bind(this));
+    }
+    document.body.addEventListener('click', this.onBodyClick);
+  },
+  componentWillUnmount: function () {
+    if(this.props.id) foundationApi.unsubscribe(this.props.id);
+    document.body.removeEventListener('click', this.onBodyClick);
   },
   render: function () {
     var children = React.Children.map(this.props.children, function (child, index) {
@@ -17,7 +52,7 @@ var ActionSheet = React.createClass({
       return cloneWithProps(child, extraProps);
     }.bind(this));
     return (
-      <div className='action-sheet-container'>
+      <div id={this.props.id} data-closable={true}  className='action-sheet-container'>
         {children}
       </div>
     );
