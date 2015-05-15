@@ -33,8 +33,6 @@
   },
   "homepage": "https://github.com/akiran/react-foundation-apps",
   "devDependencies": {
-    "6to5-core": "^3.6.5",
-    "6to5-loader": "^3.0.0",
     "autoprefixer-core": "^4.0.1",
     "babel-core": "^4.1.1",
     "babel-loader": "^4.0.0",
@@ -42,7 +40,7 @@
     "del": "^1.1.0",
     "escape-loader": "*",
     "gulp": "^3.8.10",
-    "gulp-ruby-sass": "^0.7.1",
+    "gulp-sass": "^2.0.1",
     "highlight.js": "^8.4.0",
     "highlightjs-themes": "git+https://github.com/akiran/highlightjs-themes",
     "html-loader": "^0.2.3",
@@ -56,9 +54,8 @@
     "react-hot-loader": "^1.2.3",
     "react-layer-mixin": "*",
     "react-responsive-mixin": "^0.3.*",
-    "react-router": "^0.11.4",
+    "react-router": ">=0.12",
     "run-sequence": "^1.0.2",
-    "sass-loader": "^0.3.1",
     "style-loader": "^0.8.2",
     "webpack": "^1.4.13",
     "webpack-dev-server": "^1.6.6"
