@@ -1,9 +1,10 @@
 {
   "name": "react-foundation-apps",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "'React port of foundation-apps'",
   "main": "index.js",
   "scripts": {
+    "prepublish": "gulp dist",
     "postinstall": "bower install",
     "start": "./node_modules/.bin/gulp server"
   },

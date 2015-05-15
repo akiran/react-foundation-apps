@@ -62,9 +62,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  Modal: __webpack_require__(5),
 	  Notification: __webpack_require__(6),
 	  OffCanvas: __webpack_require__(7),
-	  Panel: __webpack_require__(10),
-	  Popup: __webpack_require__(8),
-	  Tabs: __webpack_require__(9),
+	  Panel: __webpack_require__(8),
+	  Popup: __webpack_require__(9),
+	  Tabs: __webpack_require__(10),
 	  Trigger: __webpack_require__(11),
 	};
 
@@ -1540,6 +1540,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var React = __webpack_require__(12);
 	var cloneWithProps = __webpack_require__(25);
+	var foundationApi = __webpack_require__(13);
 
 	var ActionSheet = React.createClass({
 	  displayName: "ActionSheet",
@@ -1549,6 +1550,39 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 	  setActiveState: function setActiveState(active) {
 	    this.setState({ active: active });
+	  },
+	  onBodyClick: function onBodyClick(e) {
+	    var el = e.target;
+	    var insideActionSheet = false;
+
+	    do {
+	      if (el.classList && el.classList.contains("action-sheet-container")) {
+	        insideActionSheet = true;
+	        break;
+	      }
+	    } while (el = el.parentNode);
+
+	    if (!insideActionSheet) {
+	      this.setActiveState(false);
+	    }
+	  },
+	  componentDidMount: function componentDidMount() {
+	    if (this.props.id) {
+	      foundationApi.subscribe(this.props.id, (function (name, msg) {
+	        if (msg === "open") {
+	          this.setState({ active: true });
+	        } else if (msg === "close") {
+	          this.setState({ active: false });
+	        } else if (msg === "toggle") {
+	          this.setState({ active: !this.state.active });
+	        }
+	      }).bind(this));
+	    }
+	    document.body.addEventListener("click", this.onBodyClick);
+	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    if (this.props.id) foundationApi.unsubscribe(this.props.id);
+	    document.body.removeEventListener("click", this.onBodyClick);
 	  },
 	  render: function render() {
 	    var children = React.Children.map(this.props.children, (function (child, index) {
@@ -1560,15 +1594,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }).bind(this));
 	    return React.createElement(
 	      "div",
-	      { className: "action-sheet-container" },
+	      { id: this.props.id, "data-closable": true, className: "action-sheet-container" },
 	      children
 	    );
 	  }
 	});
 
 	module.exports = ActionSheet;
-	ActionSheet.Button = __webpack_require__(16);
-	ActionSheet.Content = __webpack_require__(15);
+	ActionSheet.Button = __webpack_require__(15);
+	ActionSheet.Content = __webpack_require__(16);
 
 /***/ },
 /* 3 */
@@ -1577,8 +1611,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	"use strict";
 
 	var React = __webpack_require__(12);
-	var ExecutionEnvironment = __webpack_require__(26);
-	var IconicJs = ExecutionEnvironment.canUseDOM && __webpack_require__(13);
+	var ExecutionEnvironment = __webpack_require__(27);
+	var IconicJs = ExecutionEnvironment.canUseDOM && __webpack_require__(14);
 	var cloneWithProps = __webpack_require__(25);
 
 	var Iconic = React.createClass({
@@ -1668,9 +1702,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	"use strict";
 
 	var React = __webpack_require__(12);
-	var cx = __webpack_require__(27);
+	var cx = __webpack_require__(26);
 	var Animation = __webpack_require__(18);
-	var foundationApi = __webpack_require__(14);
+	var foundationApi = __webpack_require__(13);
 
 	var Modal = React.createClass({
 	  displayName: "Modal",
@@ -1758,9 +1792,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	"use strict";
 
 	var React = __webpack_require__(12);
-	var cx = __webpack_require__(27);
+	var cx = __webpack_require__(26);
 	// var LayerMixin = require('react-layer-mixin');
-	var foundationApi = __webpack_require__(14);
+	var foundationApi = __webpack_require__(13);
 
 	var Offcanvas = React.createClass({
 	  displayName: "Offcanvas",
@@ -1812,125 +1846,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	"use strict";
 
 	var React = __webpack_require__(12);
-	var cx = __webpack_require__(27);
-	var ExecutionEnvironment = __webpack_require__(26);
-	var foundationApi = __webpack_require__(14);
-	var Tether = ExecutionEnvironment.canUseDOM && __webpack_require__(1);
-
-	var Popup = React.createClass({
-	  displayName: "Popup",
-
-	  getInitialState: function getInitialState() {
-	    return {
-	      active: false,
-	      tetherInit: false
-	    };
-	  },
-	  getDefaultProps: function getDefaultProps() {
-	    return {
-	      pinTo: "top center",
-	      pinAt: ""
-	    };
-	  },
-	  componentDidMount: function componentDidMount() {
-	    this.tether = {};
-	    foundationApi.subscribe(this.props.id, (function (name, msg) {
-	      if (msg[0] === "toggle") {
-	        this.toggle(msg[1]);
-	      }
-	    }).bind(this));
-	  },
-	  toggle: function toggle(target) {
-	    var active = !this.state.active;
-	    this.setState({ active: active }, (function () {
-	      if (active) {
-	        this.tetherElement(target);
-	      } else {
-	        this.tether.destroy();
-	      }
-	    }).bind(this));
-	  },
-	  tetherElement: function tetherElement(target) {
-	    var targetElement = document.getElementById(target);
-	    var attachment = "top center";
-	    this.tether = new Tether({
-	      element: this.getDOMNode(),
-	      target: targetElement,
-	      attachment: attachment });
-	  },
-	  render: function render() {
-	    var classes = {
-	      popup: true,
-	      "is-active": this.state.active
-	    };
-	    return React.createElement(
-	      "div",
-	      { id: this.props.id, className: cx(classes), "data-closable": "popup" },
-	      this.props.children
-	    );
-	  } });
-
-	module.exports = Popup;
-
-/***/ },
-/* 9 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	var React = __webpack_require__(12);
-	var cloneWithProps = __webpack_require__(25);
-
-	var Tabs = React.createClass({
-	  displayName: "Tabs",
-
-	  getInitialState: function getInitialState() {
-	    return {
-	      selectedTab: 0,
-	      content: null
-	    };
-	  },
-	  selectTab: function selectTab(options) {
-	    this.setState(options);
-	  },
-	  render: function render() {
-	    var children = React.Children.map(this.props.children, (function (child, index) {
-	      return cloneWithProps(child, {
-	        active: index === this.state.selectedTab,
-	        index: index,
-	        selectTab: this.selectTab
-	      });
-	    }).bind(this));
-	    return React.createElement(
-	      "div",
-	      null,
-	      React.createElement(
-	        "div",
-	        { className: "tabs" },
-	        children
-	      ),
-	      React.createElement(
-	        "div",
-	        null,
-	        this.state.content
-	      )
-	    );
-	  }
-	});
-
-	module.exports = Tabs;
-	Tabs.Tab = __webpack_require__(21);
-
-/***/ },
-/* 10 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	var React = __webpack_require__(12);
-	var cx = __webpack_require__(27);
+	var cx = __webpack_require__(26);
 	var Animation = __webpack_require__(18);
-	var foundationApi = __webpack_require__(14);
+	var foundationApi = __webpack_require__(13);
 
 	var Panel = React.createClass({
 	  displayName: "Panel",
@@ -1990,6 +1908,122 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = Panel;
 
 /***/ },
+/* 9 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var React = __webpack_require__(12);
+	var cx = __webpack_require__(26);
+	var ExecutionEnvironment = __webpack_require__(27);
+	var foundationApi = __webpack_require__(13);
+	var Tether = ExecutionEnvironment.canUseDOM && __webpack_require__(1);
+
+	var Popup = React.createClass({
+	  displayName: "Popup",
+
+	  getInitialState: function getInitialState() {
+	    return {
+	      active: false,
+	      tetherInit: false
+	    };
+	  },
+	  getDefaultProps: function getDefaultProps() {
+	    return {
+	      pinTo: "top center",
+	      pinAt: ""
+	    };
+	  },
+	  componentDidMount: function componentDidMount() {
+	    this.tether = {};
+	    foundationApi.subscribe(this.props.id, (function (name, msg) {
+	      if (msg[0] === "toggle") {
+	        this.toggle(msg[1]);
+	      }
+	    }).bind(this));
+	  },
+	  toggle: function toggle(target) {
+	    var active = !this.state.active;
+	    this.setState({ active: active }, (function () {
+	      if (active) {
+	        this.tetherElement(target);
+	      } else {
+	        this.tether.destroy();
+	      }
+	    }).bind(this));
+	  },
+	  tetherElement: function tetherElement(target) {
+	    var targetElement = document.getElementById(target);
+	    var attachment = "top center";
+	    this.tether = new Tether({
+	      element: this.getDOMNode(),
+	      target: targetElement,
+	      attachment: attachment });
+	  },
+	  render: function render() {
+	    var classes = {
+	      popup: true,
+	      "is-active": this.state.active
+	    };
+	    return React.createElement(
+	      "div",
+	      { id: this.props.id, className: cx(classes), "data-closable": "popup" },
+	      this.props.children
+	    );
+	  } });
+
+	module.exports = Popup;
+
+/***/ },
+/* 10 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var React = __webpack_require__(12);
+	var cloneWithProps = __webpack_require__(25);
+
+	var Tabs = React.createClass({
+	  displayName: "Tabs",
+
+	  getInitialState: function getInitialState() {
+	    return {
+	      selectedTab: 0,
+	      content: null
+	    };
+	  },
+	  selectTab: function selectTab(options) {
+	    this.setState(options);
+	  },
+	  render: function render() {
+	    var children = React.Children.map(this.props.children, (function (child, index) {
+	      return cloneWithProps(child, {
+	        active: index === this.state.selectedTab,
+	        index: index,
+	        selectTab: this.selectTab
+	      });
+	    }).bind(this));
+	    return React.createElement(
+	      "div",
+	      null,
+	      React.createElement(
+	        "div",
+	        { className: "tabs" },
+	        children
+	      ),
+	      React.createElement(
+	        "div",
+	        null,
+	        this.state.content
+	      )
+	    );
+	  }
+	});
+
+	module.exports = Tabs;
+	Tabs.Tab = __webpack_require__(21);
+
+/***/ },
 /* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -1997,7 +2031,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var React = __webpack_require__(12);
 	var cloneWithProps = __webpack_require__(25);
-	var foundationApi = __webpack_require__(14);
+	var foundationApi = __webpack_require__(13);
 	var PopupToggle = __webpack_require__(22);
 
 	var Trigger = React.createClass({
@@ -2077,19 +2111,8 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/*!
-	 * iconic.js v0.4.0 - The Iconic JavaScript library
-	 * Copyright (c) 2014 Waybury - http://useiconic.com
-	 */
-
-	!function(a){"object"==typeof exports?module.exports=a():"function"==typeof define&&define.amd?define(a):"undefined"!=typeof window?window.IconicJS=a():"undefined"!=typeof global?global.IconicJS=a():"undefined"!=typeof self&&(self.IconicJS=a())}(function(){var a;return function b(a,c,d){function e(g,h){if(!c[g]){if(!a[g]){var i="function"==typeof require&&require;if(!h&&i)return i(g,!0);if(f)return f(g,!0);throw new Error("Cannot find module '"+g+"'")}var j=c[g]={exports:{}};a[g][0].call(j.exports,function(b){var c=a[g][1][b];return e(c?c:b)},j,j.exports,b,a,c,d)}return c[g].exports}for(var f="function"==typeof require&&require,g=0;g<d.length;g++)e(d[g]);return e}({1:[function(a,b){var c=(a("./modules/polyfills"),a("./modules/svg-injector")),d=a("./modules/extend"),e=a("./modules/responsive"),f=a("./modules/position"),g=a("./modules/container"),h=a("./modules/log"),i={},j=window.iconicSmartIconApis={},k=("file:"===window.location.protocol,0),l=function(a,b,e){b=d({},i,b||{});var f={evalScripts:b.evalScripts,pngFallback:b.pngFallback};f.each=function(a){if(a)if("string"==typeof a)h.debug(a);else if(a instanceof SVGSVGElement){var c=a.getAttribute("data-icon");if(c&&j[c]){var d=j[c](a);for(var e in d)a[e]=d[e]}/iconic-bg-/.test(a.getAttribute("class"))&&g.addBackground(a),m(a),k++,b&&b.each&&"function"==typeof b.each&&b.each(a)}},"string"==typeof a&&(a=document.querySelectorAll(a)),c(a,f,e)},m=function(a){var b=[];a?"string"==typeof a?b=document.querySelectorAll(a):void 0!==a.length?b=a:"object"==typeof a&&b.push(a):b=document.querySelectorAll("svg.iconic"),Array.prototype.forEach.call(b,function(a){a instanceof SVGSVGElement&&(a.update&&a.update(),e.refresh(a),f.refresh(a))})},n=function(){i.debug&&console.time&&console.time("autoInjectSelector - "+i.autoInjectSelector);var a=k;l(i.autoInjectSelector,{},function(){if(i.debug&&console.timeEnd&&console.timeEnd("autoInjectSelector - "+i.autoInjectSelector),h.debug("AutoInjected: "+(k-a)),e.refreshAll(),i.autoInjectDone&&"function"==typeof i.autoInjectDone){var b=k-a;i.autoInjectDone(b)}})},o=function(a){a&&""!==a&&"complete"!==document.readyState?document.addEventListener("DOMContentLoaded",n):document.removeEventListener("DOMContentLoaded",n)},p=function(a){return a=a||{},d(i,a),o(i.autoInjectSelector),h.enableDebug(i.debug),window._Iconic?window._Iconic:{inject:l,update:m,smartIconApis:j,svgInjectedCount:k}};b.exports=p,window._Iconic=new p({autoInjectSelector:"img.iconic",evalScripts:"once",pngFallback:!1,each:null,autoInjectDone:null,debug:!1})},{"./modules/container":2,"./modules/extend":3,"./modules/log":4,"./modules/polyfills":5,"./modules/position":6,"./modules/responsive":7,"./modules/svg-injector":8}],2:[function(a,b){var c=function(a){var b=a.getAttribute("class").split(" "),c=-1!==b.indexOf("iconic-fluid"),d=[],e=["iconic-bg"];Array.prototype.forEach.call(b,function(a){switch(a){case"iconic-sm":case"iconic-md":case"iconic-lg":d.push(a),c||e.push(a.replace(/-/,"-bg-"));break;case"iconic-fluid":d.push(a),e.push(a.replace(/-/,"-bg-"));break;case"iconic-bg-circle":case"iconic-bg-rounded-rect":case"iconic-bg-badge":e.push(a);break;default:d.push(a)}}),a.setAttribute("class",d.join(" "));var f=a.parentNode,g=Array.prototype.indexOf.call(f.childNodes,a),h=document.createElement("span");h.setAttribute("class",e.join(" ")),h.appendChild(a),f.insertBefore(h,f.childNodes[g])};b.exports={addBackground:c}},{}],3:[function(a,b){b.exports=function(a){return Array.prototype.forEach.call(Array.prototype.slice.call(arguments,1),function(b){if(b)for(var c in b)b.hasOwnProperty(c)&&(a[c]=b[c])}),a}},{}],4:[function(a,b){var c=!1,d=function(a){console&&console.log&&console.log(a)},e=function(a){d("Iconic INFO: "+a)},f=function(a){d("Iconic WARNING: "+a)},g=function(a){c&&d("Iconic DEBUG: "+a)},h=function(a){c=a};b.exports={info:e,warn:f,debug:g,enableDebug:h}},{}],5:[function(){Array.prototype.forEach||(Array.prototype.forEach=function(a,b){"use strict";if(void 0===this||null===this||"function"!=typeof a)throw new TypeError;var c,d=this.length>>>0;for(c=0;d>c;++c)c in this&&a.call(b,this[c],c,this)}),function(){if(Event.prototype.preventDefault||(Event.prototype.preventDefault=function(){this.returnValue=!1}),Event.prototype.stopPropagation||(Event.prototype.stopPropagation=function(){this.cancelBubble=!0}),!Element.prototype.addEventListener){var a=[],b=function(b,c){var d=this,e=function(a){a.target=a.srcElement,a.currentTarget=d,c.handleEvent?c.handleEvent(a):c.call(d,a)};if("DOMContentLoaded"==b){var f=function(a){"complete"==document.readyState&&e(a)};if(document.attachEvent("onreadystatechange",f),a.push({object:this,type:b,listener:c,wrapper:f}),"complete"==document.readyState){var g=new Event;g.srcElement=window,f(g)}}else this.attachEvent("on"+b,e),a.push({object:this,type:b,listener:c,wrapper:e})},c=function(b,c){for(var d=0;d<a.length;){var e=a[d];if(e.object==this&&e.type==b&&e.listener==c){"DOMContentLoaded"==b?this.detachEvent("onreadystatechange",e.wrapper):this.detachEvent("on"+b,e.wrapper);break}++d}};Element.prototype.addEventListener=b,Element.prototype.removeEventListener=c,HTMLDocument&&(HTMLDocument.prototype.addEventListener=b,HTMLDocument.prototype.removeEventListener=c),Window&&(Window.prototype.addEventListener=b,Window.prototype.removeEventListener=c)}}()},{}],6:[function(a,b){var c=function(a){var b=a.getAttribute("data-position");if(b&&""!==b){var c,d,e,f,g,h,i,j=a.getAttribute("width"),k=a.getAttribute("height"),l=b.split("-"),m=a.querySelectorAll("g.iconic-container");Array.prototype.forEach.call(m,function(a){if(c=a.getAttribute("data-width"),d=a.getAttribute("data-height"),c!==j||d!==k){if(e=a.getAttribute("transform"),f=1,e){var b=e.match(/scale\((\d)/);f=b&&b[1]?b[1]:1}g=Math.floor((j/f-c)/2),h=Math.floor((k/f-d)/2),Array.prototype.forEach.call(l,function(a){switch(a){case"top":h=0;break;case"bottom":h=k/f-d;break;case"left":g=0;break;case"right":g=j/f-c;break;case"center":break;default:console&&console.log&&console.log("Unknown position: "+a)}}),i=0===h?g:g+" "+h,i="translate("+i+")",e?/translate/.test(e)?e=e.replace(/translate\(.*?\)/,i):e+=" "+i:e=i,a.setAttribute("transform",e)}})}};b.exports={refresh:c}},{}],7:[function(a,b){var c=/(iconic-sm\b|iconic-md\b|iconic-lg\b)/,d=function(a,b){var c="undefined"!=typeof window.getComputedStyle&&window.getComputedStyle(a,null).getPropertyValue(b);return!c&&a.currentStyle&&(c=a.currentStyle[b.replace(/([a-z])\-([a-z])/,function(a,b,c){return b+c.toUpperCase()})]||a.currentStyle[b]),c},e=function(a){var b=a.style.display;a.style.display="block";var c=parseFloat(d(a,"width").slice(0,-2)),e=parseFloat(d(a,"height").slice(0,-2));return a.style.display=b,{width:c,height:e}},f=function(){var a="/* Iconic Responsive Support Styles */\n.iconic-property-fill, .iconic-property-text {stroke: none !important;}\n.iconic-property-stroke {fill: none !important;}\nsvg.iconic.iconic-fluid {height:100% !important;width:100% !important;}\nsvg.iconic.iconic-sm:not(.iconic-size-md):not(.iconic-size-lg), svg.iconic.iconic-size-sm{width:16px;height:16px;}\nsvg.iconic.iconic-md:not(.iconic-size-sm):not(.iconic-size-lg), svg.iconic.iconic-size-md{width:32px;height:32px;}\nsvg.iconic.iconic-lg:not(.iconic-size-sm):not(.iconic-size-md), svg.iconic.iconic-size-lg{width:128px;height:128px;}\nsvg.iconic-sm > g.iconic-md, svg.iconic-sm > g.iconic-lg, svg.iconic-md > g.iconic-sm, svg.iconic-md > g.iconic-lg, svg.iconic-lg > g.iconic-sm, svg.iconic-lg > g.iconic-md {display: none;}\nsvg.iconic.iconic-icon-sm > g.iconic-lg, svg.iconic.iconic-icon-md > g.iconic-lg {display:none;}\nsvg.iconic-sm:not(.iconic-icon-md):not(.iconic-icon-lg) > g.iconic-sm, svg.iconic-md.iconic-icon-sm > g.iconic-sm, svg.iconic-lg.iconic-icon-sm > g.iconic-sm {display:inline;}\nsvg.iconic-md:not(.iconic-icon-sm):not(.iconic-icon-lg) > g.iconic-md, svg.iconic-sm.iconic-icon-md > g.iconic-md, svg.iconic-lg.iconic-icon-md > g.iconic-md {display:inline;}\nsvg.iconic-lg:not(.iconic-icon-sm):not(.iconic-icon-md) > g.iconic-lg, svg.iconic-sm.iconic-icon-lg > g.iconic-lg, svg.iconic-md.iconic-icon-lg > g.iconic-lg {display:inline;}";navigator&&navigator.userAgent&&/MSIE 10\.0/.test(navigator.userAgent)&&(a+="svg.iconic{zoom:1.0001;}");var b=document.createElement("style");b.id="iconic-responsive-css",b.type="text/css",b.styleSheet?b.styleSheet.cssText=a:b.appendChild(document.createTextNode(a)),(document.head||document.getElementsByTagName("head")[0]).appendChild(b)},g=function(a){if(/iconic-fluid/.test(a.getAttribute("class"))){var b,d=e(a),f=a.viewBox.baseVal.width/a.viewBox.baseVal.height;b=1===f?Math.min(d.width,d.height):1>f?d.width:d.height;var g;g=32>b?"iconic-sm":b>=32&&128>b?"iconic-md":"iconic-lg";var h=a.getAttribute("class"),i=c.test(h)?h.replace(c,g):h+" "+g;a.setAttribute("class",i)}},h=function(){var a=document.querySelectorAll(".injected-svg.iconic-fluid");Array.prototype.forEach.call(a,function(a){g(a)})};document.addEventListener("DOMContentLoaded",function(){f()}),window.addEventListener("resize",function(){h()}),b.exports={refresh:g,refreshAll:h}},{}],8:[function(b,c,d){!function(b,e){"use strict";function f(a){a=a.split(" ");for(var b={},c=a.length,d=[];c--;)b.hasOwnProperty(a[c])||(b[a[c]]=1,d.unshift(a[c]));return d.join(" ")}var g="file:"===b.location.protocol,h=e.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#BasicStructure","1.1"),i=Array.prototype.forEach||function(a,b){if(void 0===this||null===this||"function"!=typeof a)throw new TypeError;var c,d=this.length>>>0;for(c=0;d>c;++c)c in this&&a.call(b,this[c],c,this)},j={},k=0,l=[],m=[],n={},o=function(a){return a.cloneNode(!0)},p=function(a,b){m[a]=m[a]||[],m[a].push(b)},q=function(a){for(var b=0,c=m[a].length;c>b;b++)!function(b){setTimeout(function(){m[a][b](o(j[a]))},0)}(b)},r=function(a,c){if(void 0!==j[a])j[a]instanceof SVGSVGElement?c(o(j[a])):p(a,c);else{if(!b.XMLHttpRequest)return c("Browser does not support XMLHttpRequest"),!1;j[a]={},p(a,c);var d=new XMLHttpRequest;d.onreadystatechange=function(){if(4===d.readyState){if(404===d.status||null===d.responseXML)return c("Unable to load SVG file: "+a),g&&c("Note: SVG injection ajax calls do not work locally without adjusting security setting in your browser. Or consider using a local webserver."),c(),!1;if(!(200===d.status||g&&0===d.status))return c("There was a problem injecting the SVG: "+d.status+" "+d.statusText),!1;if(d.responseXML instanceof Document)j[a]=d.responseXML.documentElement;else if(DOMParser&&DOMParser instanceof Function){var b;try{var e=new DOMParser;b=e.parseFromString(d.responseText,"text/xml")}catch(f){b=void 0}if(!b||b.getElementsByTagName("parsererror").length)return c("Unable to parse SVG file: "+a),!1;j[a]=b.documentElement}q(a)}},d.open("GET",a),d.overrideMimeType&&d.overrideMimeType("text/xml"),d.send()}},s=function(a,c,d,e){var g=a.getAttribute("data-src")||a.getAttribute("src");if(!/svg$/i.test(g))return e("Attempted to inject a file with a non-svg extension: "+g),void 0;if(!h){var j=a.getAttribute("data-fallback")||a.getAttribute("data-png");return j?(a.setAttribute("src",j),e(null)):d?(a.setAttribute("src",d+"/"+g.split("/").pop().replace(".svg",".png")),e(null)):e("This browser does not support SVG and no PNG fallback was defined."),void 0}-1===l.indexOf(a)&&(l.push(a),a.setAttribute("src",""),r(g,function(d){if("undefined"==typeof d||"string"==typeof d)return e(d),!1;var h=a.getAttribute("id");h&&d.setAttribute("id",h);var j=a.getAttribute("title");j&&d.setAttribute("title",j);var m=[].concat(d.getAttribute("class")||[],"injected-svg",a.getAttribute("class")||[]).join(" ");d.setAttribute("class",f(m));var o=a.getAttribute("style");o&&d.setAttribute("style",o);var p=[].filter.call(a.attributes,function(a){return/^data-\w[\w\-]*$/.test(a.name)});i.call(p,function(a){a.name&&a.value&&d.setAttribute(a.name,a.value)});for(var q,r=d.querySelectorAll("defs clipPath[id]"),s=0,t=r.length;t>s;s++){q=r[s].id+"-"+k;for(var u=d.querySelectorAll('[clip-path*="'+r[s].id+'"]'),v=0,w=u.length;w>v;v++)u[v].setAttribute("clip-path","url(#"+q+")");r[s].id=q}d.removeAttribute("xmlns:a");for(var x,y,z=d.querySelectorAll("script"),A=[],B=0,C=z.length;C>B;B++)y=z[B].getAttribute("type"),y&&"application/ecmascript"!==y&&"application/javascript"!==y||(x=z[B].innerText||z[B].textContent,A.push(x),d.removeChild(z[B]));if(A.length>0&&("always"===c||"once"===c&&!n[g])){for(var D=0,E=A.length;E>D;D++)new Function(A[D])(b);n[g]=!0}a.parentNode.replaceChild(d,a),delete l[l.indexOf(a)],a=null,k++,e(d)}))},t=function(a,b,c){b=b||{};var d=b.evalScripts||"always",e=b.pngFallback||!1,f=b.each;if(void 0!==a.length){var g=0;i.call(a,function(b){s(b,d,e,function(b){f&&"function"==typeof f&&f(b),c&&a.length===++g&&c(g)})})}else a?s(a,d,e,function(b){f&&"function"==typeof f&&f(b),c&&c(1),a=null}):c&&c(0)};"object"==typeof c&&"object"==typeof c.exports?c.exports=d=t:"function"==typeof a&&a.amd?a(function(){return t}):"object"==typeof b&&(b.SVGInjector=t)}(window,document)},{}]},{},[1])(1)});
-
-/***/ },
-/* 14 */
-/***/ function(module, exports, __webpack_require__) {
-
 	//From https://github.com/zurb/foundation-apps/blob/master/js/angular/common/common.services.js
-	var PubSub = __webpack_require__(36);
+	var PubSub = __webpack_require__(32);
 	var assign = __webpack_require__(31);
 
 	var listeners = [];
@@ -2136,37 +2159,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = foundationApi;
 
 /***/ },
-/* 15 */
+/* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	/*!
+	 * iconic.js v0.4.0 - The Iconic JavaScript library
+	 * Copyright (c) 2014 Waybury - http://useiconic.com
+	 */
 
-	var React = __webpack_require__(12);
-	var cx = __webpack_require__(27);
-
-	var ActionSheetContent = React.createClass({
-	  displayName: "ActionSheetContent",
-
-	  getDefaultProps: function getDefaultProps() {
-	    return { position: "bottom" };
-	  },
-	  render: function render() {
-	    var classes = {
-	      "action-sheet": true,
-	      "is-active": this.props.active
-	    };
-	    return React.createElement(
-	      "div",
-	      { className: cx(classes) },
-	      this.props.children
-	    );
-	  }
-	});
-
-	module.exports = ActionSheetContent;
+	!function(a){"object"==typeof exports?module.exports=a():"function"==typeof define&&define.amd?define(a):"undefined"!=typeof window?window.IconicJS=a():"undefined"!=typeof global?global.IconicJS=a():"undefined"!=typeof self&&(self.IconicJS=a())}(function(){var a;return function b(a,c,d){function e(g,h){if(!c[g]){if(!a[g]){var i="function"==typeof require&&require;if(!h&&i)return i(g,!0);if(f)return f(g,!0);throw new Error("Cannot find module '"+g+"'")}var j=c[g]={exports:{}};a[g][0].call(j.exports,function(b){var c=a[g][1][b];return e(c?c:b)},j,j.exports,b,a,c,d)}return c[g].exports}for(var f="function"==typeof require&&require,g=0;g<d.length;g++)e(d[g]);return e}({1:[function(a,b){var c=(a("./modules/polyfills"),a("./modules/svg-injector")),d=a("./modules/extend"),e=a("./modules/responsive"),f=a("./modules/position"),g=a("./modules/container"),h=a("./modules/log"),i={},j=window.iconicSmartIconApis={},k=("file:"===window.location.protocol,0),l=function(a,b,e){b=d({},i,b||{});var f={evalScripts:b.evalScripts,pngFallback:b.pngFallback};f.each=function(a){if(a)if("string"==typeof a)h.debug(a);else if(a instanceof SVGSVGElement){var c=a.getAttribute("data-icon");if(c&&j[c]){var d=j[c](a);for(var e in d)a[e]=d[e]}/iconic-bg-/.test(a.getAttribute("class"))&&g.addBackground(a),m(a),k++,b&&b.each&&"function"==typeof b.each&&b.each(a)}},"string"==typeof a&&(a=document.querySelectorAll(a)),c(a,f,e)},m=function(a){var b=[];a?"string"==typeof a?b=document.querySelectorAll(a):void 0!==a.length?b=a:"object"==typeof a&&b.push(a):b=document.querySelectorAll("svg.iconic"),Array.prototype.forEach.call(b,function(a){a instanceof SVGSVGElement&&(a.update&&a.update(),e.refresh(a),f.refresh(a))})},n=function(){i.debug&&console.time&&console.time("autoInjectSelector - "+i.autoInjectSelector);var a=k;l(i.autoInjectSelector,{},function(){if(i.debug&&console.timeEnd&&console.timeEnd("autoInjectSelector - "+i.autoInjectSelector),h.debug("AutoInjected: "+(k-a)),e.refreshAll(),i.autoInjectDone&&"function"==typeof i.autoInjectDone){var b=k-a;i.autoInjectDone(b)}})},o=function(a){a&&""!==a&&"complete"!==document.readyState?document.addEventListener("DOMContentLoaded",n):document.removeEventListener("DOMContentLoaded",n)},p=function(a){return a=a||{},d(i,a),o(i.autoInjectSelector),h.enableDebug(i.debug),window._Iconic?window._Iconic:{inject:l,update:m,smartIconApis:j,svgInjectedCount:k}};b.exports=p,window._Iconic=new p({autoInjectSelector:"img.iconic",evalScripts:"once",pngFallback:!1,each:null,autoInjectDone:null,debug:!1})},{"./modules/container":2,"./modules/extend":3,"./modules/log":4,"./modules/polyfills":5,"./modules/position":6,"./modules/responsive":7,"./modules/svg-injector":8}],2:[function(a,b){var c=function(a){var b=a.getAttribute("class").split(" "),c=-1!==b.indexOf("iconic-fluid"),d=[],e=["iconic-bg"];Array.prototype.forEach.call(b,function(a){switch(a){case"iconic-sm":case"iconic-md":case"iconic-lg":d.push(a),c||e.push(a.replace(/-/,"-bg-"));break;case"iconic-fluid":d.push(a),e.push(a.replace(/-/,"-bg-"));break;case"iconic-bg-circle":case"iconic-bg-rounded-rect":case"iconic-bg-badge":e.push(a);break;default:d.push(a)}}),a.setAttribute("class",d.join(" "));var f=a.parentNode,g=Array.prototype.indexOf.call(f.childNodes,a),h=document.createElement("span");h.setAttribute("class",e.join(" ")),h.appendChild(a),f.insertBefore(h,f.childNodes[g])};b.exports={addBackground:c}},{}],3:[function(a,b){b.exports=function(a){return Array.prototype.forEach.call(Array.prototype.slice.call(arguments,1),function(b){if(b)for(var c in b)b.hasOwnProperty(c)&&(a[c]=b[c])}),a}},{}],4:[function(a,b){var c=!1,d=function(a){console&&console.log&&console.log(a)},e=function(a){d("Iconic INFO: "+a)},f=function(a){d("Iconic WARNING: "+a)},g=function(a){c&&d("Iconic DEBUG: "+a)},h=function(a){c=a};b.exports={info:e,warn:f,debug:g,enableDebug:h}},{}],5:[function(){Array.prototype.forEach||(Array.prototype.forEach=function(a,b){"use strict";if(void 0===this||null===this||"function"!=typeof a)throw new TypeError;var c,d=this.length>>>0;for(c=0;d>c;++c)c in this&&a.call(b,this[c],c,this)}),function(){if(Event.prototype.preventDefault||(Event.prototype.preventDefault=function(){this.returnValue=!1}),Event.prototype.stopPropagation||(Event.prototype.stopPropagation=function(){this.cancelBubble=!0}),!Element.prototype.addEventListener){var a=[],b=function(b,c){var d=this,e=function(a){a.target=a.srcElement,a.currentTarget=d,c.handleEvent?c.handleEvent(a):c.call(d,a)};if("DOMContentLoaded"==b){var f=function(a){"complete"==document.readyState&&e(a)};if(document.attachEvent("onreadystatechange",f),a.push({object:this,type:b,listener:c,wrapper:f}),"complete"==document.readyState){var g=new Event;g.srcElement=window,f(g)}}else this.attachEvent("on"+b,e),a.push({object:this,type:b,listener:c,wrapper:e})},c=function(b,c){for(var d=0;d<a.length;){var e=a[d];if(e.object==this&&e.type==b&&e.listener==c){"DOMContentLoaded"==b?this.detachEvent("onreadystatechange",e.wrapper):this.detachEvent("on"+b,e.wrapper);break}++d}};Element.prototype.addEventListener=b,Element.prototype.removeEventListener=c,HTMLDocument&&(HTMLDocument.prototype.addEventListener=b,HTMLDocument.prototype.removeEventListener=c),Window&&(Window.prototype.addEventListener=b,Window.prototype.removeEventListener=c)}}()},{}],6:[function(a,b){var c=function(a){var b=a.getAttribute("data-position");if(b&&""!==b){var c,d,e,f,g,h,i,j=a.getAttribute("width"),k=a.getAttribute("height"),l=b.split("-"),m=a.querySelectorAll("g.iconic-container");Array.prototype.forEach.call(m,function(a){if(c=a.getAttribute("data-width"),d=a.getAttribute("data-height"),c!==j||d!==k){if(e=a.getAttribute("transform"),f=1,e){var b=e.match(/scale\((\d)/);f=b&&b[1]?b[1]:1}g=Math.floor((j/f-c)/2),h=Math.floor((k/f-d)/2),Array.prototype.forEach.call(l,function(a){switch(a){case"top":h=0;break;case"bottom":h=k/f-d;break;case"left":g=0;break;case"right":g=j/f-c;break;case"center":break;default:console&&console.log&&console.log("Unknown position: "+a)}}),i=0===h?g:g+" "+h,i="translate("+i+")",e?/translate/.test(e)?e=e.replace(/translate\(.*?\)/,i):e+=" "+i:e=i,a.setAttribute("transform",e)}})}};b.exports={refresh:c}},{}],7:[function(a,b){var c=/(iconic-sm\b|iconic-md\b|iconic-lg\b)/,d=function(a,b){var c="undefined"!=typeof window.getComputedStyle&&window.getComputedStyle(a,null).getPropertyValue(b);return!c&&a.currentStyle&&(c=a.currentStyle[b.replace(/([a-z])\-([a-z])/,function(a,b,c){return b+c.toUpperCase()})]||a.currentStyle[b]),c},e=function(a){var b=a.style.display;a.style.display="block";var c=parseFloat(d(a,"width").slice(0,-2)),e=parseFloat(d(a,"height").slice(0,-2));return a.style.display=b,{width:c,height:e}},f=function(){var a="/* Iconic Responsive Support Styles */\n.iconic-property-fill, .iconic-property-text {stroke: none !important;}\n.iconic-property-stroke {fill: none !important;}\nsvg.iconic.iconic-fluid {height:100% !important;width:100% !important;}\nsvg.iconic.iconic-sm:not(.iconic-size-md):not(.iconic-size-lg), svg.iconic.iconic-size-sm{width:16px;height:16px;}\nsvg.iconic.iconic-md:not(.iconic-size-sm):not(.iconic-size-lg), svg.iconic.iconic-size-md{width:32px;height:32px;}\nsvg.iconic.iconic-lg:not(.iconic-size-sm):not(.iconic-size-md), svg.iconic.iconic-size-lg{width:128px;height:128px;}\nsvg.iconic-sm > g.iconic-md, svg.iconic-sm > g.iconic-lg, svg.iconic-md > g.iconic-sm, svg.iconic-md > g.iconic-lg, svg.iconic-lg > g.iconic-sm, svg.iconic-lg > g.iconic-md {display: none;}\nsvg.iconic.iconic-icon-sm > g.iconic-lg, svg.iconic.iconic-icon-md > g.iconic-lg {display:none;}\nsvg.iconic-sm:not(.iconic-icon-md):not(.iconic-icon-lg) > g.iconic-sm, svg.iconic-md.iconic-icon-sm > g.iconic-sm, svg.iconic-lg.iconic-icon-sm > g.iconic-sm {display:inline;}\nsvg.iconic-md:not(.iconic-icon-sm):not(.iconic-icon-lg) > g.iconic-md, svg.iconic-sm.iconic-icon-md > g.iconic-md, svg.iconic-lg.iconic-icon-md > g.iconic-md {display:inline;}\nsvg.iconic-lg:not(.iconic-icon-sm):not(.iconic-icon-md) > g.iconic-lg, svg.iconic-sm.iconic-icon-lg > g.iconic-lg, svg.iconic-md.iconic-icon-lg > g.iconic-lg {display:inline;}";navigator&&navigator.userAgent&&/MSIE 10\.0/.test(navigator.userAgent)&&(a+="svg.iconic{zoom:1.0001;}");var b=document.createElement("style");b.id="iconic-responsive-css",b.type="text/css",b.styleSheet?b.styleSheet.cssText=a:b.appendChild(document.createTextNode(a)),(document.head||document.getElementsByTagName("head")[0]).appendChild(b)},g=function(a){if(/iconic-fluid/.test(a.getAttribute("class"))){var b,d=e(a),f=a.viewBox.baseVal.width/a.viewBox.baseVal.height;b=1===f?Math.min(d.width,d.height):1>f?d.width:d.height;var g;g=32>b?"iconic-sm":b>=32&&128>b?"iconic-md":"iconic-lg";var h=a.getAttribute("class"),i=c.test(h)?h.replace(c,g):h+" "+g;a.setAttribute("class",i)}},h=function(){var a=document.querySelectorAll(".injected-svg.iconic-fluid");Array.prototype.forEach.call(a,function(a){g(a)})};document.addEventListener("DOMContentLoaded",function(){f()}),window.addEventListener("resize",function(){h()}),b.exports={refresh:g,refreshAll:h}},{}],8:[function(b,c,d){!function(b,e){"use strict";function f(a){a=a.split(" ");for(var b={},c=a.length,d=[];c--;)b.hasOwnProperty(a[c])||(b[a[c]]=1,d.unshift(a[c]));return d.join(" ")}var g="file:"===b.location.protocol,h=e.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#BasicStructure","1.1"),i=Array.prototype.forEach||function(a,b){if(void 0===this||null===this||"function"!=typeof a)throw new TypeError;var c,d=this.length>>>0;for(c=0;d>c;++c)c in this&&a.call(b,this[c],c,this)},j={},k=0,l=[],m=[],n={},o=function(a){return a.cloneNode(!0)},p=function(a,b){m[a]=m[a]||[],m[a].push(b)},q=function(a){for(var b=0,c=m[a].length;c>b;b++)!function(b){setTimeout(function(){m[a][b](o(j[a]))},0)}(b)},r=function(a,c){if(void 0!==j[a])j[a]instanceof SVGSVGElement?c(o(j[a])):p(a,c);else{if(!b.XMLHttpRequest)return c("Browser does not support XMLHttpRequest"),!1;j[a]={},p(a,c);var d=new XMLHttpRequest;d.onreadystatechange=function(){if(4===d.readyState){if(404===d.status||null===d.responseXML)return c("Unable to load SVG file: "+a),g&&c("Note: SVG injection ajax calls do not work locally without adjusting security setting in your browser. Or consider using a local webserver."),c(),!1;if(!(200===d.status||g&&0===d.status))return c("There was a problem injecting the SVG: "+d.status+" "+d.statusText),!1;if(d.responseXML instanceof Document)j[a]=d.responseXML.documentElement;else if(DOMParser&&DOMParser instanceof Function){var b;try{var e=new DOMParser;b=e.parseFromString(d.responseText,"text/xml")}catch(f){b=void 0}if(!b||b.getElementsByTagName("parsererror").length)return c("Unable to parse SVG file: "+a),!1;j[a]=b.documentElement}q(a)}},d.open("GET",a),d.overrideMimeType&&d.overrideMimeType("text/xml"),d.send()}},s=function(a,c,d,e){var g=a.getAttribute("data-src")||a.getAttribute("src");if(!/svg$/i.test(g))return e("Attempted to inject a file with a non-svg extension: "+g),void 0;if(!h){var j=a.getAttribute("data-fallback")||a.getAttribute("data-png");return j?(a.setAttribute("src",j),e(null)):d?(a.setAttribute("src",d+"/"+g.split("/").pop().replace(".svg",".png")),e(null)):e("This browser does not support SVG and no PNG fallback was defined."),void 0}-1===l.indexOf(a)&&(l.push(a),a.setAttribute("src",""),r(g,function(d){if("undefined"==typeof d||"string"==typeof d)return e(d),!1;var h=a.getAttribute("id");h&&d.setAttribute("id",h);var j=a.getAttribute("title");j&&d.setAttribute("title",j);var m=[].concat(d.getAttribute("class")||[],"injected-svg",a.getAttribute("class")||[]).join(" ");d.setAttribute("class",f(m));var o=a.getAttribute("style");o&&d.setAttribute("style",o);var p=[].filter.call(a.attributes,function(a){return/^data-\w[\w\-]*$/.test(a.name)});i.call(p,function(a){a.name&&a.value&&d.setAttribute(a.name,a.value)});for(var q,r=d.querySelectorAll("defs clipPath[id]"),s=0,t=r.length;t>s;s++){q=r[s].id+"-"+k;for(var u=d.querySelectorAll('[clip-path*="'+r[s].id+'"]'),v=0,w=u.length;w>v;v++)u[v].setAttribute("clip-path","url(#"+q+")");r[s].id=q}d.removeAttribute("xmlns:a");for(var x,y,z=d.querySelectorAll("script"),A=[],B=0,C=z.length;C>B;B++)y=z[B].getAttribute("type"),y&&"application/ecmascript"!==y&&"application/javascript"!==y||(x=z[B].innerText||z[B].textContent,A.push(x),d.removeChild(z[B]));if(A.length>0&&("always"===c||"once"===c&&!n[g])){for(var D=0,E=A.length;E>D;D++)new Function(A[D])(b);n[g]=!0}a.parentNode.replaceChild(d,a),delete l[l.indexOf(a)],a=null,k++,e(d)}))},t=function(a,b,c){b=b||{};var d=b.evalScripts||"always",e=b.pngFallback||!1,f=b.each;if(void 0!==a.length){var g=0;i.call(a,function(b){s(b,d,e,function(b){f&&"function"==typeof f&&f(b),c&&a.length===++g&&c(g)})})}else a?s(a,d,e,function(b){f&&"function"==typeof f&&f(b),c&&c(1),a=null}):c&&c(0)};"object"==typeof c&&"object"==typeof c.exports?c.exports=d=t:"function"==typeof a&&a.amd?a(function(){return t}):"object"==typeof b&&(b.SVGInjector=t)}(window,document)},{}]},{},[1])(1)});
 
 /***/ },
-/* 16 */
+/* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -2204,13 +2208,43 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = ActionSheetButton;
 
 /***/ },
+/* 16 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var React = __webpack_require__(12);
+	var cx = __webpack_require__(26);
+
+	var ActionSheetContent = React.createClass({
+	  displayName: "ActionSheetContent",
+
+	  getDefaultProps: function getDefaultProps() {
+	    return { position: "bottom" };
+	  },
+	  render: function render() {
+	    var classes = {
+	      "action-sheet": true,
+	      "is-active": this.props.active
+	    };
+	    return React.createElement(
+	      "div",
+	      { className: cx(classes) },
+	      this.props.children
+	    );
+	  }
+	});
+
+	module.exports = ActionSheetContent;
+
+/***/ },
 /* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
 	var React = __webpack_require__(12);
-	var cx = __webpack_require__(27);
+	var cx = __webpack_require__(26);
 
 	var AccordionItem = React.createClass({
 	  displayName: "AccordionItem",
@@ -2250,7 +2284,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var ReactTransitionEvents = __webpack_require__(28);
 	var CSSCore = __webpack_require__(29);
 	var cloneWithProps = __webpack_require__(25);
-	var cx = __webpack_require__(27);
+	var cx = __webpack_require__(26);
 	var TICK = 17;
 
 	var Animation = React.createClass({
@@ -2329,7 +2363,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 	var React = __webpack_require__(12);
-	var foundationApi = __webpack_require__(14);
+	var foundationApi = __webpack_require__(13);
 	var Notification = __webpack_require__(30);
 	var Animation = __webpack_require__(18);
 
@@ -2399,8 +2433,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 	var React = __webpack_require__(12);
-	var cx = __webpack_require__(27);
-	var foundationApi = __webpack_require__(14);
+	var cx = __webpack_require__(26);
+	var foundationApi = __webpack_require__(13);
 	var Animation = __webpack_require__(18);
 	var Notification = __webpack_require__(30);
 
@@ -2449,7 +2483,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	"use strict";
 
 	var React = __webpack_require__(12);
-	var cx = __webpack_require__(27);
+	var cx = __webpack_require__(26);
 
 	var Tab = React.createClass({
 	  displayName: "Tab",
@@ -2488,7 +2522,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	"use strict";
 
 	var React = __webpack_require__(12);
-	var foundationApi = __webpack_require__(14);
+	var foundationApi = __webpack_require__(13);
 	var cloneWithProps = __webpack_require__(25);
 
 	var PopupToggle = React.createClass({
@@ -2514,9 +2548,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 23 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var canUseDOM = __webpack_require__(37);
+	var canUseDOM = __webpack_require__(38);
 	var enquire = canUseDOM && __webpack_require__(40);
-	var json2mq = __webpack_require__(38);
+	var json2mq = __webpack_require__(39);
 
 	var ResponsiveMixin = {
 	  media: function (query, handler) {
@@ -2628,11 +2662,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 
-	var ReactElement = __webpack_require__(32);
-	var ReactPropTransferer = __webpack_require__(33);
+	var ReactElement = __webpack_require__(33);
+	var ReactPropTransferer = __webpack_require__(34);
 
-	var keyOf = __webpack_require__(34);
-	var warning = __webpack_require__(35);
+	var keyOf = __webpack_require__(35);
+	var warning = __webpack_require__(36);
 
 	var CHILDREN_PROP = keyOf({children: null});
 
@@ -2683,6 +2717,64 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * LICENSE file in the root directory of this source tree. An additional grant
 	 * of patent rights can be found in the PATENTS file in the same directory.
 	 *
+	 * @providesModule cx
+	 */
+
+	/**
+	 * This function is used to mark string literals representing CSS class names
+	 * so that they can be transformed statically. This allows for modularization
+	 * and minification of CSS class names.
+	 *
+	 * In static_upstream, this function is actually implemented, but it should
+	 * eventually be replaced with something more descriptive, and the transform
+	 * that is used in the main stack should be ported for use elsewhere.
+	 *
+	 * @param string|object className to modularize, or an object of key/values.
+	 *                      In the object case, the values are conditions that
+	 *                      determine if the className keys should be included.
+	 * @param [string ...]  Variable list of classNames in the string case.
+	 * @return string       Renderable space-separated CSS className.
+	 */
+
+	'use strict';
+	var warning = __webpack_require__(36);
+
+	var warned = false;
+
+	function cx(classNames) {
+	  if ("production" !== (undefined)) {
+	    ("production" !== (undefined) ? warning(
+	      warned,
+	      'React.addons.classSet will be deprecated in a future version. See ' +
+	      'http://fb.me/react-addons-classset'
+	    ) : null);
+	    warned = true;
+	  }
+
+	  if (typeof classNames == 'object') {
+	    return Object.keys(classNames).filter(function(className) {
+	      return classNames[className];
+	    }).join(' ');
+	  } else {
+	    return Array.prototype.join.call(arguments, ' ');
+	  }
+	}
+
+	module.exports = cx;
+
+
+/***/ },
+/* 27 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Copyright 2013-2015, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
 	 * @providesModule ExecutionEnvironment
 	 */
 
@@ -2720,64 +2812,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 27 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Copyright 2013-2015, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	 * @providesModule cx
-	 */
-
-	/**
-	 * This function is used to mark string literals representing CSS class names
-	 * so that they can be transformed statically. This allows for modularization
-	 * and minification of CSS class names.
-	 *
-	 * In static_upstream, this function is actually implemented, but it should
-	 * eventually be replaced with something more descriptive, and the transform
-	 * that is used in the main stack should be ported for use elsewhere.
-	 *
-	 * @param string|object className to modularize, or an object of key/values.
-	 *                      In the object case, the values are conditions that
-	 *                      determine if the className keys should be included.
-	 * @param [string ...]  Variable list of classNames in the string case.
-	 * @return string       Renderable space-separated CSS className.
-	 */
-
-	'use strict';
-	var warning = __webpack_require__(35);
-
-	var warned = false;
-
-	function cx(classNames) {
-	  if ("production" !== (undefined)) {
-	    ("production" !== (undefined) ? warning(
-	      warned,
-	      'React.addons.classSet will be deprecated in a future version. See ' +
-	      'http://fb.me/react-addons-classset'
-	    ) : null);
-	    warned = true;
-	  }
-
-	  if (typeof classNames == 'object') {
-	    return Object.keys(classNames).filter(function(className) {
-	      return classNames[className];
-	    }).join(' ');
-	  } else {
-	    return Array.prototype.join.call(arguments, ' ');
-	  }
-	}
-
-	module.exports = cx;
-
-
-/***/ },
 /* 28 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -2794,7 +2828,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 
-	var ExecutionEnvironment = __webpack_require__(26);
+	var ExecutionEnvironment = __webpack_require__(27);
 
 	/**
 	 * EVENT_NAME_MAP is used to determine which event fired when a
@@ -2908,7 +2942,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @typechecks
 	 */
 
-	var invariant = __webpack_require__(39);
+	var invariant = __webpack_require__(37);
 
 	/**
 	 * The CSSCore module specifies the API (and implements most of the methods)
@@ -3102,6 +3136,256 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 32 */
 /***/ function(module, exports, __webpack_require__) {
 
+	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
+	Copyright (c) 2010,2011,2012,2013,2014 Morgan Roderick http://roderick.dk
+	License: MIT - http://mrgnrdrck.mit-license.org
+
+	https://github.com/mroderick/PubSubJS
+	*/
+	(function (root, factory){
+		'use strict';
+
+	    if (true){
+	        // AMD. Register as an anonymous module.
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [exports], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+
+	    } else if (typeof exports === 'object'){
+	        // CommonJS
+	        factory(exports);
+
+	    } else {
+	        // Browser globals
+	        var PubSub = {};
+	        root.PubSub = PubSub;
+	        factory(PubSub);
+	    }
+	}(( typeof window === 'object' && window ) || this, function (PubSub){
+		'use strict';
+
+		var messages = {},
+			lastUid = -1;
+
+		function hasKeys(obj){
+			var key;
+
+			for (key in obj){
+				if ( obj.hasOwnProperty(key) ){
+					return true;
+				}
+			}
+			return false;
+		}
+
+		/**
+		 *	Returns a function that throws the passed exception, for use as argument for setTimeout
+		 *	@param { Object } ex An Error object
+		 */
+		function throwException( ex ){
+			return function reThrowException(){
+				throw ex;
+			};
+		}
+
+		function callSubscriberWithDelayedExceptions( subscriber, message, data ){
+			try {
+				subscriber( message, data );
+			} catch( ex ){
+				setTimeout( throwException( ex ), 0);
+			}
+		}
+
+		function callSubscriberWithImmediateExceptions( subscriber, message, data ){
+			subscriber( message, data );
+		}
+
+		function deliverMessage( originalMessage, matchedMessage, data, immediateExceptions ){
+			var subscribers = messages[matchedMessage],
+				callSubscriber = immediateExceptions ? callSubscriberWithImmediateExceptions : callSubscriberWithDelayedExceptions,
+				s;
+
+			if ( !messages.hasOwnProperty( matchedMessage ) ) {
+				return;
+			}
+
+			for (s in subscribers){
+				if ( subscribers.hasOwnProperty(s)){
+					callSubscriber( subscribers[s], originalMessage, data );
+				}
+			}
+		}
+
+		function createDeliveryFunction( message, data, immediateExceptions ){
+			return function deliverNamespaced(){
+				var topic = String( message ),
+					position = topic.lastIndexOf( '.' );
+
+				// deliver the message as it is now
+				deliverMessage(message, message, data, immediateExceptions);
+
+				// trim the hierarchy and deliver message to each level
+				while( position !== -1 ){
+					topic = topic.substr( 0, position );
+					position = topic.lastIndexOf('.');
+					deliverMessage( message, topic, data, immediateExceptions );
+				}
+			};
+		}
+
+		function messageHasSubscribers( message ){
+			var topic = String( message ),
+				found = Boolean(messages.hasOwnProperty( topic ) && hasKeys(messages[topic])),
+				position = topic.lastIndexOf( '.' );
+
+			while ( !found && position !== -1 ){
+				topic = topic.substr( 0, position );
+				position = topic.lastIndexOf( '.' );
+				found = Boolean(messages.hasOwnProperty( topic ) && hasKeys(messages[topic]));
+			}
+
+			return found;
+		}
+
+		function publish( message, data, sync, immediateExceptions ){
+			var deliver = createDeliveryFunction( message, data, immediateExceptions ),
+				hasSubscribers = messageHasSubscribers( message );
+
+			if ( !hasSubscribers ){
+				return false;
+			}
+
+			if ( sync === true ){
+				deliver();
+			} else {
+				setTimeout( deliver, 0 );
+			}
+			return true;
+		}
+
+		/**
+		 *	PubSub.publish( message[, data] ) -> Boolean
+		 *	- message (String): The message to publish
+		 *	- data: The data to pass to subscribers
+		 *	Publishes the the message, passing the data to it's subscribers
+		**/
+		PubSub.publish = function( message, data ){
+			return publish( message, data, false, PubSub.immediateExceptions );
+		};
+
+		/**
+		 *	PubSub.publishSync( message[, data] ) -> Boolean
+		 *	- message (String): The message to publish
+		 *	- data: The data to pass to subscribers
+		 *	Publishes the the message synchronously, passing the data to it's subscribers
+		**/
+		PubSub.publishSync = function( message, data ){
+			return publish( message, data, true, PubSub.immediateExceptions );
+		};
+
+		/**
+		 *	PubSub.subscribe( message, func ) -> String
+		 *	- message (String): The message to subscribe to
+		 *	- func (Function): The function to call when a new message is published
+		 *	Subscribes the passed function to the passed message. Every returned token is unique and should be stored if
+		 *	you need to unsubscribe
+		**/
+		PubSub.subscribe = function( message, func ){
+			if ( typeof func !== 'function'){
+				return false;
+			}
+
+			// message is not registered yet
+			if ( !messages.hasOwnProperty( message ) ){
+				messages[message] = {};
+			}
+
+			// forcing token as String, to allow for future expansions without breaking usage
+			// and allow for easy use as key names for the 'messages' object
+			var token = 'uid_' + String(++lastUid);
+			messages[message][token] = func;
+
+			// return token for unsubscribing
+			return token;
+		};
+
+		/* Public: Clears all subscriptions
+		 */
+		PubSub.clearAllSubscriptions = function clearAllSubscriptions(){
+			messages = {};
+		};
+
+		/*Public: Clear subscriptions by the topic
+		*/
+		PubSub.clearSubscriptions = function clearSubscriptions(topic){
+			var m; 
+			for (m in messages){
+				if (messages.hasOwnProperty(m) && m.indexOf(topic) === 0){
+					delete messages[m];
+				}
+			}
+		};
+
+		/* Public: removes subscriptions.
+		 * When passed a token, removes a specific subscription.
+		 * When passed a function, removes all subscriptions for that function
+		 * When passed a topic, removes all subscriptions for that topic (hierarchy)
+		 *
+		 * value - A token, function or topic to unsubscribe.
+		 *
+		 * Examples
+		 *
+		 *		// Example 1 - unsubscribing with a token
+		 *		var token = PubSub.subscribe('mytopic', myFunc);
+		 *		PubSub.unsubscribe(token);
+		 *
+		 *		// Example 2 - unsubscribing with a function
+		 *		PubSub.unsubscribe(myFunc);
+		 *
+		 *		// Example 3 - unsubscribing a topic
+		 *		PubSub.unsubscribe('mytopic');
+		 */
+		PubSub.unsubscribe = function(value){
+			var isTopic    = typeof value === 'string' && messages.hasOwnProperty(value),
+				isToken    = !isTopic && typeof value === 'string',
+				isFunction = typeof value === 'function',
+				result = false,
+				m, message, t;
+
+			if (isTopic){
+				delete messages[value];
+				return;
+			}
+
+			for ( m in messages ){
+				if ( messages.hasOwnProperty( m ) ){
+					message = messages[m];
+
+					if ( isToken && message[value] ){
+						delete message[value];
+						result = value;
+						// tokens are unique, so we can just stop here
+						break;
+					}
+
+					if (isFunction) {
+						for ( t in message ){
+							if (message.hasOwnProperty(t) && message[t] === value){
+								delete message[t];
+								result = true;
+							}
+						}
+					}
+				}
+			}
+
+			return result;
+		};
+	}));
+
+
+/***/ },
+/* 33 */
+/***/ function(module, exports, __webpack_require__) {
+
 	/**
 	 * Copyright 2014-2015, Facebook, Inc.
 	 * All rights reserved.
@@ -3115,11 +3399,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 
-	var ReactContext = __webpack_require__(41);
-	var ReactCurrentOwner = __webpack_require__(42);
+	var ReactContext = __webpack_require__(42);
+	var ReactCurrentOwner = __webpack_require__(43);
 
-	var assign = __webpack_require__(43);
-	var warning = __webpack_require__(35);
+	var assign = __webpack_require__(44);
+	var warning = __webpack_require__(36);
 
 	var RESERVED_PROPS = {
 	  key: true,
@@ -3409,7 +3693,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 33 */
+/* 34 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -3425,8 +3709,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 
-	var assign = __webpack_require__(43);
-	var emptyFunction = __webpack_require__(44);
+	var assign = __webpack_require__(44);
+	var emptyFunction = __webpack_require__(41);
 	var joinClasses = __webpack_require__(45);
 
 	/**
@@ -3523,7 +3807,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 34 */
+/* 35 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -3563,7 +3847,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 35 */
+/* 36 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -3579,7 +3863,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 
-	var emptyFunction = __webpack_require__(44);
+	var emptyFunction = __webpack_require__(41);
 
 	/**
 	 * Similar to invariant but only logs a warning if the condition is not met.
@@ -3628,325 +3912,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 36 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
-	Copyright (c) 2010,2011,2012,2013,2014 Morgan Roderick http://roderick.dk
-	License: MIT - http://mrgnrdrck.mit-license.org
-
-	https://github.com/mroderick/PubSubJS
-	*/
-	(function (root, factory){
-		'use strict';
-
-	    if (true){
-	        // AMD. Register as an anonymous module.
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [exports], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-
-	    } else if (typeof exports === 'object'){
-	        // CommonJS
-	        factory(exports);
-
-	    } else {
-	        // Browser globals
-	        var PubSub = {};
-	        root.PubSub = PubSub;
-	        factory(PubSub);
-	    }
-	}(( typeof window === 'object' && window ) || this, function (PubSub){
-		'use strict';
-
-		var messages = {},
-			lastUid = -1;
-
-		function hasKeys(obj){
-			var key;
-
-			for (key in obj){
-				if ( obj.hasOwnProperty(key) ){
-					return true;
-				}
-			}
-			return false;
-		}
-
-		/**
-		 *	Returns a function that throws the passed exception, for use as argument for setTimeout
-		 *	@param { Object } ex An Error object
-		 */
-		function throwException( ex ){
-			return function reThrowException(){
-				throw ex;
-			};
-		}
-
-		function callSubscriberWithDelayedExceptions( subscriber, message, data ){
-			try {
-				subscriber( message, data );
-			} catch( ex ){
-				setTimeout( throwException( ex ), 0);
-			}
-		}
-
-		function callSubscriberWithImmediateExceptions( subscriber, message, data ){
-			subscriber( message, data );
-		}
-
-		function deliverMessage( originalMessage, matchedMessage, data, immediateExceptions ){
-			var subscribers = messages[matchedMessage],
-				callSubscriber = immediateExceptions ? callSubscriberWithImmediateExceptions : callSubscriberWithDelayedExceptions,
-				s;
-
-			if ( !messages.hasOwnProperty( matchedMessage ) ) {
-				return;
-			}
-
-			for (s in subscribers){
-				if ( subscribers.hasOwnProperty(s)){
-					callSubscriber( subscribers[s], originalMessage, data );
-				}
-			}
-		}
-
-		function createDeliveryFunction( message, data, immediateExceptions ){
-			return function deliverNamespaced(){
-				var topic = String( message ),
-					position = topic.lastIndexOf( '.' );
-
-				// deliver the message as it is now
-				deliverMessage(message, message, data, immediateExceptions);
-
-				// trim the hierarchy and deliver message to each level
-				while( position !== -1 ){
-					topic = topic.substr( 0, position );
-					position = topic.lastIndexOf('.');
-					deliverMessage( message, topic, data, immediateExceptions );
-				}
-			};
-		}
-
-		function messageHasSubscribers( message ){
-			var topic = String( message ),
-				found = Boolean(messages.hasOwnProperty( topic ) && hasKeys(messages[topic])),
-				position = topic.lastIndexOf( '.' );
-
-			while ( !found && position !== -1 ){
-				topic = topic.substr( 0, position );
-				position = topic.lastIndexOf( '.' );
-				found = Boolean(messages.hasOwnProperty( topic ) && hasKeys(messages[topic]));
-			}
-
-			return found;
-		}
-
-		function publish( message, data, sync, immediateExceptions ){
-			var deliver = createDeliveryFunction( message, data, immediateExceptions ),
-				hasSubscribers = messageHasSubscribers( message );
-
-			if ( !hasSubscribers ){
-				return false;
-			}
-
-			if ( sync === true ){
-				deliver();
-			} else {
-				setTimeout( deliver, 0 );
-			}
-			return true;
-		}
-
-		/**
-		 *	PubSub.publish( message[, data] ) -> Boolean
-		 *	- message (String): The message to publish
-		 *	- data: The data to pass to subscribers
-		 *	Publishes the the message, passing the data to it's subscribers
-		**/
-		PubSub.publish = function( message, data ){
-			return publish( message, data, false, PubSub.immediateExceptions );
-		};
-
-		/**
-		 *	PubSub.publishSync( message[, data] ) -> Boolean
-		 *	- message (String): The message to publish
-		 *	- data: The data to pass to subscribers
-		 *	Publishes the the message synchronously, passing the data to it's subscribers
-		**/
-		PubSub.publishSync = function( message, data ){
-			return publish( message, data, true, PubSub.immediateExceptions );
-		};
-
-		/**
-		 *	PubSub.subscribe( message, func ) -> String
-		 *	- message (String): The message to subscribe to
-		 *	- func (Function): The function to call when a new message is published
-		 *	Subscribes the passed function to the passed message. Every returned token is unique and should be stored if
-		 *	you need to unsubscribe
-		**/
-		PubSub.subscribe = function( message, func ){
-			if ( typeof func !== 'function'){
-				return false;
-			}
-
-			// message is not registered yet
-			if ( !messages.hasOwnProperty( message ) ){
-				messages[message] = {};
-			}
-
-			// forcing token as String, to allow for future expansions without breaking usage
-			// and allow for easy use as key names for the 'messages' object
-			var token = 'uid_' + String(++lastUid);
-			messages[message][token] = func;
-
-			// return token for unsubscribing
-			return token;
-		};
-
-		/* Public: Clears all subscriptions
-		 */
-		PubSub.clearAllSubscriptions = function clearAllSubscriptions(){
-			messages = {};
-		};
-
-		/*Public: Clear subscriptions by the topic
-		*/
-		PubSub.clearSubscriptions = function clearSubscriptions(topic){
-			var m; 
-			for (m in messages){
-				if (messages.hasOwnProperty(m) && m.indexOf(topic) === 0){
-					delete messages[m];
-				}
-			}
-		};
-
-		/* Public: removes subscriptions.
-		 * When passed a token, removes a specific subscription.
-		 * When passed a function, removes all subscriptions for that function
-		 * When passed a topic, removes all subscriptions for that topic (hierarchy)
-		 *
-		 * value - A token, function or topic to unsubscribe.
-		 *
-		 * Examples
-		 *
-		 *		// Example 1 - unsubscribing with a token
-		 *		var token = PubSub.subscribe('mytopic', myFunc);
-		 *		PubSub.unsubscribe(token);
-		 *
-		 *		// Example 2 - unsubscribing with a function
-		 *		PubSub.unsubscribe(myFunc);
-		 *
-		 *		// Example 3 - unsubscribing a topic
-		 *		PubSub.unsubscribe('mytopic');
-		 */
-		PubSub.unsubscribe = function(value){
-			var isTopic    = typeof value === 'string' && messages.hasOwnProperty(value),
-				isToken    = !isTopic && typeof value === 'string',
-				isFunction = typeof value === 'function',
-				result = false,
-				m, message, t;
-
-			if (isTopic){
-				delete messages[value];
-				return;
-			}
-
-			for ( m in messages ){
-				if ( messages.hasOwnProperty( m ) ){
-					message = messages[m];
-
-					if ( isToken && message[value] ){
-						delete message[value];
-						result = value;
-						// tokens are unique, so we can just stop here
-						break;
-					}
-
-					if (isFunction) {
-						for ( t in message ){
-							if (message.hasOwnProperty(t) && message[t] === value){
-								delete message[t];
-								result = true;
-							}
-						}
-					}
-				}
-			}
-
-			return result;
-		};
-	}));
-
-
-/***/ },
 /* 37 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var canUseDOM = !!(
-	  typeof window !== 'undefined' &&
-	  window.document &&
-	  window.document.createElement
-	);
-
-	module.exports = canUseDOM;
-
-/***/ },
-/* 38 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var camel2hyphen = __webpack_require__(47);
-
-	var isDimension = function (feature) {
-	  var re = /[height|width]$/;
-	  return re.test(feature);
-	};
-
-	var obj2mq = function (obj) {
-	  var mq = '';
-	  var features = Object.keys(obj);
-	  features.forEach(function (feature, index) {
-	    var value = obj[feature];
-	    feature = camel2hyphen(feature);
-	    // Add px to dimension features
-	    if (isDimension(feature) && typeof value === 'number') {
-	      value = value + 'px';
-	    }
-	    if (value === true) {
-	      mq += feature;
-	    } else if (value === false) {
-	      mq += 'not ' + feature;
-	    } else {
-	      mq += '(' + feature + ': ' + value + ')';
-	    }
-	    if (index < features.length-1) {
-	      mq += ' and '
-	    }
-	  });
-	  return mq;
-	};
-
-	var json2mq = function (query) {
-	  var mq = '';
-	  if (typeof query === 'string') {
-	    return query;
-	  }
-	  // Handling array of media queries
-	  if (query instanceof Array) {
-	    query.forEach(function (q, index) {
-	      mq += obj2mq(q);
-	      if (index < query.length-1) {
-	        mq += ', '
-	      }
-	    });
-	    return mq;
-	  }
-	  // Handling single media query
-	  return obj2mq(query);
-	};
-
-	module.exports = json2mq;
-
-/***/ },
-/* 39 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -4003,6 +3969,74 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = invariant;
 
+
+/***/ },
+/* 38 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var canUseDOM = !!(
+	  typeof window !== 'undefined' &&
+	  window.document &&
+	  window.document.createElement
+	);
+
+	module.exports = canUseDOM;
+
+/***/ },
+/* 39 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var camel2hyphen = __webpack_require__(47);
+
+	var isDimension = function (feature) {
+	  var re = /[height|width]$/;
+	  return re.test(feature);
+	};
+
+	var obj2mq = function (obj) {
+	  var mq = '';
+	  var features = Object.keys(obj);
+	  features.forEach(function (feature, index) {
+	    var value = obj[feature];
+	    feature = camel2hyphen(feature);
+	    // Add px to dimension features
+	    if (isDimension(feature) && typeof value === 'number') {
+	      value = value + 'px';
+	    }
+	    if (value === true) {
+	      mq += feature;
+	    } else if (value === false) {
+	      mq += 'not ' + feature;
+	    } else {
+	      mq += '(' + feature + ': ' + value + ')';
+	    }
+	    if (index < features.length-1) {
+	      mq += ' and '
+	    }
+	  });
+	  return mq;
+	};
+
+	var json2mq = function (query) {
+	  var mq = '';
+	  if (typeof query === 'string') {
+	    return query;
+	  }
+	  // Handling array of media queries
+	  if (query instanceof Array) {
+	    query.forEach(function (q, index) {
+	      mq += obj2mq(q);
+	      if (index < query.length-1) {
+	        mq += ', '
+	      }
+	    });
+	    return mq;
+	  }
+	  // Handling single media query
+	  return obj2mq(query);
+	};
+
+	module.exports = json2mq;
 
 /***/ },
 /* 40 */
@@ -4314,14 +4348,52 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * LICENSE file in the root directory of this source tree. An additional grant
 	 * of patent rights can be found in the PATENTS file in the same directory.
 	 *
+	 * @providesModule emptyFunction
+	 */
+
+	function makeEmptyFunction(arg) {
+	  return function() {
+	    return arg;
+	  };
+	}
+
+	/**
+	 * This function accepts and discards inputs; it has no side effects. This is
+	 * primarily useful idiomatically for overridable function endpoints which
+	 * always need to be callable, since JS lacks a null-call idiom ala Cocoa.
+	 */
+	function emptyFunction() {}
+
+	emptyFunction.thatReturns = makeEmptyFunction;
+	emptyFunction.thatReturnsFalse = makeEmptyFunction(false);
+	emptyFunction.thatReturnsTrue = makeEmptyFunction(true);
+	emptyFunction.thatReturnsNull = makeEmptyFunction(null);
+	emptyFunction.thatReturnsThis = function() { return this; };
+	emptyFunction.thatReturnsArgument = function(arg) { return arg; };
+
+	module.exports = emptyFunction;
+
+
+/***/ },
+/* 42 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Copyright 2013-2015, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
 	 * @providesModule ReactContext
 	 */
 
 	'use strict';
 
-	var assign = __webpack_require__(43);
+	var assign = __webpack_require__(44);
 	var emptyObject = __webpack_require__(46);
-	var warning = __webpack_require__(35);
+	var warning = __webpack_require__(36);
 
 	var didWarn = false;
 
@@ -4383,7 +4455,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 42 */
+/* 43 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -4421,7 +4493,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 43 */
+/* 44 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -4471,44 +4543,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 	module.exports = assign;
-
-
-/***/ },
-/* 44 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Copyright 2013-2015, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	 * @providesModule emptyFunction
-	 */
-
-	function makeEmptyFunction(arg) {
-	  return function() {
-	    return arg;
-	  };
-	}
-
-	/**
-	 * This function accepts and discards inputs; it has no side effects. This is
-	 * primarily useful idiomatically for overridable function endpoints which
-	 * always need to be callable, since JS lacks a null-call idiom ala Cocoa.
-	 */
-	function emptyFunction() {}
-
-	emptyFunction.thatReturns = makeEmptyFunction;
-	emptyFunction.thatReturnsFalse = makeEmptyFunction(false);
-	emptyFunction.thatReturnsTrue = makeEmptyFunction(true);
-	emptyFunction.thatReturnsNull = makeEmptyFunction(null);
-	emptyFunction.thatReturnsThis = function() { return this; };
-	emptyFunction.thatReturnsArgument = function(arg) { return arg; };
-
-	module.exports = emptyFunction;
 
 
 /***/ },
