@@ -37,7 +37,7 @@ var Modal = React.createClass({
   },
   stopClickPropagation: function (e) {
     e.preventDefault();
-    e.stopProppagation();
+    e.stopPropagation();
   },
   render: function() {
     var overlayStyle = {};
