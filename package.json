@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "prepublish": "gulp dist",
-    "postinstall": "bower install",
+    "postinstall": "",
     "start": "./node_modules/.bin/gulp server"
   },
   "repository": {
