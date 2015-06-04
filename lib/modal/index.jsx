@@ -36,7 +36,6 @@ var Modal = React.createClass({
     }
   },
   stopClickPropagation: function (e) {
-    e.preventDefault();
     e.stopPropagation();
   },
   render: function() {
