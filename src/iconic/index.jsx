@@ -1,6 +1,6 @@
 var React = require('react');
 var ExecutionEnvironment = require('react/lib/ExecutionEnvironment');
-var IconicJs = ExecutionEnvironment.canUseDOM && require('../vendor/iconic.min');
+var IconicJs = ExecutionEnvironment.canUseDOM && require('../../vendor/iconic.min');
 var cloneWithProps = require('react/lib/cloneWithProps');
 
 var Iconic = React.createClass({
