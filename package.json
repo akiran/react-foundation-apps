@@ -1,12 +1,12 @@
 {
   "name": "react-foundation-apps",
-  "version": "0.6.1",
+  "version": "0.7.0",
   "description": "'React port of foundation-apps'",
   "main": "index.js",
   "scripts": {
-    "prepublish": "gulp dist",
     "postinstall": "",
-    "start": "./node_modules/.bin/gulp server"
+    "start": "./node_modules/.bin/gulp server",
+    "prepublish": "./node_modules/.bin/babel ./src --out-dir ./lib --ignore *.min.js && ./node_modules/.bin/gulp dist"
   },
   "repository": {
     "type": "git",
@@ -35,6 +35,7 @@
   "homepage": "https://github.com/akiran/react-foundation-apps",
   "devDependencies": {
     "autoprefixer-core": "^4.0.1",
+    "babel": "^5.6.7",
     "babel-core": "^4.1.1",
     "babel-loader": "^4.0.0",
     "css-loader": "^0.9.0",
