@@ -16,7 +16,7 @@ var Tab = React.createClass({
   },
   render: function () {
     return (
-      <div className={'tab-item ' + (this.props.active ? 'is-active' : '')} onClick={this.select}>
+      <div className={'tab-item' + (this.props.active ? ' is-active' : '')} onClick={this.select}>
         {this.props.title}
       </div>
     );
