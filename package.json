@@ -4,7 +4,6 @@
   "description": "'React port of foundation-apps'",
   "main": "index.js",
   "scripts": {
-    "postinstall": "bower install",
     "start": "./node_modules/.bin/gulp server",
     "prepublish": "./node_modules/.bin/babel ./src --out-dir ./lib --ignore *.min.js && ./node_modules/.bin/gulp dist"
   },
@@ -71,7 +70,8 @@
   "dependencies": {
     "object-assign": "^2.0.0",
     "pubsub-js": "^1.5.0",
-    "tether": "^0.6.5"
+    "tether": "^0.6.5",
+    "foundation-apps": "~1.1.0"
   },
   "browserify": {
     "transform": [
