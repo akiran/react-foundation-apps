@@ -14,7 +14,7 @@ var ActionSheet = React.createClass({
     var insideActionSheet = false;
 
     do {
-      if(el.classList && el.classList.contains('action-sheet-container')) {
+      if(el.classList && el.classList.contains('action-sheet-container') && el.id === this.props.id) {
         insideActionSheet = true;
         break;
       }

@@ -24,7 +24,7 @@ var foundationApi = {
     return settings;
   },
   modifySettings: function(tree) {
-    settings = angular.extend(settings, tree);
+    settings = assign(settings, tree);
     return settings;
   },
   generateUuid: function() {

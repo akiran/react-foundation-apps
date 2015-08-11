@@ -2,15 +2,10 @@ var React = require('react');
 var cx = require('react/lib/cx');
 
 var Tab = React.createClass({
-  componentDidMount: function () {
-    if (this.props.active) {
-      this.select();
-    }
-  },
+
   select: function () {
     var options = {
-      selectedTab: this.props.index,
-      content: this.props.children
+      selectedTab: this.props.index
     };
     this.props.selectTab(options);
   },
