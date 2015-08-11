@@ -69,7 +69,7 @@
     "object-assign": "^2.0.*"
   },
   "dependencies": {
-    "foundation-apps": "^1.1.0",
+    "foundation-apps": "git+https://github.com/zurb/foundation-apps.git",
     "object-assign": "^2.0.0",
     "pubsub-js": "^1.5.0",
     "tether": "^0.6.5"
