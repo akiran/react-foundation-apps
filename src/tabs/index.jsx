@@ -8,6 +8,20 @@ var Tabs = React.createClass({
       content: null
     };
   },
+  componentDidUpdate: function() {
+    var self = this;
+    if (typeof this.props.onSelectTab === 'function') {
+      var props = Object.create({});
+      Object.keys(this.props.children[this.state.selectedTab].props)
+        .filter(function(propKey){
+          return propKey !== 'children';
+        })
+        .forEach(function(propKey) {
+          props[propKey] = self.props.children[self.state.selectedTab].props[propKey];
+        });
+      this.props.onSelectTab(props);
+    }
+  },
   selectTab: function (options) {
     this.setState(options);
   },
