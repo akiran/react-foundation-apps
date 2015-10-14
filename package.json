@@ -69,6 +69,7 @@
     "object-assign": "^2.0.*"
   },
   "dependencies": {
+    "can-use-dom": "^0.1.0",
     "object-assign": "^2.0.0",
     "pubsub-js": "^1.5.0",
     "tether": "^0.6.5"
