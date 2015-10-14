@@ -1,5 +1,5 @@
 var React = require('react');
-var Tabs = require('../../lib/tabs');
+var Tabs = require('../../src/tabs');
 
 var BasicTabs = React.createClass({
   render: function () {

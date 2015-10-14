@@ -1,8 +1,8 @@
 var React = require('react');
-var Highlight = require('react-highlight/lib/optimized');
+var Highlight = require('react-highlight/src/optimized');
 var FixedPanel = require('./fixed-panel');
-var Panel = require('../../lib/panel');
-var Trigger = require('../../lib/trigger');
+var Panel = require('../../src/panel');
+var Trigger = require('../../src/trigger');
 
 var PanelDocs = React.createClass({
   render: function () {

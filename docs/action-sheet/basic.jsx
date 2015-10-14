@@ -1,5 +1,5 @@
 var React = require('react');
-var ActionSheet  = require('../../lib/action-sheet');
+var ActionSheet  = require('../../src/action-sheet');
 
 
 var BasicActionSheet = React.createClass({

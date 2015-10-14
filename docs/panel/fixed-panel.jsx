@@ -1,6 +1,6 @@
 var React = require('react');
-var Panel = require('../../lib/panel');
-var Trigger = require('../../lib/trigger');
+var Panel = require('../../src/panel');
+var Trigger = require('../../src/trigger');
 
 var FixedPa = React.createClass({
   render: function () {

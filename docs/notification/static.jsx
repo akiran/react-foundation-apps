@@ -1,6 +1,6 @@
 var React = require('react');
-var Notification = require('../../lib/notification');
-var Trigger = require('../../lib/trigger')
+var Notification = require('../../src/notification');
+var Trigger = require('../../src/trigger')
 
 var Static = React.createClass({
   render: function () {

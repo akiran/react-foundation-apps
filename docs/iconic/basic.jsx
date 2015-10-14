@@ -1,5 +1,5 @@
 var React = require('react');
-var Iconic = require('../../lib/iconic');
+var Iconic = require('../../src/iconic');
 
 var BasicIconic = React.createClass({
   render: function () {

@@ -1,6 +1,6 @@
 var React = require('react');
-var Popup = require('../../lib/popup');
-var Trigger = require('../../lib/trigger');
+var Popup = require('../../src/popup');
+var Trigger = require('../../src/trigger');
 
 var BasicPopup = React.createClass({
   render: function () {

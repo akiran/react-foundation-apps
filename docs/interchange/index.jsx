@@ -1,6 +1,6 @@
 var React = require('react');
 var BasicInterchange = require('./basic');
-var Highlight = require('react-highlight/lib/optimized');
+var Highlight = require('react-highlight/src/optimized');
 
 var InterchangeDocs = React.createClass({
   render: function () {

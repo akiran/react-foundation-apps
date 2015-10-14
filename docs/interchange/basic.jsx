@@ -1,5 +1,5 @@
 var React = require('react');
-var Interchange = require('../../lib/interchange');
+var Interchange = require('../../src/interchange');
 
 var BasicInterchange = React.createClass({
   render: function () {

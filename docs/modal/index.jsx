@@ -1,5 +1,5 @@
 var React = require('react');
-var Highlight = require('react-highlight/lib/optimized');
+var Highlight = require('react-highlight/src/optimized');
 var SimpleModal = require('./simple');
 var AdvancedModal = require('./advanced');
 

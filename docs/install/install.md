@@ -24,14 +24,14 @@ All the components are in react-foundation-apps/lib.
 You can import the required components like so
 
 ```javascript
-var Accordion = require('react-foundation-apps/lib/accordion');
+var Accordion = require('react-foundation-apps/src/accordion');
 ```
 
 ### Example
 
 ```javascript
 var React = require('react');
-var Accordion = require('react-foundation-apps/lib/accordion');
+var Accordion = require('react-foundation-apps/src/accordion');
 
 var SampleAccordion = React.createClass({
   render: function () {

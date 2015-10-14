@@ -4,9 +4,9 @@ var Link = Router.Link;
 var Route = Router.Route;
 var DefaultRoute = Router.DefaultRoute;
 var RouteHandler = Router.RouteHandler;
-var Offcanvas = require('../lib/offcanvas');
-var Trigger = require('../lib/trigger');
-var Panel = require('../lib/panel');
+var Offcanvas = require('../src/offcanvas');
+var Trigger = require('../src/trigger');
+var Panel = require('../src/panel');
 
 var Docs = React.createClass({
   render: function () {

@@ -1,6 +1,6 @@
 var React = require('react');
 var BasicIconic = require('./basic');
-var Highlight = require('react-highlight/lib/optimized');
+var Highlight = require('react-highlight/src/optimized');
 
 var IconicDocs = React.createClass({
   render: function () {

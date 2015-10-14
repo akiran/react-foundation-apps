@@ -1,6 +1,6 @@
 var React = require('react');
-var Modal = require('../../lib/modal');
-var Trigger = require('../../lib/trigger');
+var Modal = require('../../src/modal');
+var Trigger = require('../../src/trigger');
 
 var AdvancedModal = React.createClass({
   render: function () {

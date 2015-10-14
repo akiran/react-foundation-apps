@@ -1,5 +1,5 @@
 var React = require('react');
-var Accordion = require('../../lib/accordion');
+var Accordion = require('../../src/accordion');
 
 var SingleSelect = React.createClass({
   render: function () {
