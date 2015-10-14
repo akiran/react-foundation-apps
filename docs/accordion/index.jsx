@@ -1,7 +1,7 @@
 var React = require('react');
 var BasicAccordion = require('./basic');
 var AdvancedAccordion = require('./advanced');
-var Highlight = require('react-highlight/optimized');
+var Highlight = require('react-highlight/lib/optimized');
 
 var Accordion = React.createClass({
   render: function () {

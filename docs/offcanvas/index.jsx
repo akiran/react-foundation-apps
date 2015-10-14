@@ -1,5 +1,5 @@
 var React = require('react');
-var Highlight = require('react-highlight/optimized');
+var Highlight = require('react-highlight/lib/optimized');
 var Trigger = require('../../lib/trigger');
 
 var OffcanvasDocs = React.createClass({

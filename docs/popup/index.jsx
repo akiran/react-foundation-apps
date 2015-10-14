@@ -1,6 +1,6 @@
 var React = require('react');
 var BasicPopup = require('./basic');
-var Highlight = require('react-highlight/optimized');
+var Highlight = require('react-highlight/lib/optimized');
 
 var Popup = React.createClass({
   render: function () {

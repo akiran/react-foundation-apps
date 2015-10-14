@@ -1,5 +1,5 @@
 var React = require('react');
-var Highlight = require('react-highlight/optimized');
+var Highlight = require('react-highlight/lib/optimized');
 var FixedPanel = require('./fixed-panel');
 var Panel = require('../../lib/panel');
 var Trigger = require('../../lib/trigger');
