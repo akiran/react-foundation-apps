@@ -63,15 +63,19 @@
     "webpack-dev-server": "^1.6.6"
   },
   "peerDependencies": {
-    "react": "*",
+    "react": "^0.14.*",
     "react-responsive-mixin": "*",
     "pubsub-js": "^1.5.x",
     "object-assign": "^2.0.*"
   },
   "dependencies": {
     "can-use-dom": "^0.1.0",
+    "classnames": "^2.2.0",
+    "exenv": "^1.2.0",
+    "history": "^1.12.0",
     "object-assign": "^2.0.0",
     "pubsub-js": "^1.5.0",
+    "react-addons-css-transition-group": "^0.14.3",
     "tether": "^0.6.5"
   },
   "browserify": {

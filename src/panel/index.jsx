@@ -1,5 +1,4 @@
 var React = require('react');
-var cx = require('react/lib/cx');
 var Animation = require('../utils/animation');
 var foundationApi = require('../utils/foundation-api');
 

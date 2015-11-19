@@ -1,6 +1,6 @@
 var React = require('react');
-var cx = require('react/lib/cx');
-var ExecutionEnvironment = require('react/lib/ExecutionEnvironment');
+var cx = require('classnames');
+var ExecutionEnvironment = require('exenv');
 var foundationApi = require('../utils/foundation-api');
 var Tether = ExecutionEnvironment.canUseDOM && require('tether/tether');
 

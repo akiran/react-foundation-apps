@@ -2,8 +2,6 @@ var React = require('react');
 var Router = require('react-router');
 var Link = Router.Link;
 var Route = Router.Route;
-var DefaultRoute = Router.DefaultRoute;
-var RouteHandler = Router.RouteHandler;
 var Offcanvas = require('../src/offcanvas');
 var Trigger = require('../src/trigger');
 var Panel = require('../src/panel');
@@ -73,7 +71,7 @@ var Docs = React.createClass({
                 <Trigger toggle='sidebar'>
                   <a className="small secondary expand button hide-for-medium">Show Components</a>
                 </Trigger>
-                <RouteHandler />
+                {this.props.children}
               </div>
             </div>
           </div>
