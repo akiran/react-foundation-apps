@@ -1,4 +1,5 @@
 var React = require('react');
+var ReactDOM = require('react-dom');
 var ExecutionEnvironment = require('exenv');
 var IconicJs = ExecutionEnvironment.canUseDOM && require('../../vendor/iconic.min');
 var cloneWithProps = require('react/lib/cloneWithProps');
@@ -6,7 +7,7 @@ var cloneWithProps = require('react/lib/cloneWithProps');
 var Iconic = React.createClass({
   inject: function () {
     var ico = IconicJs();
-    ico.inject(this.getDOMNode());
+    ico.inject(ReactDOM.findDOMNode(this));
   },
   componentDidMount: function () {
     this.inject();

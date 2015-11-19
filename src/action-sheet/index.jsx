@@ -1,5 +1,4 @@
 var React = require('react');
-var cloneWithProps = require('react/lib/cloneWithProps');
 var foundationApi = require('../utils/foundation-api');
 
 var ActionSheet = React.createClass({
@@ -49,7 +48,7 @@ var ActionSheet = React.createClass({
       if (child.type.displayName === 'ActionSheetButton') {
         extraProps.setActiveState = this.setActiveState;
       }
-      return cloneWithProps(child, extraProps);
+      return React.cloneElement(child, extraProps);
     }.bind(this));
     return (
       <div id={this.props.id} data-closable={true}  className='action-sheet-container'>

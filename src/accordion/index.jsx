@@ -1,5 +1,4 @@
 var React = require('react');
-var cloneWithProps = require('react/lib/cloneWithProps');
 
 var Accordion = React.createClass({
   getInitialState: function () {
@@ -41,7 +40,7 @@ var Accordion = React.createClass({
   },
   render: function () {
     var children = React.Children.map(this.props.children, function (child, index) {
-      return cloneWithProps(child, {
+      return React.cloneElement(child, {
         active: this.state.sections[index]? this.state.sections[index].active: false,
         activate: this.select.bind(this, index)
       });
