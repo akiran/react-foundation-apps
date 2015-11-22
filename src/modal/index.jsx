@@ -16,18 +16,16 @@ var Modal = React.createClass({
     };
   },
   componentDidMount: function () {
-    foundationApi.subscribe(this.props.id, function (name, msg) {
-      if (msg === 'open') {
-        this.setState({open: true});
-      } else if (msg === 'close') {
-        this.setState({open: false});
-      } else if (msg === 'toggle') {
-        this.setState({open: !this.state.open});
-      }
-    }.bind(this));
+    this.subscribe(this.props.id);
   },
   componentWillUnmount: function () {
     foundationApi.unsubscribe(this.props.id);
+  },
+  componentWillReceiveProps: function (nextProps) {
+    if (nextProps.id !== this.props.id) {
+      foundationApi.unsubscribe(this.props.id);
+      this.subscribe(nextProps.id);
+    }
   },
   hideOverlay: function (e) {
     e.preventDefault();
@@ -38,6 +36,17 @@ var Modal = React.createClass({
   stopClickPropagation: function (e) {
     e.preventDefault();
     e.stopPropagation();
+  },
+  subscribe: function (id) {
+    foundationApi.subscribe(id, function (name, msg) {
+      if (msg === 'open') {
+        this.setState({open: true});
+      } else if (msg === 'close') {
+        this.setState({open: false});
+      } else if (msg === 'toggle') {
+        this.setState({open: !this.state.open});
+      }
+    }.bind(this));
   },
   render: function() {
     var overlayStyle = {};
