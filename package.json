@@ -63,16 +63,17 @@
     "webpack-dev-server": "^1.6.6"
   },
   "peerDependencies": {
-    "react": "*",
-    "react-responsive-mixin": "*",
-    "pubsub-js": "^1.5.x",
-    "object-assign": "^2.0.*"
+    "react": ">=0.14.x",
+    "react-dom": ">=0.14.x",
+    "react-responsive-mixin": "*"
   },
   "dependencies": {
+    "classnames": "^2.2.1",
     "foundation-apps": "git+https://github.com/zurb/foundation-apps.git",
-    "object-assign": "^2.0.0",
-    "pubsub-js": "^1.5.0",
-    "tether": "^0.6.5"
+    "object-assign": "^4.0.0",
+    "tether": "^0.6.5",
+    "pubsub-js": "^1.5.x",
+    "object-assign": ">=4.0.*"
   },
   "browserify": {
     "transform": [

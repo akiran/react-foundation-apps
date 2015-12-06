@@ -1,5 +1,5 @@
 var React = require('react');
-var cx = require('react/lib/cx');
+var classnames = require('classnames');
 
 var AccordionItem = React.createClass({
   render: function () {
@@ -8,7 +8,7 @@ var AccordionItem = React.createClass({
       'is-active': this.props.active
     };
     return (
-      <div className={cx(itemClasses)}>
+      <div className={classnames(itemClasses)}>
         <div className='accordion-title' onClick={this.props.activate}>
           {this.props.title}
         </div>

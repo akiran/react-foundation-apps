@@ -1,5 +1,5 @@
 var React = require('react');
-var cx = require('react/lib/cx');
+var classnames = require('classnames');
 // var LayerMixin = require('react-layer-mixin');
 var foundationApi = require('../utils/foundation-api');
 
@@ -37,7 +37,7 @@ var Offcanvas = React.createClass({
       classes[this.props.className] = true;
     }
     return (
-      <div id={this.props.id} data-closable={true} className={cx(classes)}>
+      <div id={this.props.id} data-closable={true} className={classnames(classes)}>
           {this.props.children}
       </div>
     );

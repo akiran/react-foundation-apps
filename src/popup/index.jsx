@@ -1,5 +1,6 @@
 var React = require('react');
-var cx = require('react/lib/cx');
+var ReactDOM = require('react-dom');
+var classnames = require('classnames');
 var ExecutionEnvironment = require('react/lib/ExecutionEnvironment');
 var foundationApi = require('../utils/foundation-api');
 var Tether = ExecutionEnvironment.canUseDOM && require('tether/tether');
@@ -39,7 +40,7 @@ var Popup = React.createClass({
     var targetElement = document.getElementById(target);
     var attachment = 'top center';
     this.tether = new Tether({
-      element: this.getDOMNode(),
+      element: ReactDOM.findDOMNode(this),
       target: targetElement,
       attachment: attachment,
     });
@@ -50,7 +51,7 @@ var Popup = React.createClass({
       'is-active': this.state.active
     };
     return (
-      <div id={this.props.id} className={cx(classes)} data-closable='popup'>
+      <div id={this.props.id} className={classnames(classes)} data-closable='popup'>
         {this.props.children}
       </div>
     );

@@ -1,5 +1,5 @@
 var React = require('react');
-var cx = require('react/lib/cx');
+var classnames = require('classnames');
 
 var Tab = React.createClass({
 
@@ -15,7 +15,7 @@ var Tab = React.createClass({
       'is-active': this.props.active
     };
     return (
-      <div className={cx(classes)} onClick={this.select}>
+      <div className={classnames(classes)} onClick={this.select}>
         {this.props.title}
       </div>
     );

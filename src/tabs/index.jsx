@@ -1,5 +1,5 @@
 var React = require('react');
-var cloneWithProps = require('react/lib/cloneWithProps');
+
 
 var Tabs = React.createClass({
   getInitialState: function () {
@@ -14,7 +14,7 @@ var Tabs = React.createClass({
     var content = null;
     var children = React.Children.map(this.props.children, function (child, index) {
       if(index === this.state.selectedTab) content = child.props.children;
-      return cloneWithProps(child, {
+      return React.cloneElement(child, {
         active: (index === this.state.selectedTab),
         index: index,
         selectTab: this.selectTab

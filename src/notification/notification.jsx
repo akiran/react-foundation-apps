@@ -7,7 +7,8 @@ var Notification = React.createClass({
       color: 'success',
       title: null,
       image: null,
-      content: null
+      content: null,
+      wrapperElement: "p"
     };
   },
   render: function () {
@@ -27,7 +28,7 @@ var Notification = React.createClass({
         {imageNode}
         <div className="notification-content">
           <h1>{this.props.title}</h1>
-          <p>{this.props.children}</p>
+          {React.createElement(this.props.wrapperElement, null, this.props.children)}
         </div>
       </div>
     );

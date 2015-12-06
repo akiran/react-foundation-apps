@@ -1,5 +1,5 @@
 var React = require('react');
-var cx = require('react/lib/cx');
+var classnames = require('classnames');
 
 var ActionSheetContent = React.createClass({
   getDefaultProps: function () {
@@ -11,7 +11,7 @@ var ActionSheetContent = React.createClass({
       'is-active': this.props.active
     };
     return (
-      <div className={cx(classes)}>{this.props.children}</div>
+      <div className={classnames(classes)}>{this.props.children}</div>
     );
   }
 });
