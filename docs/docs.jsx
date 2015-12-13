@@ -1,9 +1,8 @@
 var React = require('react');
-var Router = require('react-router');
-var Link = Router.Link;
-var Route = Router.Route;
-var DefaultRoute = Router.DefaultRoute;
-var RouteHandler = Router.RouteHandler;
+var ReactRouter = require('react-router');
+var Router = ReactRouter.Router;
+var Route = ReactRouter.Route;
+var Link = ReactRouter.Link;
 var Offcanvas = require('../src/offcanvas');
 var Trigger = require('../src/trigger');
 var Panel = require('../src/panel');
@@ -52,18 +51,18 @@ var Docs = React.createClass({
                 </Trigger>
                 <section>
                   <ul className='menu-bar vertical'>
-                    <li><Link to='install'>Installation &amp; Usage</Link></li>
-                    <li><Link to='trigger'>Trigger</Link></li>
-                    <li><Link to='modal'>Modal</Link></li>
-                    <li><Link to='panel'>Panel</Link></li>
-                    <li><Link to='offcanvas'>Off-canvas Menu</Link></li>
-                    <li><Link to='notification'>Notification</Link></li>
-                    <li><Link to='action-sheet'>Action Sheet</Link></li>
-                    <li><Link to='tabs'>Tabs</Link></li>
-                    <li><Link to='iconic'>Iconic</Link></li>
-                    <li><Link to='accordion'>Accordion</Link></li>
-                    <li><Link to='interchange'>Interchange</Link></li>
-                    <li><Link to='popup'>Popup</Link></li>
+                    <li><Link to={`/install`}>Installation &amp; Usage</Link></li>
+                    <li><Link to={`/trigger`}>Trigger</Link></li>
+                    <li><Link to={`/modal`}>Modal</Link></li>
+                    <li><Link to={`/panel`}>Panel</Link></li>
+                    <li><Link to={`/offcanvas`}>Off-canvas Menu</Link></li>
+                    <li><Link to={`/notification`}>Notification</Link></li>
+                    <li><Link to={`/action-sheet`}>Action Sheet</Link></li>
+                    <li><Link to={`/tabs`}>Tabs</Link></li>
+                    <li><Link to={`/iconic`}>Iconic</Link></li>
+                    <li><Link to={`/accordion`}>Accordion</Link></li>
+                    <li><Link to={`/interchange`}>Interchange</Link></li>
+                    <li><Link to={`/popup`}>Popup</Link></li>
                   </ul>
                 </section>
               </div>
@@ -73,7 +72,7 @@ var Docs = React.createClass({
                 <Trigger toggle='sidebar'>
                   <a className="small secondary expand button hide-for-medium">Show Components</a>
                 </Trigger>
-                <RouteHandler />
+                {this.props.children}
               </div>
             </div>
           </div>
@@ -82,9 +81,5 @@ var Docs = React.createClass({
     );
   }
 });
-
-
-
-
 
 module.exports = Docs;

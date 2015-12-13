@@ -3,10 +3,10 @@ var path = require('path');
 var autoprefixer = require('autoprefixer-core');
 
 module.exports = {
-  devtool: '#inline-source-map',
+  devtool: 'source-map',
   entry: {
     'docs.js': [
-      'webpack-dev-server/client?http://192.168.0.100:8000',
+      'webpack-dev-server/client?http://localhost:8000',
       'webpack/hot/only-dev-server',
       './docs/index.jsx'
     ]

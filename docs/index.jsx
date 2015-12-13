@@ -1,12 +1,10 @@
 var React = require('react');
-var Router = require('react-router');
+var render = require('react-dom').render;
 var routes = require('./routes');
 var canUseDOM = require('can-use-dom');
- 
+
 if (canUseDOM) {
   document.addEventListener('DOMContentLoaded', function () {
-    Router.run(routes, Router.HistoryLocation, function (Handler) {
-      React.render(<Handler/>, document.body);
-    });
+    render(routes, document.body);
   });
-} 
+}
