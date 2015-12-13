@@ -1,6 +1,7 @@
 var React = require('react');
-var cx = require('react/lib/cx');
-var ExecutionEnvironment = require('react/lib/ExecutionEnvironment');
+var ReactDOM = require('react-dom');
+var cx = require('classnames');
+var ExecutionEnvironment = require('exenv');
 var foundationApi = require('../utils/foundation-api');
 var Tether = ExecutionEnvironment.canUseDOM && require('tether/tether');
 
@@ -39,7 +40,7 @@ var Popup = React.createClass({
     var targetElement = document.getElementById(target);
     var attachment = 'top center';
     this.tether = new Tether({
-      element: this.getDOMNode(),
+      element: ReactDOM.findDOMNode(this),
       target: targetElement,
       attachment: attachment,
     });

@@ -1,9 +1,9 @@
 // some parts of code from react/lib/ReactCSSTransitionGroupChild.js
 var React = require('react');
+var ReactDOM = require('react-dom');
 var ReactTransitionEvents = require('react/lib/ReactTransitionEvents');
-var CSSCore = require('react/lib/CSSCore');
-var cloneWithProps = require('react/lib/cloneWithProps');
-var cx = require('react/lib/cx');
+var CSSCore = require('fbjs/lib/CSSCore');
+var cx = require('classnames');
 var TICK = 17;
 
 var Animation = React.createClass({
@@ -31,17 +31,17 @@ var Animation = React.createClass({
     CSSCore.removeClass(node, this.props.animationOut);
   },
   finishAnimation: function () {
-    var node = this.getDOMNode();
+    var node = ReactDOM.findDOMNode(this);
     this.reset(node);
     CSSCore.removeClass(node, this.props.active? '' : 'is-active');
     this.reflow(node);
     ReactTransitionEvents.removeEndEventListener(node, this.finishAnimation);
   },
   animate: function(animationClass, animationType) {
-    var node = this.getDOMNode();
+    var node = ReactDOM.findDOMNode(this);
     var initClass = 'ng-' + animationType;
     var activeClass = initClass + '-active';
-  
+
 
     this.reset(node);
     CSSCore.addClass(node, animationClass);
@@ -54,7 +54,7 @@ var Animation = React.createClass({
     //activate
     node.style.transitionDuration = '';
     CSSCore.addClass(node, activeClass);
-    
+
     ReactTransitionEvents.addEndEventListener(node, this.finishAnimation);
   },
   componentDidUpdate: function (prevProps) {
@@ -67,7 +67,7 @@ var Animation = React.createClass({
   render: function () {
     var child = React.Children.only(this.props.children);
     var extraProps = {};
-    return cloneWithProps(child, extraProps);
+    return React.cloneElement(child, extraProps);
   }
 });
 

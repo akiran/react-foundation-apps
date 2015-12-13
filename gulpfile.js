@@ -18,7 +18,7 @@ gulp.task('copy', function () {
   gulp.src('./docs/img/*')
     .pipe(gulp.dest('build/img'));
 
-  gulp.src('./bower_components/foundation-apps/iconic/*')
+  gulp.src('./node_modules/foundation-apps/iconic/*')
     .pipe(gulp.dest('build/img/iconic'));
 });
 
