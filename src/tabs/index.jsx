@@ -21,7 +21,7 @@ var Tabs = React.createClass({
     return (
       <div>
         <div className='tabs'>{children}</div>
-        <div>{this.state.content}</div>
+        <div className='tab-contents'>{this.state.content}</div>
       </div>
     );
   }
