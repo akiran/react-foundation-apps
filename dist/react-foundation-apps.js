@@ -60,12 +60,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	  Iconic: __webpack_require__(11),
 	  Interchange: __webpack_require__(162),
 	  Modal: __webpack_require__(168),
-	  Notification: __webpack_require__(172),
-	  OffCanvas: __webpack_require__(176),
-	  Panel: __webpack_require__(177),
-	  Popup: __webpack_require__(178),
-	  Tabs: __webpack_require__(180),
-	  Trigger: __webpack_require__(182),
+	  Notification: __webpack_require__(173),
+	  OffCanvas: __webpack_require__(177),
+	  Panel: __webpack_require__(178),
+	  Popup: __webpack_require__(179),
+	  Tabs: __webpack_require__(181),
+	  Trigger: __webpack_require__(183),
 	};
 
 
@@ -20216,7 +20216,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 
-	var invariant = __webpack_require__(22);
+	var invariant = __webpack_require__(172);
 
 	/**
 	 * The CSSCore module specifies the API (and implements most of the methods)
@@ -20304,15 +20304,70 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 172 */
 /***/ function(module, exports, __webpack_require__) {
 
+	/**
+	 * Copyright 2013-2015, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 * @providesModule invariant
+	 */
+
 	'use strict';
 
-	module.exports = {
-	  Set: __webpack_require__(173),
-	  Static: __webpack_require__(175)
-	};
+	/**
+	 * Use invariant() to assert state which your program assumes to be true.
+	 *
+	 * Provide sprintf-style format (only %s is supported) and arguments
+	 * to provide information about what broke and what you were
+	 * expecting.
+	 *
+	 * The invariant message will be stripped in production, but the invariant
+	 * will remain to ensure logic does not differ in production.
+	 */
+
+	function invariant(condition, format, a, b, c, d, e, f) {
+	  if ((undefined) !== 'production') {
+	    if (format === undefined) {
+	      throw new Error('invariant requires an error message argument');
+	    }
+	  }
+
+	  if (!condition) {
+	    var error;
+	    if (format === undefined) {
+	      error = new Error('Minified exception occurred; use the non-minified dev environment ' + 'for the full error message and additional helpful warnings.');
+	    } else {
+	      var args = [a, b, c, d, e, f];
+	      var argIndex = 0;
+	      error = new Error(format.replace(/%s/g, function () {
+	        return args[argIndex++];
+	      }));
+	      error.name = 'Invariant Violation';
+	    }
+
+	    error.framesToPop = 1; // we don't care about invariant's own frame
+	    throw error;
+	  }
+	}
+
+	module.exports = invariant;
 
 /***/ },
 /* 173 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	module.exports = {
+	  Set: __webpack_require__(174),
+	  Static: __webpack_require__(176)
+	};
+
+/***/ },
+/* 174 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20321,7 +20376,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var React = __webpack_require__(2);
 	var foundationApi = __webpack_require__(6);
-	var Notification = __webpack_require__(174);
+	var Notification = __webpack_require__(175);
 	var Animation = __webpack_require__(169);
 
 	var NotificationSet = React.createClass({
@@ -20382,7 +20437,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = NotificationSet;
 
 /***/ },
-/* 174 */
+/* 175 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20442,7 +20497,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = Notification;
 
 /***/ },
-/* 175 */
+/* 176 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20452,7 +20507,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var React = __webpack_require__(2);
 	var foundationApi = __webpack_require__(6);
 	var Animation = __webpack_require__(169);
-	var Notification = __webpack_require__(174);
+	var Notification = __webpack_require__(175);
 
 	var NotificationStatic = React.createClass({
 	  displayName: 'NotificationStatic',
@@ -20493,7 +20548,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = NotificationStatic;
 
 /***/ },
-/* 176 */
+/* 177 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20549,7 +20604,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = Offcanvas;
 
 /***/ },
-/* 177 */
+/* 178 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20617,7 +20672,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = Panel;
 
 /***/ },
-/* 178 */
+/* 179 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20627,7 +20682,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var cx = __webpack_require__(4);
 	var ExecutionEnvironment = __webpack_require__(157);
 	var foundationApi = __webpack_require__(6);
-	var Tether = ExecutionEnvironment.canUseDOM && __webpack_require__(179);
+	var Tether = ExecutionEnvironment.canUseDOM && __webpack_require__(180);
 
 	var Popup = React.createClass({
 	  displayName: 'Popup',
@@ -20687,7 +20742,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = Popup;
 
 /***/ },
-/* 179 */
+/* 180 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! tether 0.6.5 */
@@ -22150,7 +22205,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 180 */
+/* 181 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22195,10 +22250,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 	module.exports = Tabs;
-	Tabs.Tab = __webpack_require__(181);
+	Tabs.Tab = __webpack_require__(182);
 
 /***/ },
-/* 181 */
+/* 182 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22237,7 +22292,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = Tab;
 
 /***/ },
-/* 182 */
+/* 183 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22245,7 +22300,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var React = __webpack_require__(2);
 	var ReactDOM = __webpack_require__(12);
 	var foundationApi = __webpack_require__(6);
-	var PopupToggle = __webpack_require__(183);
+	var PopupToggle = __webpack_require__(184);
 
 	var Trigger = React.createClass({
 	  displayName: 'Trigger',
@@ -22315,7 +22370,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = Trigger;
 
 /***/ },
-/* 183 */
+/* 184 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
