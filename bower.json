@@ -1,9 +1,10 @@
 {
   "name": "react-foundation-apps",
   "version": "0.0.1",
-  "homepage": "https://github.com/akiran/react-foundation-apps",
+  "homepage": "https://github.com/synap-collaboration/react-foundation-apps",
   "authors": [
-    "Kiran Abburi"
+    "Kiran Abburi",
+    "Matt Mitchell"
   ],
   "description": "React port for foundation-apps",
   "keywords": [
@@ -20,5 +21,8 @@
   ],
   "dependencies": {
     "foundation-apps": "~1.1.0"
+  },
+  "main": {
+    "index.js"
   }
 }
