@@ -1,6 +1,7 @@
 var React = require('react');
 
 var ActionSheetButton = React.createClass({
+  displayName: "ActionSheetButton",
   toggle: function () {
     this.props.setActiveState(!this.props.active);
   },
