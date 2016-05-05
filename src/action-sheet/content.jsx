@@ -10,6 +10,7 @@ var ActionSheetContent = React.createClass({
       'action-sheet': true,
       'is-active': this.props.active
     };
+    classes[this.props.position] = true;
     return (
       <div className={cx(classes)}>{this.props.children}</div>
     );
