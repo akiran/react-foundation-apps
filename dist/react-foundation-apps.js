@@ -251,7 +251,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    this.setState({ active: active });
 	  },
 	  onBodyClick: function onBodyClick(e) {
-	    this.setActiveState(false);
+	    if (e.target.dataset && !e.target.dataset['keepActionSheetActive']) this.setActiveState(false);
 	  },
 	  componentDidMount: function componentDidMount() {
 	    if (this.props.id) {
@@ -290,7 +290,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = ActionSheet;
 	ActionSheet.Button = __webpack_require__(9);
 	ActionSheet.Content = __webpack_require__(10);
-
 
 /***/ },
 /* 6 */

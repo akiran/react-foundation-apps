@@ -9,20 +9,7 @@ var ActionSheet = React.createClass({
     this.setState({active: active});
   },
   onBodyClick: function (e) {
-    var el = e.target;
-    var insideActionSheet = false;
-
-    do {
-      if(el.classList && el.classList.contains('action-sheet-container')) {
-        insideActionSheet = true;
-        break;
-      }
-
-    } while ((el = el.parentNode));
-
-    if(!insideActionSheet) {
-      this.setActiveState(false);
-    }
+    if (e.target.dataset && !e.target.dataset['keepActionSheetActive']) this.setActiveState(false);
   },
   componentDidMount: function () {
     if(this.props.id) {
