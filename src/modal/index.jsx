@@ -7,11 +7,12 @@ var Modal = React.createClass({
     return { open: false };
   },
   getDefaultProps: function () {
-    return { 
+    return {
       overlay: true,
       overlayClose: true,
       animationIn: 'fadeIn',
-      animationOut: 'fadeOut'
+      animationOut: 'fadeOut',
+      onClose: null
     };
   },
   componentDidMount: function () {
@@ -29,7 +30,8 @@ var Modal = React.createClass({
   hideOverlay: function (e) {
     e.preventDefault();
     if (this.props.overlayClose) {
-      this.setState({open: false});   
+      this.setState({open: false});
+      if (this.props.onClose) this.props.onClose();
     }
   },
   stopClickPropagation: function (e) {
@@ -42,8 +44,10 @@ var Modal = React.createClass({
         this.setState({open: true});
       } else if (msg === 'close') {
         this.setState({open: false});
+        if (this.props.onClose) this.props.onClose();
       } else if (msg === 'toggle') {
         this.setState({open: !this.state.open});
+        if (!this.state.open && this.props.onClose) this.props.onClose();
       }
     }.bind(this));
   },
