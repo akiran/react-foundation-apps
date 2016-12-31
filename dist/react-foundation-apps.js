@@ -634,6 +634,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	'use strict';
 
 	var React = __webpack_require__(2);
+	var cx = __webpack_require__(4);
 
 	var ActionSheetButton = React.createClass({
 	  displayName: 'ActionSheetButton',
@@ -643,6 +644,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 	  render: function render() {
 	    var Title = null;
+	    var classes = {
+	      'is-active': this.props.active
+	    };
 	    if (this.props.title.length > 0) {
 	      Title = React.createElement(
 	        'a',
@@ -652,7 +656,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	    return React.createElement(
 	      'div',
-	      { onClick: this.toggle },
+	      { className: cx(classes), onClick: this.toggle },
 	      Title,
 	      React.createElement(
 	        'div',
