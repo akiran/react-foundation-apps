@@ -1,6 +1,6 @@
 {
   "name": "react-foundation-apps",
-  "version": "0.7.2",
+  "version": "0.7.3",
   "description": "'React port of foundation-apps'",
   "main": "index.js",
   "scripts": {

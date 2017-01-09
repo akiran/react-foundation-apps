@@ -273,7 +273,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 	  render: function render() {
 	    var children = React.Children.map(this.props.children, (function (child, index) {
-	      var extraProps = { active: this.state.active };
+	      var extraProps = { active: this.props.forceActive ? true : this.state.active };
 	      if (child.type.displayName === 'ActionSheetButton') {
 	        extraProps.setActiveState = this.setActiveState;
 	      }
@@ -371,7 +371,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var PubSub = {};
 	    root.PubSub = PubSub;
 	    factory(PubSub);
-	    
+
 	}(( typeof window === 'object' && window ) || this, function (PubSub){
 		'use strict';
 
@@ -529,7 +529,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		/*Public: Clear subscriptions by the topic
 		*/
 		PubSub.clearSubscriptions = function clearSubscriptions(topic){
-			var m; 
+			var m;
 			for (m in messages){
 				if (messages.hasOwnProperty(m) && m.indexOf(topic) === 0){
 					delete messages[m];
@@ -564,7 +564,7 @@ return /******/ (function(modules) { // webpackBootstrap
 				m, message, t;
 
 			if (isTopic){
-				delete messages[value];
+				PubSub.clearSubscriptions(value);
 				return;
 			}
 
@@ -8454,6 +8454,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	};
 
+	function registerNullComponentID() {
+	  ReactEmptyComponentRegistry.registerNullComponentID(this._rootNodeID);
+	}
+
 	var ReactEmptyComponent = function (instantiate) {
 	  this._currentElement = null;
 	  this._rootNodeID = null;
@@ -8462,7 +8466,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	assign(ReactEmptyComponent.prototype, {
 	  construct: function (element) {},
 	  mountComponent: function (rootID, transaction, context) {
-	    ReactEmptyComponentRegistry.registerNullComponentID(rootID);
+	    transaction.getReactMountReady().enqueue(registerNullComponentID, this);
 	    this._rootNodeID = rootID;
 	    return ReactReconciler.mountComponent(this._renderedComponent, rootID, transaction, context);
 	  },
@@ -9808,6 +9812,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 	var EventInterface = {
 	  type: null,
+	  target: null,
 	  // currentTarget is set when dispatching; no use in copying it here
 	  currentTarget: emptyFunction.thatReturnsNull,
 	  eventPhase: null,
@@ -9841,8 +9846,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	  this.dispatchConfig = dispatchConfig;
 	  this.dispatchMarker = dispatchMarker;
 	  this.nativeEvent = nativeEvent;
-	  this.target = nativeEventTarget;
-	  this.currentTarget = nativeEventTarget;
 
 	  var Interface = this.constructor.Interface;
 	  for (var propName in Interface) {
@@ -9853,7 +9856,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    if (normalize) {
 	      this[propName] = normalize(nativeEvent);
 	    } else {
-	      this[propName] = nativeEvent[propName];
+	      if (propName === 'target') {
+	        this.target = nativeEventTarget;
+	      } else {
+	        this[propName] = nativeEvent[propName];
+	      }
 	    }
 	  }
 
@@ -13695,7 +13702,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 	    });
 
-	    nativeProps.children = content;
+	    if (content) {
+	      nativeProps.children = content;
+	    }
+
 	    return nativeProps;
 	  }
 
@@ -17144,15 +17154,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @typechecks
 	 */
 
+	/* eslint-disable fb-www/typeof-undefined */
+
 	/**
 	 * Same as document.activeElement but wraps in a try-catch block. In IE it is
 	 * not safe to call document.activeElement if there is nothing focused.
 	 *
-	 * The activeElement will be null only if the document body is not yet defined.
+	 * The activeElement will be null only if the document or document body is not
+	 * yet defined.
 	 */
-	"use strict";
+	'use strict';
 
 	function getActiveElement() /*?DOMElement*/{
+	  if (typeof document === 'undefined') {
+	    return null;
+	  }
 	  try {
 	    return document.activeElement || document.body;
 	  } catch (e) {
@@ -19150,7 +19166,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 
-	module.exports = '0.14.5';
+	module.exports = '0.14.8';
 
 /***/ },
 /* 156 */
@@ -19182,6 +19198,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  Based on code that is Copyright 2013-2015, Facebook, Inc.
 	  All rights reserved.
 	*/
+	/* global define */
 
 	(function () {
 		'use strict';
