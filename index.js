@@ -1,6 +1,7 @@
 module.exports = {
   Accordion: require('./lib/accordion'),
   ActionSheet: require('./lib/action-sheet'),
+  foundationApi: require('./lib/utils/foundation-api'),
   Iconic: require('./lib/iconic'),
   Interchange: require('./lib/interchange'),
   Modal: require('./lib/modal'),

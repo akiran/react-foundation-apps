@@ -1,5 +1,5 @@
 var React = require('react');
-var cx = require('react/lib/cx');
+var cx = require('classnames');
 // var LayerMixin = require('react-layer-mixin');
 var foundationApi = require('../utils/foundation-api');
 

@@ -1,10 +1,9 @@
 {
   "name": "react-foundation-apps",
-  "version": "0.7.0",
+  "version": "0.7.3",
   "description": "'React port of foundation-apps'",
   "main": "index.js",
   "scripts": {
-    "postinstall": "bower install",
     "start": "./node_modules/.bin/gulp server",
     "prepublish": "./node_modules/.bin/babel ./src --out-dir ./lib && ./node_modules/.bin/gulp dist"
   },
@@ -51,7 +50,8 @@
     "multiline": "^1.0.1",
     "postcss-loader": "^0.2.0",
     "raw-loader": "^0.5.1",
-    "react": "*",
+    "react": "^0.14.2",
+    "react-dom": "^0.14.2",
     "react-highlight": "git+https://github.com/akiran/react-highlight.git",
     "react-hot-loader": "^1.2.3",
     "react-layer-mixin": "*",
@@ -63,15 +63,21 @@
     "webpack-dev-server": "^1.6.6"
   },
   "peerDependencies": {
-    "react": "*",
+    "react": "^0.14.*",
     "react-responsive-mixin": "*",
     "pubsub-js": "^1.5.x",
     "object-assign": "^2.0.*"
   },
   "dependencies": {
     "can-use-dom": "^0.1.0",
+    "classnames": "^2.2.0",
+    "exenv": "^1.2.0",
+    "fbjs": "^0.5.0",
+    "foundation-apps": "^1.2.0",
+    "history": "^1.12.0",
     "object-assign": "^2.0.0",
     "pubsub-js": "^1.5.0",
+    "react-addons-css-transition-group": "^0.14.3",
     "tether": "^0.6.5"
   },
   "browserify": {
