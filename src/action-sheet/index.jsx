@@ -31,7 +31,7 @@ var ActionSheet = React.createClass({
   },
   render: function () {
     var children = React.Children.map(this.props.children, function (child, index) {
-      var extraProps = {active: this.state.active};
+      var extraProps = {active: this.props.forceActive ? true : this.state.active};
       if (child.type.displayName === 'ActionSheetButton') {
         extraProps.setActiveState = this.setActiveState;
       }
