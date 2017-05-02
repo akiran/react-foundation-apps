@@ -1,6 +1,6 @@
 {
   "name": "react-foundation-apps",
-  "version": "0.7.3",
+  "version": "0.7.4",
   "description": "'React port of foundation-apps'",
   "main": "index.js",
   "scripts": {
@@ -50,8 +50,7 @@
     "multiline": "^1.0.1",
     "postcss-loader": "^0.2.0",
     "raw-loader": "^0.5.1",
-    "react": "^0.14.2",
-    "react-dom": "^0.14.2",
+    "react": "*",
     "react-highlight": "git+https://github.com/akiran/react-highlight.git",
     "react-hot-loader": "^1.2.3",
     "react-layer-mixin": "*",
@@ -63,7 +62,7 @@
     "webpack-dev-server": "^1.6.6"
   },
   "peerDependencies": {
-    "react": "^0.14.*",
+    "react": "*",
     "react-responsive-mixin": "*",
     "pubsub-js": "^1.5.x",
     "object-assign": "^2.0.*"
