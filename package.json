@@ -1,6 +1,6 @@
 {
   "name": "react-foundation-apps",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "description": "'React port of foundation-apps'",
   "main": "index.js",
   "scripts": {
@@ -82,7 +82,7 @@
     "object-assign": "^4.1.1",
     "pubsub-js": "^1.5.0",
     "react-addons-css-transition-group": "^15.5.2",
-    "tether": "^1.4.0"
+    "tether": "^0.7.2"
   },
   "browserify": {
     "transform": [
