@@ -55,6 +55,7 @@ var Animation = React.createClass({
     CSSCore.addClass(node, activeClass);
     
     ReactTransitionEvents.addEndEventListener(node, this.finishAnimation);
+    this.finishAnimation()
   },
   componentDidUpdate: function (prevProps) {
     if (prevProps.active !== this.props.active) {
