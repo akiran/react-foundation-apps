@@ -29,14 +29,10 @@ var Modal = React.createClass({
     foundationApi.unsubscribe(this.props.id);
   },
   hideOverlay: function (e) {
-    e.preventDefault();
-    if (this.props.overlayClose) {
-      this.setState({open: false});   
+    if (this.props.overlayClose && e.target == this._modalOverlay) {
+      e.preventDefault();
+      this.setState({open: false});
     }
-  },
-  stopClickPropagation: function (e) {
-    e.preventDefault();
-    e.stopPropagation();
   },
   render: function() {
     var overlayStyle = {};
@@ -45,13 +41,13 @@ var Modal = React.createClass({
     }
     return (
       <Animation active={this.state.open} animationIn="fadeIn" animationOut="fadeOut">
-        <div className='modal-overlay' style={overlayStyle} onClick={this.hideOverlay} >
+        <div className='modal-overlay' style={overlayStyle} onClick={this.hideOverlay} ref={(div) => {this._modalOverlay = div}}>
           <Animation
             active={this.state.open}
             animationIn={this.props.animationIn}
             animationOut={this.props.animationOut}
           >
-            <div id={this.props.id} data-closable={true} className='modal' onClick={this.stopClickPropagation}>
+          <div id={this.props.id} data-closable={true} className='modal'>
               {this.props.children}
             </div>
           </Animation>

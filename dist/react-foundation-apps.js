@@ -22963,14 +22963,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    foundationApi.unsubscribe(this.props.id);
 	  },
 	  hideOverlay: function (e) {
-	    e.preventDefault();
-	    if (this.props.overlayClose) {
+	    if (this.props.overlayClose && e.target == this._modalOverlay) {
+	      e.preventDefault();
 	      this.setState({ open: false });
 	    }
-	  },
-	  stopClickPropagation: function (e) {
-	    e.preventDefault();
-	    e.stopPropagation();
 	  },
 	  render: function () {
 	    var overlayStyle = {};
@@ -22982,7 +22978,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	      { active: this.state.open, animationIn: 'fadeIn', animationOut: 'fadeOut' },
 	      React.createElement(
 	        'div',
-	        { className: 'modal-overlay', style: overlayStyle, onClick: this.hideOverlay },
+	        { className: 'modal-overlay', style: overlayStyle, onClick: this.hideOverlay, ref: div => {
+	            this._modalOverlay = div;
+	          } },
 	        React.createElement(
 	          Animation,
 	          {
@@ -22992,7 +22990,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          },
 	          React.createElement(
 	            'div',
-	            { id: this.props.id, 'data-closable': true, className: 'modal', onClick: this.stopClickPropagation },
+	            { id: this.props.id, 'data-closable': true, className: 'modal' },
 	            this.props.children
 	          )
 	        )
