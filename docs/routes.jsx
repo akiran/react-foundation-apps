@@ -1,7 +1,8 @@
 var React = require('react');
-var Router = require('react-router');
-var Route = Router.Route;
-var DefaultRoute = Router.DefaultRoute;
+var ReactRouter = require('react-router');
+var Router = ReactRouter.Router
+var Route = ReactRouter.Route;
+var IndexRoute = ReactRouter.IndexRoute;
 var Install = require('./install');
 var Accordion = require('./accordion');
 var Interchange = require('./interchange');
@@ -18,20 +19,20 @@ var Docs = require('./docs');
 
 var path = (process.env.NODE_ENV==='dev_docs') ? '/': '/opensource/react-foundation-apps';
 var routes = (
-  <Route name='app' path={path} handler={Docs}>
-    <Route name='install' handler={Install} />
-    <Route name='trigger' handler={Trigger} />
-    <Route name='modal' handler={Modal} />
-    <Route name='panel' handler={Panel} />
-    <Route name='offcanvas' handler={Offcanvas} />
-    <Route name='notification' handler={Notification} />
-    <Route name='action-sheet' handler={ActionSheet} />
-    <Route name='tabs' handler={Tabs} />
-    <Route name='iconic' handler={Iconic} />
-    <Route name='accordion' handler={Accordion} />
-    <Route name='interchange' handler={Interchange} />
-    <Route name='popup' handler={Popup} />
-    <DefaultRoute handler={Install} />
+  <Route name='app' path={path} component={Docs}>
+    <Route path='install' component={Install} />
+    <Route path='trigger' component={Trigger} />
+    <Route path='modal' component={Modal} />
+    <Route path='panel' component={Panel} />
+    <Route path='offcanvas' component={Offcanvas} />
+    <Route path='notification' component={Notification} />
+    <Route path='action-sheet' component={ActionSheet} />
+    <Route path='tabs' component={Tabs} />
+    <Route path='iconic' component={Iconic} />
+    <Route path='accordion' component={Accordion} />
+    <Route path='interchange' component={Interchange} />
+    <Route path='popup' component={Popup} />
+    <IndexRoute component={Install} />
   </Route>
 );
 

@@ -1,8 +1,8 @@
 var React = require('react');
 var Highlight = require('react-highlight/src/optimized');
 
-var InstallationDocs = React.createClass({
-  render: function () {
+class InstallationDocs extends React.Component {
+  render() {
     return (
       <div className='grid-content'>
         <h4 className='subheader'>
@@ -14,6 +14,6 @@ var InstallationDocs = React.createClass({
       </div>
     );
   }
-});
+}
 
 module.exports = InstallationDocs;

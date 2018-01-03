@@ -12,7 +12,7 @@ module.exports = {
 
   module: {
     loaders: [
-      {test: /\.jsx$/, loaders: ['babel']},
+      {test: /\.jsx$/, loaders: ['babel?presets[]=es2015&presets[]=react']},
     ],
     noParse: /\.min\.js/
   },

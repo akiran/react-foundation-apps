@@ -1,18 +1,15 @@
 var React = require('react');
-var cloneWithProps = require('react/lib/cloneWithProps');
 
-var Accordion = React.createClass({
-  getInitialState: function () {
-    return { sections: [] };
-  },
-  getDefaultProps: function () {
-    return { 
-      autoOpen: true,
-      multiOpen: false,
-      collapsible: false
-    };
-  },
-  componentWillMount: function () {
+class Accordion extends React.Component {
+  static defaultProps = { 
+    autoOpen: true,
+    multiOpen: false,
+    collapsible: false
+  };
+
+  state = { sections: [] };
+
+  componentWillMount() {
     var sections = [];
     React.Children.forEach(this.props.children, function (child, index) {
       sections.push({active: false});
@@ -21,8 +18,9 @@ var Accordion = React.createClass({
       sections[0].active = true;
     }
     this.setState({sections: sections});
-  },
-  select: function (selectSection) {
+  }
+
+  select = (selectSection) => {
     var sections = this.state.sections;
     sections.forEach(function (section, index) {
       if(this.props.multiOpen) {
@@ -38,10 +36,11 @@ var Accordion = React.createClass({
       }
     }.bind(this));
     this.setState({sections: sections});
-  },
-  render: function () {
+  };
+
+  render() {
     var children = React.Children.map(this.props.children, function (child, index) {
-      return cloneWithProps(child, {
+      return React.cloneElement(child, {
         active: this.state.sections[index]? this.state.sections[index].active: false,
         activate: this.select.bind(this, index)
       });
@@ -50,7 +49,7 @@ var Accordion = React.createClass({
       <div className='accordion'>{children}</div>
     );
   }
-});
+}
 
 module.exports = Accordion;
 Accordion.Item = require('./item');

@@ -2,8 +2,8 @@ var React = require('react');
 var Modal = require('../../src/modal');
 var Trigger = require('../../src/trigger');
 
-var SimpleModal = React.createClass({
-  render: function () {
+class SimpleModal extends React.Component {
+  render() {
     return (
       <div>
         <Trigger open="basicModal"><a className='button'>Open Modal</a></Trigger>
@@ -16,6 +16,6 @@ var SimpleModal = React.createClass({
       </div>
     );
   }
-});
+}
 
 module.exports = SimpleModal;

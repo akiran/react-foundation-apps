@@ -1,5 +1,5 @@
 var React = require('react');
-var cloneWithProps = require('react/lib/cloneWithProps');
+var ReactDOM = require('react-dom');
 var foundationApi = require('../utils/foundation-api');
 var PopupToggle = require('../popup/toggle');
 
@@ -19,7 +19,7 @@ var Trigger = React.createClass({
       return this.props.close;
     } else {
       var parentElement= false;
-      var tempElement = this.getDOMNode().parentNode;
+      var tempElement = ReactDOM.findDOMNode(this).parentNode;
       while(parentElement === false) {
         if(tempElement.nodeName == 'BODY') {
           parentElement = '';
@@ -59,7 +59,7 @@ var Trigger = React.createClass({
       return <PopupToggle {...this.props} />;
     } else {
       var child = React.Children.only(this.props.children);
-      return cloneWithProps(child, {
+      return React.cloneElement(child, {
         onClick: this.clickHandler
       });
     }

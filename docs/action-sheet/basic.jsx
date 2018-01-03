@@ -2,8 +2,8 @@ var React = require('react');
 var ActionSheet  = require('../../src/action-sheet');
 
 
-var BasicActionSheet = React.createClass({
-  render: function () {
+class BasicActionSheet extends React.Component {
+  render() {
     return (
       <ActionSheet>
         <ActionSheet.Button title='Action Sheet'></ActionSheet.Button>
@@ -18,6 +18,6 @@ var BasicActionSheet = React.createClass({
       </ActionSheet>
     );
   }
-});
+}
 
 module.exports = BasicActionSheet;

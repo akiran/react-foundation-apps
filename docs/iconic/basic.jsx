@@ -1,8 +1,8 @@
 var React = require('react');
 var Iconic = require('../../src/iconic');
 
-var BasicIconic = React.createClass({
-  render: function () {
+class BasicIconic extends React.Component {
+  render() {
     var baseUrl = '';
     if (process.env.NODE_ENV === 'production') {
       baseUrl = 'http://static.webrafter.com';
@@ -13,6 +13,6 @@ var BasicIconic = React.createClass({
       </Iconic>
     );
   }
-});
+}
 
 module.exports = BasicIconic;

@@ -2,8 +2,8 @@ var React = require('react');
 var Popup = require('../../src/popup');
 var Trigger = require('../../src/trigger');
 
-var BasicPopup = React.createClass({
-  render: function () {
+class BasicPopup extends React.Component {
+  render() {
     return (
       <div>
         <Trigger popupToggle='basic-popup'>
@@ -15,6 +15,6 @@ var BasicPopup = React.createClass({
       </div>
     );
   }
-});
+}
 
 module.exports = BasicPopup;

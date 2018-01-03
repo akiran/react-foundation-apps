@@ -3,8 +3,8 @@ var BasicAccordion = require('./basic');
 var AdvancedAccordion = require('./advanced');
 var Highlight = require('react-highlight/src/optimized');
 
-var Accordion = React.createClass({
-  render: function () {
+class Accordion extends React.Component {
+  render() {
     return (
       <div className='grid-content'>
         <h2>Accordion</h2>
@@ -41,6 +41,6 @@ var Accordion = React.createClass({
       </div>
     );
   }
-});
+}
 
 module.exports = Accordion;

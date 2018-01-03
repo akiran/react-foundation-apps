@@ -4,8 +4,8 @@ var FixedPanel = require('./fixed-panel');
 var Panel = require('../../src/panel');
 var Trigger = require('../../src/trigger');
 
-var PanelDocs = React.createClass({
-  render: function () {
+class PanelDocs extends React.Component {
+  render() {
     return (
       <div>
         <Panel id='example-top-panel' position='top'>
@@ -101,6 +101,6 @@ var PanelDocs = React.createClass({
       </div>
     );
   }
-});
+}
 
 module.exports = PanelDocs;

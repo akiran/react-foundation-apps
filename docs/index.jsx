@@ -1,12 +1,14 @@
 var React = require('react');
-var Router = require('react-router');
+var ReactDOM = require('react-dom');
+var ReactRouter = require('react-router');
+var Router = ReactRouter.Router;
 var routes = require('./routes');
 var canUseDOM = require('can-use-dom');
  
 if (canUseDOM) {
   document.addEventListener('DOMContentLoaded', function () {
-    Router.run(routes, Router.HistoryLocation, function (Handler) {
-      React.render(<Handler/>, document.body);
-    });
+    var container = document.createElement('div');
+    document.body.appendChild(container);
+    ReactDOM.render(<Router routes={routes}/>, container);
   });
 } 

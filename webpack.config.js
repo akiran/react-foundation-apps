@@ -1,12 +1,12 @@
 var webpack = require('webpack');
 var path = require('path');
-var autoprefixer = require('autoprefixer-core');
+var autoprefixer = require('autoprefixer');
 
 module.exports = {
-  devtool: '#inline-source-map',
+  devtool: 'source-map',
   entry: {
     'docs.js': [
-      'webpack-dev-server/client?http://192.168.0.100:8000',
+      'webpack-dev-server/client?http://localhost:8000',
       'webpack/hot/only-dev-server',
       './docs/index.jsx'
     ]
@@ -17,7 +17,7 @@ module.exports = {
   },
   module: {
     loaders: [
-      {test: /\.jsx$/, loaders: ['react-hot', 'babel']},
+      {test: /\.jsx$/, loaders: ['react-hot', 'babel?presets[]=es2015&presets[]=react']},
       {
         test: /\.scss$/,
         loader: "style!css!postcss!sass?outputStyle=expanded&includePaths[]=" + 

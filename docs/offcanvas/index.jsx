@@ -2,8 +2,8 @@ var React = require('react');
 var Highlight = require('react-highlight/src/optimized');
 var Trigger = require('../../src/trigger');
 
-var OffcanvasDocs = React.createClass({
-  render: function () {
+class OffcanvasDocs extends React.Component {
+  render() {
     return (
       <div>
         <h2>Off-canvas</h2>
@@ -46,6 +46,6 @@ var OffcanvasDocs = React.createClass({
       </div>
     );
   }
-});
+}
 
 module.exports = OffcanvasDocs;
