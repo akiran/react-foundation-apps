@@ -2,8 +2,8 @@ var React = require('react');
 var BasicIconic = require('./basic');
 var Highlight = require('react-highlight/src/optimized');
 
-var IconicDocs = React.createClass({
-  render: function () {
+class IconicDocs extends React.Component {
+  render() {
     return (
       <div>
         <h2>Iconic</h2>
@@ -23,6 +23,6 @@ var IconicDocs = React.createClass({
       </div>
     );
   }
-});
+}
 
 module.exports = IconicDocs;

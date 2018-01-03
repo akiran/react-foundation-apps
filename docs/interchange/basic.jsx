@@ -1,8 +1,8 @@
 var React = require('react');
 var Interchange = require('../../src/interchange');
 
-var BasicInterchange = React.createClass({
-  render: function () {
+class BasicInterchange extends React.Component {
+  render() {
     var baseUrl = '';
     if (process.env.NODE_ENV === 'production') {
       baseUrl = 'http://static.webrafter.com';
@@ -17,6 +17,6 @@ var BasicInterchange = React.createClass({
       </div>
     );
   }
-});
+}
 
 module.exports = BasicInterchange;

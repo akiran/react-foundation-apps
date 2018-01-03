@@ -2,8 +2,8 @@ var React = require('react');
 var Highlight = require('react-highlight/src/optimized');
 var BasicTabs = require('./basic');
 
-var TabsDocs = React.createClass({
-  render: function () {
+class TabsDocs extends React.Component {
+  render() {
     return (
       <div>
       <h2>Tabs</h2>
@@ -27,6 +27,6 @@ var TabsDocs = React.createClass({
       </div>
     );
   }
-});
+}
 
 module.exports = TabsDocs;

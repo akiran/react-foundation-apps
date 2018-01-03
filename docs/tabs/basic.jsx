@@ -1,8 +1,8 @@
 var React = require('react');
 var Tabs = require('../../src/tabs');
 
-var BasicTabs = React.createClass({
-  render: function () {
+class BasicTabs extends React.Component {
+  render() {
     return (
       <Tabs>
         <Tabs.Tab title='Tab 1'>Tab 1 content</Tabs.Tab>
@@ -11,6 +11,6 @@ var BasicTabs = React.createClass({
       </Tabs>
     );
   }
-});
+}
 
 module.exports = BasicTabs;

@@ -2,8 +2,8 @@ var React = require('react');
 var Notification = require('../../src/notification');
 var Trigger = require('../../src/trigger');
 
-var AdvancedNotification = React.createClass({
-  render: function () {
+class AdvancedNotification extends React.Component {
+  render() {
     return (
       <div>
         <Trigger notify="main-notifications" title="My notification" content="Notification example" color="success" position="top-left"> 
@@ -13,6 +13,6 @@ var AdvancedNotification = React.createClass({
       </div>
     );
   }
-});
+}
 
 module.exports = AdvancedNotification;

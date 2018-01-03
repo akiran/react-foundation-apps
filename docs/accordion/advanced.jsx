@@ -1,8 +1,8 @@
 var React = require('react');
 var Accordion = require('../../src/accordion');
 
-var MultiSelect = React.createClass({
-  render: function () {
+class MultiSelect extends React.Component {
+  render() {
     return (
       <Accordion multiOpen={true} autoOpen={false} >
         <Accordion.Item title='First item title'> First item content </Accordion.Item>
@@ -11,6 +11,6 @@ var MultiSelect = React.createClass({
       </Accordion>
     );
   }
-});
+}
 
 module.exports = MultiSelect;

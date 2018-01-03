@@ -2,8 +2,8 @@ var React = require('react');
 var BasicInterchange = require('./basic');
 var Highlight = require('react-highlight/src/optimized');
 
-var InterchangeDocs = React.createClass({
-  render: function () {
+class InterchangeDocs extends React.Component {
+  render() {
     return (
       <div>
         <h2>Interchange</h2>
@@ -26,6 +26,6 @@ var InterchangeDocs = React.createClass({
       </div>
     );
   }
-});
+}
 
 module.exports = InterchangeDocs;

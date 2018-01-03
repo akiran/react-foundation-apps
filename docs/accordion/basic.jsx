@@ -1,8 +1,8 @@
 var React = require('react');
 var Accordion = require('../../src/accordion');
 
-var SingleSelect = React.createClass({
-  render: function () {
+class SingleSelect extends React.Component {
+  render() {
     return (
       <Accordion collapsible={false}>
         <Accordion.Item title='First item title'> First item content </Accordion.Item>
@@ -11,6 +11,6 @@ var SingleSelect = React.createClass({
       </Accordion>
     );
   }
-});
+}
 
 module.exports = SingleSelect;

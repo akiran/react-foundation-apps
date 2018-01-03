@@ -2,8 +2,8 @@ var React = require('react');
 var BasicPopup = require('./basic');
 var Highlight = require('react-highlight/src/optimized');
 
-var Popup = React.createClass({
-  render: function () {
+class Popup extends React.Component {
+  render() {
     return (
       <div>
         <h2>Popup</h2>
@@ -22,6 +22,6 @@ var Popup = React.createClass({
       </div>
     );
   }
-});
+}
 
 module.exports = Popup;

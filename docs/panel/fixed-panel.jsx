@@ -2,8 +2,8 @@ var React = require('react');
 var Panel = require('../../src/panel');
 var Trigger = require('../../src/trigger');
 
-var FixedPa = React.createClass({
-  render: function () {
+class FixedPa extends React.Component {
+  render() {
     return (
       <div>
         <Trigger open='fixed-panel'>
@@ -18,6 +18,6 @@ var FixedPa = React.createClass({
       </div>
     );
   }
-});
+}
 
 module.exports = FixedPa;

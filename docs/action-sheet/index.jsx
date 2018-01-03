@@ -2,8 +2,8 @@ var React = require('react');
 var Highlight = require('react-highlight/src/optimized');
 var BasicActionSheet = require('./basic');
 
-var ActionSheetDocs = React.createClass({
-  render: function () {
+class ActionSheetDocs extends React.Component {
+  render() {
     return (
       <div>
         <h2> Action Sheet </h2>
@@ -30,6 +30,6 @@ var ActionSheetDocs = React.createClass({
       </div>
     );
   }
-});
+}
 
 module.exports = ActionSheetDocs;

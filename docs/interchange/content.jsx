@@ -1,12 +1,12 @@
 var React = require('react');
 var Interchange = require('../../src/interchange');
 
-var Content = React.createClass({
-  render: function () {
+class Content extends React.Component {
+  render() {
     return (
       <div><Interchange /></div>
     );
   }
-});
+}
 
 module.exports = Content;

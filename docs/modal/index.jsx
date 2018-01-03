@@ -3,8 +3,8 @@ var Highlight = require('react-highlight/src/optimized');
 var SimpleModal = require('./simple');
 var AdvancedModal = require('./advanced');
 
-var ModalDocs = React.createClass({
-  render: function () {
+class ModalDocs extends React.Component {
+  render() {
     return (
       <div className='grid-content'>
         <h2>Modal</h2>
@@ -39,6 +39,6 @@ var ModalDocs = React.createClass({
       </div>
     );
   }
-});
+}
 
 module.exports = ModalDocs;

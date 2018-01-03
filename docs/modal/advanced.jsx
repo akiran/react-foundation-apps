@@ -2,8 +2,8 @@ var React = require('react');
 var Modal = require('../../src/modal');
 var Trigger = require('../../src/trigger');
 
-var AdvancedModal = React.createClass({
-  render: function () {
+class AdvancedModal extends React.Component {
+  render() {
     return (
       <div>
         <Trigger open='advancedModal'>
@@ -27,7 +27,7 @@ var AdvancedModal = React.createClass({
       </div>
     );
   }
-});
+}
 
 
 module.exports = AdvancedModal;

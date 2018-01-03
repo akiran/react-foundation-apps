@@ -3,8 +3,8 @@ var Highlight = require('react-highlight/src/optimized');
 var StaticNotification = require('./static');
 var AdvancedNotification = require('./advanced');
 
-var NotificationDocs = React.createClass({
-  render: function () {
+class NotificationDocs extends React.Component {
+  render() {
     return (
       <div>
         <h2>Notification</h2>
@@ -27,6 +27,6 @@ var NotificationDocs = React.createClass({
       </div>
     );
   }
-});
+}
 
 module.exports = NotificationDocs;  

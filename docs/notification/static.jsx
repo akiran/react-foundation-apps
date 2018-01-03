@@ -2,8 +2,8 @@ var React = require('react');
 var Notification = require('../../src/notification');
 var Trigger = require('../../src/trigger')
 
-var Static = React.createClass({
-  render: function () {
+class Static extends React.Component {
+  render() {
     return (
       <div>
         <Trigger open='my-notify'>
@@ -15,6 +15,6 @@ var Static = React.createClass({
       </div>
     );
   }
-});
+}
 
 module.exports = Static;
